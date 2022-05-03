@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		214F41C328212BDE00A9D696 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 214F41C228212BDE00A9D696 /* GoogleSignIn */; };
+		214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */; };
+		214F41CB2821417A00A9D696 /* PasswordResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F41CA2821417A00A9D696 /* PasswordResetView.swift */; };
+		21AC33D62821494800A79F7B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AC33D52821494800A79F7B /* LoginViewModel.swift */; };
 		21B6285F280AC4B900E3FC49 /* Habit_TrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6285E280AC4B900E3FC49 /* Habit_TrackerApp.swift */; };
 		21B62861280AC4B900E3FC49 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B62860280AC4B900E3FC49 /* ContentView.swift */; };
 		21B62863280AC4BB00E3FC49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B62862280AC4BB00E3FC49 /* Assets.xcassets */; };
@@ -20,6 +24,10 @@
 		21B62890280AC89C00E3FC49 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 21B6288F280AC89C00E3FC49 /* FirebaseFirestoreSwift */; };
 		21B62892280AC89C00E3FC49 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 21B62891280AC89C00E3FC49 /* FirebaseFunctions */; };
 		21B62894280AC89C00E3FC49 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 21B62893280AC89C00E3FC49 /* FirebaseMessaging */; };
+		21B62898280AD1E300E3FC49 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B62897280AD1E300E3FC49 /* LoginView.swift */; };
+		21B6289A280ADA7F00E3FC49 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B62899280ADA7F00E3FC49 /* UserSession.swift */; };
+		21B6289C280ADD9400E3FC49 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6289B280ADD9400E3FC49 /* SignUpView.swift */; };
+		21B6289E280AE09A00E3FC49 /* FirebaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6289D280AE09900E3FC49 /* FirebaseUser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +48,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoogleSignInButton.swift; path = "Habit Tracker/Views/GoogleSignInButton.swift"; sourceTree = SOURCE_ROOT; };
+		214F41CA2821417A00A9D696 /* PasswordResetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasswordResetView.swift; path = "Habit Tracker/Views/PasswordResetView.swift"; sourceTree = SOURCE_ROOT; };
+		2169E266282115EA00E46AF8 /* Habit Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Habit Tracker.entitlements"; sourceTree = "<group>"; };
+		21AC33D52821494800A79F7B /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		21B6285B280AC4B800E3FC49 /* Habit Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B6285E280AC4B900E3FC49 /* Habit_TrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_TrackerApp.swift; sourceTree = "<group>"; };
 		21B62860280AC4B900E3FC49 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -51,6 +63,11 @@
 		21B62879280AC4BB00E3FC49 /* Habit_TrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_TrackerUITests.swift; sourceTree = "<group>"; };
 		21B6287B280AC4BB00E3FC49 /* Habit_TrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_TrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		21B62888280AC65A00E3FC49 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		21B62895280AD19600E3FC49 /* Habit-Tracker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Habit-Tracker-Info.plist"; sourceTree = SOURCE_ROOT; };
+		21B62897280AD1E300E3FC49 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		21B62899280ADA7F00E3FC49 /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
+		21B6289B280ADD9400E3FC49 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		21B6289D280AE09900E3FC49 /* FirebaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +80,7 @@
 				21B62894280AC89C00E3FC49 /* FirebaseMessaging in Frameworks */,
 				21B62890280AC89C00E3FC49 /* FirebaseFirestoreSwift in Frameworks */,
 				21B62892280AC89C00E3FC49 /* FirebaseFunctions in Frameworks */,
+				214F41C328212BDE00A9D696 /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +101,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		21AC33D3282148DB00A79F7B /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				21B62899280ADA7F00E3FC49 /* UserSession.swift */,
+				21AC33D52821494800A79F7B /* LoginViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		21AC33D4282148E200A79F7B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				21B6289D280AE09900E3FC49 /* FirebaseUser.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		21B62852280AC4B800E3FC49 = {
 			isa = PBXGroup;
 			children = (
@@ -106,9 +141,13 @@
 		21B6285D280AC4B800E3FC49 /* Habit Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				21AC33D4282148E200A79F7B /* Models */,
+				21AC33D3282148DB00A79F7B /* View Models */,
+				2169E266282115EA00E46AF8 /* Habit Tracker.entitlements */,
+				21B62896280AD1D600E3FC49 /* Views */,
+				21B62895280AD19600E3FC49 /* Habit-Tracker-Info.plist */,
 				21B62888280AC65A00E3FC49 /* GoogleService-Info.plist */,
 				21B6285E280AC4B900E3FC49 /* Habit_TrackerApp.swift */,
-				21B62860280AC4B900E3FC49 /* ContentView.swift */,
 				21B62862280AC4BB00E3FC49 /* Assets.xcassets */,
 				21B62864280AC4BB00E3FC49 /* Preview Content */,
 			);
@@ -140,6 +179,18 @@
 			path = "Habit TrackerUITests";
 			sourceTree = "<group>";
 		};
+		21B62896280AD1D600E3FC49 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				214F41CA2821417A00A9D696 /* PasswordResetView.swift */,
+				214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */,
+				21B62860280AC4B900E3FC49 /* ContentView.swift */,
+				21B62897280AD1E300E3FC49 /* LoginView.swift */,
+				21B6289B280ADD9400E3FC49 /* SignUpView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -162,6 +213,7 @@
 				21B6288F280AC89C00E3FC49 /* FirebaseFirestoreSwift */,
 				21B62891280AC89C00E3FC49 /* FirebaseFunctions */,
 				21B62893280AC89C00E3FC49 /* FirebaseMessaging */,
+				214F41C228212BDE00A9D696 /* GoogleSignIn */,
 			);
 			productName = "Habit Tracker";
 			productReference = 21B6285B280AC4B800E3FC49 /* Habit Tracker.app */;
@@ -237,6 +289,7 @@
 			mainGroup = 21B62852280AC4B800E3FC49;
 			packageReferences = (
 				21B6288A280AC89C00E3FC49 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				214F41C128212BDE00A9D696 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = 21B6285C280AC4B800E3FC49 /* Products */;
 			projectDirPath = "";
@@ -281,8 +334,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21B62898280AD1E300E3FC49 /* LoginView.swift in Sources */,
+				21B6289C280ADD9400E3FC49 /* SignUpView.swift in Sources */,
 				21B62861280AC4B900E3FC49 /* ContentView.swift in Sources */,
+				214F41CB2821417A00A9D696 /* PasswordResetView.swift in Sources */,
 				21B6285F280AC4B900E3FC49 /* Habit_TrackerApp.swift in Sources */,
+				21B6289A280ADA7F00E3FC49 /* UserSession.swift in Sources */,
+				21B6289E280AE09A00E3FC49 /* FirebaseUser.swift in Sources */,
+				214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */,
+				21AC33D62821494800A79F7B /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,12 +498,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Habit Tracker/Habit Tracker.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Habit Tracker/Preview Content\"";
 				DEVELOPMENT_TEAM = SVNZBC4323;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Habit-Tracker-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -468,12 +530,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Habit Tracker/Habit Tracker.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Habit Tracker/Preview Content\"";
 				DEVELOPMENT_TEAM = SVNZBC4323;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Habit-Tracker-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -611,6 +675,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		214F41C128212BDE00A9D696 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 		21B6288A280AC89C00E3FC49 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -622,6 +694,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		214F41C228212BDE00A9D696 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 214F41C128212BDE00A9D696 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
 		21B6288B280AC89C00E3FC49 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 21B6288A280AC89C00E3FC49 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
