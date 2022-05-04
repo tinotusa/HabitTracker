@@ -6,10 +6,62 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+
+class PasswordResetViewModel: ObservableObject {
+    @Published var email = ""
+    @Published var didError = false
+    @Published var errorDetails: ErrorDetails?
+    private lazy var auth = Auth.auth()
+
+    struct ErrorDetails {
+        var title = ""
+        var message = ""
+    }
+    
+    func sendResetEmail() {
+        auth.sendPasswordReset(withEmail: email) { [unowned self] error in
+            if let error = error {
+                let test = error as NSError
+                didError = true
+                errorDetails = ErrorDetails(
+                    title: "",
+                    message: "\(error.localizedDescription)"
+                )
+                return
+            }
+        }
+        
+    }
+}
 
 struct PasswordResetView: View {
+    @StateObject var viewModel = PasswordResetViewModel()
+    @Environment(\.dismiss) var dismiss
     var body: some View {
-        Text("password reset view")
+        VStack {
+            Text("Password reset view")
+            TextField("Email", text: $viewModel.email, prompt: Text("Email"))
+            Button("Send reset email") {
+                viewModel.sendResetEmail()
+            }
+            Button("Back") {
+                dismiss()
+            }
+        }
+        .alert(
+            "Password reset error",
+            isPresented: $viewModel.didError,
+            presenting: viewModel.errorDetails
+        ) { detail in
+            Button(role: .cancel) {
+                // something
+            } label: {
+                Text("OK")
+            }
+        } message: { details in
+            Text(details.message)
+        }
     }
 }
 
