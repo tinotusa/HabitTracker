@@ -62,8 +62,13 @@ struct SignUpView: View {
             }
             .buttonStyle(.borderedProminent)
         }
+        .disabled(userSession.isLoading)
         .textFieldStyle(.roundedBorder)
         .padding()
+        .overlay {
+            LoadingView(placeholder: "Creating account", isLoading: $userSession.isLoading)
+                .frame(height: .infinity)
+        }
     }
 }
 
