@@ -21,7 +21,19 @@ class UserSession: ObservableObject {
     init() {
         currentUser = auth.currentUser
         if currentUser != nil {
-            signedIn = true
+            Task {
+                do {
+                    let userRef = firestore.collection("users").document(currentUser!.uid)
+                    let snapshot = try await userRef.getDocument()
+                    if !snapshot.exists {
+                        signedIn = false
+                        return
+                    }
+                    signedIn = true
+                } catch {
+                    print(error)
+                }
+            }
         }
     }
     
