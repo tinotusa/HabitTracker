@@ -11,21 +11,21 @@ import FirebaseAuth
 class PasswordResetViewModel: ObservableObject {
     @Published var email = ""
     @Published var didError = false
-    @Published var errorDetails: ErrorDetails?
-    private lazy var auth = Auth.auth()
-
-    struct ErrorDetails {
-        var title = ""
-        var message = ""
+    @Published var errorDetails: ErrorDetails? {
+        didSet {
+            if errorDetails != nil {
+                didError = true
+            }
+        }
     }
     
+    private lazy var auth = Auth.auth()
+
     func sendResetEmail() {
         auth.sendPasswordReset(withEmail: email) { [unowned self] error in
             if let error = error {
-                let test = error as NSError
-                didError = true
                 errorDetails = ErrorDetails(
-                    title: "",
+                    name: "Password reset error",
                     message: "\(error.localizedDescription)"
                 )
                 return
