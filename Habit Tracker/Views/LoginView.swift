@@ -90,6 +90,19 @@ struct LoginView: View {
             .fullScreenCover(isPresented: $viewModel.showPasswordResetView) {
                 PasswordResetView()
             }
+            .alert(
+                userSession.errorDetails?.name ?? "Login error",
+                isPresented: $userSession.didError,
+                presenting: userSession.errorDetails
+            ) { details in
+                Button(role: .cancel) {
+                    // nothing
+                } label: {
+                    Text("OK")
+                }
+            } message: { details in
+                Text(details.message)
+            }
         }
     }
 }

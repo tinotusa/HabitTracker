@@ -10,14 +10,29 @@ import GoogleSignIn
 import FirebaseFirestoreSwift
 import AuthenticationServices
 
+struct ErrorDetails: Identifiable {
+    let id = UUID().uuidString
+    var name: String
+    var message: String
+}
+
 class UserSession: ObservableObject {
     @Published var signedIn = false
     @Published var currentUser: Firebase.User? = nil
     @Published var isLoading = false
+    @Published var didError = false
+    @Published var errorDetails: ErrorDetails? {
+        didSet {
+            if errorDetails != nil{
+                didError = true
+            }
+        }
+    }
     
     private lazy var auth = Auth.auth()
     private lazy var firestore = Firestore.firestore()
     
+    @MainActor
     init() {
         currentUser = auth.currentUser
         if currentUser != nil {
@@ -32,6 +47,7 @@ class UserSession: ObservableObject {
                     signedIn = true
                 } catch {
                     print(error)
+                    errorDetails = ErrorDetails(name: "", message: error.localizedDescription)
                 }
             }
         }
@@ -47,13 +63,15 @@ class UserSession: ObservableObject {
         defer {
             isLoading = false
         }
-        auth.signIn(withEmail: email, password: password) { authResult, error in
+        auth.signIn(withEmail: email, password: password) { [unowned self] authResult, error in
             if error != nil {
                 print("Error signing in with email: \(email)\n\(error?.localizedDescription ?? "")")
+                errorDetails = ErrorDetails(name: "Login error", message: "\(error?.localizedDescription ?? "")")
                 return
             }
             guard let authResult = authResult else {
                 print("Error failed to get auth result with email: \(email)")
+                errorDetails = ErrorDetails(name: "Authentication Error", message: "Failed to get authentication results from email: \(email)")
                 return
             }
             self.currentUser = authResult.user
@@ -67,15 +85,17 @@ class UserSession: ObservableObject {
         let config = GIDConfiguration(clientID: clientID)
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
         guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
-        GIDSignIn.sharedInstance.signIn(with: config, presenting: rootViewController) { user, error in
+        GIDSignIn.sharedInstance.signIn(with: config, presenting: rootViewController) { [unowned self] user, error in
             if let error = error {
                 print("Error: \(error)")
+                errorDetails = ErrorDetails(name: "Google login error", message: "\(error.localizedDescription)")
                 return
             }
             guard
                 let auth = user?.authentication,
                 let idToken = auth.idToken
             else {
+                errorDetails = ErrorDetails(name: "Authentication error", message: "Failed to get user ID token.")
                 return
             }
             let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: auth.accessToken)
@@ -97,6 +117,8 @@ class UserSession: ObservableObject {
                     }
                 } catch {
                     print(error)
+                    errorDetails = ErrorDetails(name: "Google login error", message: "\(error.localizedDescription)")
+                    
                 }
                 self.currentUser = authResult.user
                 self.signedIn = true
@@ -112,14 +134,18 @@ class UserSession: ObservableObject {
         }
         guard let appleIDCredential = auth.credential as? ASAuthorizationAppleIDCredential else {
             print("Failed to get apple ID credential")
+            errorDetails = ErrorDetails(name: "Authentication error", message: "Failed to get apple ID credential.")
+            
             return
         }
         guard let appleIDToken = appleIDCredential.identityToken else {
             print("Unable to get identity token")
+            errorDetails = ErrorDetails(name: "Authentication error", message: "Failed to get identity token.")
             return
         }
         guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
             print("Unable to get token string from data: \(appleIDToken.debugDescription)")
+            errorDetails = ErrorDetails(name: "Authentication error", message: "Failed to get token.")
             return
         }
         let credential = OAuthProvider.credential(
@@ -147,8 +173,9 @@ class UserSession: ObservableObject {
             }
             self.currentUser = authResult.user
             self.signedIn = true
-        } catch {
+        } catch let error as NSError {
             print(error)
+            errorDetails = ErrorDetails(name: "Authentication error", message: "\(error.localizedDescription)")
         }
     }
     
@@ -166,6 +193,7 @@ class UserSession: ObservableObject {
             try auth.signOut()
         } catch {
             print("Error in \(#function)\n\(error.localizedDescription)")
+            errorDetails = ErrorDetails(name: "Sign out error", message: "\(error.localizedDescription)")
         }
     }
     
