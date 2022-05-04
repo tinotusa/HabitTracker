@@ -21,53 +21,68 @@ struct SignUpView: View {
     @State private var user: FirebaseUser?
     
     var body: some View {
-        VStack {
-            Text("Sign up view")
-            Group {
-                TextField("First name", text: $firstName, prompt: Text("First name"))
-                    .textContentType(.givenName)
-                TextField("First name", text: $lastName, prompt: Text("Last name"))
-                    .textContentType(.familyName)
-            }
-    
-            Group {
-                TextField("Email", text: $email, prompt: Text("Email"))
-                    .textContentType(.emailAddress)
-                TextField("Email", text: $emailConfirmation, prompt: Text("Email confirmation"))
-                    .textContentType(.emailAddress)
-            }
-            
-            Group {
-                TextField("Password", text: $password, prompt: Text("Password"))
-                    .textContentType(.password)
-                TextField("Password", text: $passwordConfirmation, prompt: Text("Password confirmation"))
-                    .textContentType(.password)
-            }
-            
-            DatePicker("Birthday", selection: $birthday, in: ...Date(), displayedComponents: [.date])
-            
-            HStack {
-                Button("Create Account") {
-                    user = FirebaseUser(
-                        firstName: firstName,
-                        lastName: lastName,
-                        email: email,
-                        birthday: birthday
-                    )
-                    userSession.createAccount(withEmail: email, password: password, user: user)
+        GeometryReader { proxy in
+            VStack {
+                Text("Sign up view")
+                Group {
+                    TextField("First name", text: $firstName, prompt: Text("First name"))
+                        .textContentType(.givenName)
+                    TextField("First name", text: $lastName, prompt: Text("Last name"))
+                        .textContentType(.familyName)
                 }
-                Button("Back") {
-                    dismiss()
+                
+                Group {
+                    TextField("Email", text: $email, prompt: Text("Email"))
+                        .textContentType(.emailAddress)
+                    TextField("Email", text: $emailConfirmation, prompt: Text("Email confirmation"))
+                        .textContentType(.emailAddress)
                 }
+                
+                Group {
+                    TextField("Password", text: $password, prompt: Text("Password"))
+                        .textContentType(.password)
+                    TextField("Password", text: $passwordConfirmation, prompt: Text("Password confirmation"))
+                        .textContentType(.password)
+                }
+                
+                DatePicker("Birthday", selection: $birthday, in: ...Date(), displayedComponents: [.date])
+                
+                HStack {
+                    Button("Create Account") {
+                        user = FirebaseUser(
+                            firstName: firstName,
+                            lastName: lastName,
+                            email: email,
+                            birthday: birthday
+                        )
+                        userSession.createAccount(withEmail: email, password: password, user: user)
+                    }
+                    Button("Back") {
+                        dismiss()
+                    }
+                }
+                .buttonStyle(.borderedProminent)
             }
-            .buttonStyle(.borderedProminent)
-        }
-        .disabled(userSession.isLoading)
-        .textFieldStyle(.roundedBorder)
-        .padding()
-        .overlay {
-            LoadingView(placeholder: "Creating account", isLoading: $userSession.isLoading)
-                .frame(height: .infinity)
+            .disabled(userSession.isLoading)
+            .textFieldStyle(.roundedBorder)
+            .padding()
+            .overlay {
+                LoadingView(placeholder: "Creating account", isLoading: $userSession.isLoading)
+                    .frame(height: proxy.size.height)
+            }
+            .alert(
+                userSession.errorDetails?.name ?? "Error",
+                isPresented: $userSession.didError,
+                presenting: userSession.errorDetails
+            ) { _ in
+                Button(role: .cancel) {
+                    // nothing
+                } label: {
+                    Text("OK")
+                }
+            } message: { detail in
+                Text(detail.message)
+            }
         }
     }
 }

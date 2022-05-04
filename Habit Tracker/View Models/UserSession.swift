@@ -32,7 +32,6 @@ class UserSession: ObservableObject {
     private lazy var auth = Auth.auth()
     private lazy var firestore = Firestore.firestore()
     
-    @MainActor
     init() {
         currentUser = auth.currentUser
         if currentUser != nil {
@@ -47,7 +46,7 @@ class UserSession: ObservableObject {
                     signedIn = true
                 } catch {
                     print(error)
-                    errorDetails = ErrorDetails(name: "", message: error.localizedDescription)
+                    errorDetails = ErrorDetails(name: "Login error", message: error.localizedDescription)
                 }
             }
         }
@@ -203,17 +202,21 @@ class UserSession: ObservableObject {
         defer {
             isLoading = false
         }
-        auth.createUser(withEmail: email, password: password) { authResult, error in
-            if error != nil {
-                print("Error failed to create user with email: \(email)\n\(error?.localizedDescription ?? "")")
+        auth.createUser(withEmail: email, password: password) { [unowned self] authResult, error in
+            if let error = error {
+                print("Error failed to create user with email: \(email)\n\(error.localizedDescription)")
+                errorDetails = ErrorDetails(
+                    name: "Account error",
+                    message: error.localizedDescription
+                )
                 return
             }
             guard let authResult = authResult else {
-                print("Error failed to get auth data result from create user \(#function)")
+                print("Error in \(#function): failed to get auth data result from create user")
                 return
             }
             guard let firebaseUser = user else {
-                print("Error user struct is nil\(#function)")
+                print("Error in \(#function): user struct is nil")
                 return
             }
             
@@ -222,6 +225,10 @@ class UserSession: ObservableObject {
                 try userRef.setData(from: firebaseUser)
             } catch {
                 print("Error in \(#function)\n\(error)")
+                errorDetails = ErrorDetails(
+                    name: "Account error",
+                    message: error.localizedDescription
+                )
                 return
             }
 
