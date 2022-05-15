@@ -28,6 +28,8 @@
 		21B6289A280ADA7F00E3FC49 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B62899280ADA7F00E3FC49 /* UserSession.swift */; };
 		21B6289C280ADD9400E3FC49 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6289B280ADD9400E3FC49 /* SignUpView.swift */; };
 		21B6289E280AE09A00E3FC49 /* FirebaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6289D280AE09900E3FC49 /* FirebaseUser.swift */; };
+		21DDF03B2831224A00FE8DAC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03A2831224A00FE8DAC /* LoadingView.swift */; };
+		21DDF03D283122AD00FE8DAC /* ErrorDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,8 +50,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoogleSignInButton.swift; path = "Habit Tracker/Views/GoogleSignInButton.swift"; sourceTree = SOURCE_ROOT; };
-		214F41CA2821417A00A9D696 /* PasswordResetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasswordResetView.swift; path = "Habit Tracker/Views/PasswordResetView.swift"; sourceTree = SOURCE_ROOT; };
+		214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoogleSignInButton.swift; path = "Habit Tracker/Views/Login/GoogleSignInButton.swift"; sourceTree = SOURCE_ROOT; };
+		214F41CA2821417A00A9D696 /* PasswordResetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasswordResetView.swift; path = "Habit Tracker/Views/Login/PasswordResetView.swift"; sourceTree = SOURCE_ROOT; };
 		2169E266282115EA00E46AF8 /* Habit Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Habit Tracker.entitlements"; sourceTree = "<group>"; };
 		21AC33D52821494800A79F7B /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		21B6285B280AC4B800E3FC49 /* Habit Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +70,8 @@
 		21B62899280ADA7F00E3FC49 /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		21B6289B280ADD9400E3FC49 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		21B6289D280AE09900E3FC49 /* FirebaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUser.swift; sourceTree = "<group>"; };
+		21DDF03A2831224A00FE8DAC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				21B6289D280AE09900E3FC49 /* FirebaseUser.swift */,
+				21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -182,13 +187,22 @@
 		21B62896280AD1D600E3FC49 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				21DDF0392831220D00FE8DAC /* Login */,
+				21B62860280AC4B900E3FC49 /* ContentView.swift */,
+				21DDF03A2831224A00FE8DAC /* LoadingView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		21DDF0392831220D00FE8DAC /* Login */ = {
+			isa = PBXGroup;
+			children = (
 				214F41CA2821417A00A9D696 /* PasswordResetView.swift */,
 				214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */,
-				21B62860280AC4B900E3FC49 /* ContentView.swift */,
 				21B62897280AD1E300E3FC49 /* LoginView.swift */,
 				21B6289B280ADD9400E3FC49 /* SignUpView.swift */,
 			);
-			path = Views;
+			path = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -337,11 +351,13 @@
 				21B62898280AD1E300E3FC49 /* LoginView.swift in Sources */,
 				21B6289C280ADD9400E3FC49 /* SignUpView.swift in Sources */,
 				21B62861280AC4B900E3FC49 /* ContentView.swift in Sources */,
+				21DDF03B2831224A00FE8DAC /* LoadingView.swift in Sources */,
 				214F41CB2821417A00A9D696 /* PasswordResetView.swift in Sources */,
 				21B6285F280AC4B900E3FC49 /* Habit_TrackerApp.swift in Sources */,
 				21B6289A280ADA7F00E3FC49 /* UserSession.swift in Sources */,
 				21B6289E280AE09A00E3FC49 /* FirebaseUser.swift in Sources */,
 				214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */,
+				21DDF03D283122AD00FE8DAC /* ErrorDetails.swift in Sources */,
 				21AC33D62821494800A79F7B /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

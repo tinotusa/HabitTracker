@@ -12,30 +12,6 @@ import AuthenticationServices
 import GoogleSignIn
 import Firebase 
 
-struct LoadingView: View {
-    let placeholder: String
-    @Binding var isLoading: Bool
-    
-    var body: some View {
-        if isLoading {
-            ZStack {
-                Color(.black)
-                    .opacity(0.75)
-                    .ignoresSafeArea()
-                VStack {
-                    Text(placeholder)
-                        .font(.title2)
-                        .foregroundColor(.white)
-                    ProgressView()
-                        .tint(.white)
-                }
-            }
-        } else {
-            EmptyView()
-        }
-    }
-}
-
 struct LoginView: View {
     @EnvironmentObject var userSession: UserSession
     @StateObject var viewModel = LoginViewModel()
@@ -123,11 +99,7 @@ struct LoginView: View {
                 isPresented: $userSession.didError,
                 presenting: userSession.errorDetails
             ) { details in
-                Button(role: .cancel) {
-                    // nothing
-                } label: {
-                    Text("OK")
-                }
+                // default ok button
             } message: { details in
                 Text(details.message)
             }

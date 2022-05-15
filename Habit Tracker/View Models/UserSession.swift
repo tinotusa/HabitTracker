@@ -10,12 +10,6 @@ import GoogleSignIn
 import FirebaseFirestoreSwift
 import AuthenticationServices
 
-struct ErrorDetails: Identifiable {
-    let id = UUID().uuidString
-    var name: String
-    var message: String
-}
-
 class UserSession: ObservableObject {
     @Published var signedIn = false
     @Published var currentUser: Firebase.User? = nil
@@ -40,10 +34,14 @@ class UserSession: ObservableObject {
                     let userRef = firestore.collection("users").document(currentUser!.uid)
                     let snapshot = try await userRef.getDocument()
                     if !snapshot.exists {
-                        signedIn = false
+                        DispatchQueue.main.async {
+                            self.signedIn = false
+                        }
                         return
                     }
-                    signedIn = true
+                    DispatchQueue.main.async {
+                        self.signedIn = true
+                    }
                 } catch {
                     print(error)
                     errorDetails = ErrorDetails(name: "Login error", message: error.localizedDescription)
