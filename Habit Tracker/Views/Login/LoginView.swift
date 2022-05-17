@@ -6,63 +6,45 @@
 //
 
 import SwiftUI
-import FirebaseAuth
-import FirebaseFirestore
 import AuthenticationServices
 import GoogleSignIn
-import Firebase 
 
 struct LoginView: View {
     @EnvironmentObject var userSession: UserSession
     @StateObject var viewModel = LoginViewModel()
     @Environment(\.colorScheme) var colorScheme
+    enum Field: Hashable {
+        case username
+        case password
+    }
+    @FocusState var field: Field?
     
     var body: some View {
         GeometryReader { proxy in
             ScrollView(showsIndicators: false) {
                 VStack {
                     Text("Login view")
-                    // sign in with apple
-                    SignInWithAppleButton(.signIn) { request in
-                        request.requestedScopes = [.fullName, .email]
-                    } onCompletion: { result in
-                        switch result {
-                        case .success(let auth):
-                            Task {
-                                await userSession.appleLogin(with: auth)
-                            }
-                        case .failure(let error):
-                            print(error)
-                        }
-                    }
-                    .signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black)
-                    .frame(maxHeight: 60)
                     
-                    // sign in with google
-                    GoogleSignInButton()
-                        .onTapGesture {
-                            Task {
-                                await userSession.googleLogin()
-                            }
-                        }
-                        .frame(maxHeight: 60)
+                    signInWithAppleButton
                     
-                    // -- or --
-                    HStack {
-                        VStack {
-                            Divider()
-                        }
-                        Text("or")
-                            .foregroundColor(.secondary)
-                        VStack {
-                            Divider()
-                        }
-                    }
+                    signInWithGoogleButton
+                    
+                    horizontalDivider
                     
                     TextField("Email", text: $viewModel.email, prompt: Text("Email"))
                         .textContentType(.emailAddress)
-                    TextField("Password", text: $viewModel.password, prompt: Text("Password"))
+                        .focused($field, equals: .username)
+                        .submitLabel(.next)
+                        .onSubmit {
+                            field = .password
+                        }
+                    SecureField("Password", text: $viewModel.password, prompt: Text("Password"))
                         .textContentType(.password)
+                        .focused($field, equals: .password)
+                        .submitLabel(.done)
+                        .onSubmit {
+                            signIn()
+                        }
                     Button {
                         viewModel.showPasswordResetView = true
                     } label: {
@@ -70,7 +52,7 @@ struct LoginView: View {
                             .font(.subheadline)
                     }
                     Button("Login") {
-                        userSession.signIn(withEmail: viewModel.email, password: viewModel.password)
+                        signIn()
                     }
                     .buttonStyle(.borderedProminent)
                     .disabled(!viewModel.allFieldsFilled)
@@ -95,6 +77,28 @@ struct LoginView: View {
             .fullScreenCover(isPresented: $viewModel.showPasswordResetView) {
                 PasswordResetView()
             }
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    // up arrow
+                    Button {
+                        switch field {
+                        case .password: field = .username
+                        default: break
+                        }
+                    } label: {
+                        Image(systemName: "chevron.up")
+                    }
+                    // down arrow
+                    Button {
+                        switch field {
+                        case .username: field = .password
+                        default: break
+                        }
+                    } label: {
+                        Image(systemName: "chevron.down")
+                    }
+                }
+            }
             .alert(
                 userSession.errorDetails?.name ?? "Login error",
                 isPresented: $userSession.didError,
@@ -103,6 +107,53 @@ struct LoginView: View {
                 // default ok button
             } message: { details in
                 Text(details.message)
+            }
+        }
+    }
+}
+
+// MARK: Functions and subviews
+private extension LoginView {
+    func signIn() {
+        userSession.signIn(withEmail: viewModel.email, password: viewModel.password)
+    }
+    
+    var signInWithAppleButton: some View {
+        SignInWithAppleButton(.signIn) { request in
+            request.requestedScopes = [.fullName, .email]
+        } onCompletion: { result in
+            switch result {
+            case .success(let auth):
+                Task {
+                    await userSession.appleLogin(with: auth)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+        .signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black)
+        .frame(maxHeight: 60)
+    }
+    
+    var signInWithGoogleButton: some View {
+        GoogleSignInButton()
+            .onTapGesture {
+                Task {
+                    await userSession.googleLogin()
+                }
+            }
+            .frame(maxHeight: 60)
+    }
+    
+    var horizontalDivider: some View {
+        HStack {
+            VStack {
+                Divider()
+            }
+            Text("or")
+                .foregroundColor(.secondary)
+            VStack {
+                Divider()
             }
         }
     }
