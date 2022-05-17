@@ -12,4 +12,10 @@ class LoginViewModel: ObservableObject {
     @Published var password = "123456"
     @Published var showSignUpView = false
     @Published var showPasswordResetView = false
+    
+    var allFieldsFilled: Bool {
+        let email = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        let password = password.trimmingCharacters(in: .whitespacesAndNewlines)
+        return !email.isEmpty && !password.isEmpty
+    }
 }

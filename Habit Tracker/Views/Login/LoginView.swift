@@ -73,6 +73,7 @@ struct LoginView: View {
                         userSession.signIn(withEmail: viewModel.email, password: viewModel.password)
                     }
                     .buttonStyle(.borderedProminent)
+                    .disabled(!viewModel.allFieldsFilled)
                     
                     Button("Sign up") {
                         viewModel.showSignUpView = true
