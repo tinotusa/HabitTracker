@@ -5,81 +5,65 @@
 //  Created by Tino on 16/4/2022.
 //
 
-import Foundation
 import SwiftUI
 
 struct SignUpView: View {
     @EnvironmentObject var userSession: UserSession
     @Environment(\.dismiss) var dismiss
-    @State private var email = ""
-    @State private var emailConfirmation = ""
-    @State private var password = ""
-    @State private var passwordConfirmation = ""
-    @State private var birthday = Date()
-    @State private var firstName = ""
-    @State private var lastName = ""
-    @State private var user: FirebaseUser?
+    @StateObject var viewModel = SignUpViewModel()
     
     var body: some View {
         GeometryReader { proxy in
             VStack {
                 Text("Sign up view")
                 Group {
-                    TextField("First name", text: $firstName, prompt: Text("First name"))
+                    TextField("First name", text: $viewModel.firstName, prompt: Text("First name"))
                         .textContentType(.givenName)
-                    TextField("First name", text: $lastName, prompt: Text("Last name"))
+                    TextField("First name", text: $viewModel.lastName, prompt: Text("Last name"))
                         .textContentType(.familyName)
                 }
                 
                 Group {
-                    TextField("Email", text: $email, prompt: Text("Email"))
+                    TextField("Email", text: $viewModel.email, prompt: Text("Email"))
                         .textContentType(.emailAddress)
-                    TextField("Email", text: $emailConfirmation, prompt: Text("Email confirmation"))
+                    TextField("Email", text: $viewModel.emailConfirmation, prompt: Text("Email confirmation"))
                         .textContentType(.emailAddress)
                 }
                 
                 Group {
-                    TextField("Password", text: $password, prompt: Text("Password"))
+                    SecureField("Password", text: $viewModel.password, prompt: Text("Password"))
                         .textContentType(.password)
-                    TextField("Password", text: $passwordConfirmation, prompt: Text("Password confirmation"))
+                    SecureField("Password Confirmation", text: $viewModel.passwordConfirmation, prompt: Text("Password confirmation"))
                         .textContentType(.password)
                 }
                 
-                DatePicker("Birthday", selection: $birthday, in: ...Date(), displayedComponents: [.date])
+                DatePicker("Birthday", selection: $viewModel.birthday, in: ...Date(), displayedComponents: [.date])
                 
                 HStack {
                     Button("Create Account") {
-                        user = FirebaseUser(
-                            firstName: firstName,
-                            lastName: lastName,
-                            email: email,
-                            birthday: birthday
-                        )
-                        userSession.createAccount(withEmail: email, password: password, user: user)
+                        viewModel.createAccount(session: userSession)
                     }
+                    .disabled(!viewModel.allFieldsFilled)
+                    
                     Button("Back") {
                         dismiss()
                     }
                 }
                 .buttonStyle(.borderedProminent)
             }
-            .disabled(userSession.isLoading)
+            .disabled(viewModel.isLoading)
             .textFieldStyle(.roundedBorder)
             .padding()
             .overlay {
-                LoadingView(placeholder: "Creating account", isLoading: $userSession.isLoading)
+                LoadingView(placeholder: "Creating account", isLoading: $viewModel.isLoading)
                     .frame(height: proxy.size.height)
             }
             .alert(
-                userSession.errorDetails?.name ?? "Error",
-                isPresented: $userSession.didError,
-                presenting: userSession.errorDetails
+                viewModel.errorDetails?.name ?? "Error",
+                isPresented: $viewModel.didError,
+                presenting: viewModel.errorDetails
             ) { _ in
-                Button(role: .cancel) {
-                    // nothing
-                } label: {
-                    Text("OK")
-                }
+                // default ok button
             } message: { detail in
                 Text(detail.message)
             }

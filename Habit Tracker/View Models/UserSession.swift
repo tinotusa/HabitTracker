@@ -193,45 +193,4 @@ class UserSession: ObservableObject {
             errorDetails = ErrorDetails(name: "Sign out error", message: "\(error.localizedDescription)")
         }
     }
-    
-    @MainActor
-    func createAccount(withEmail email: String, password: String, user: FirebaseUser?) {
-        isLoading = true
-        defer {
-            isLoading = false
-        }
-        auth.createUser(withEmail: email, password: password) { [unowned self] authResult, error in
-            if let error = error {
-                print("Error failed to create user with email: \(email)\n\(error.localizedDescription)")
-                errorDetails = ErrorDetails(
-                    name: "Account error",
-                    message: error.localizedDescription
-                )
-                return
-            }
-            guard let authResult = authResult else {
-                print("Error in \(#function): failed to get auth data result from create user")
-                return
-            }
-            guard let firebaseUser = user else {
-                print("Error in \(#function): user struct is nil")
-                return
-            }
-            
-            let userRef = self.firestore.collection("users").document(authResult.user.uid)
-            do {
-                try userRef.setData(from: firebaseUser)
-            } catch {
-                print("Error in \(#function)\n\(error)")
-                errorDetails = ErrorDetails(
-                    name: "Account error",
-                    message: error.localizedDescription
-                )
-                return
-            }
-
-            self.currentUser = authResult.user
-            self.signedIn = true
-        }
-    }
 }

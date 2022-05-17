@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		213C5CC42833A56700ACB95F /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213C5CC32833A56700ACB95F /* SignUpViewModel.swift */; };
 		214F41C328212BDE00A9D696 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 214F41C228212BDE00A9D696 /* GoogleSignIn */; };
 		214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */; };
 		214F41CB2821417A00A9D696 /* PasswordResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F41CA2821417A00A9D696 /* PasswordResetView.swift */; };
@@ -50,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		213C5CC32833A56700ACB95F /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoogleSignInButton.swift; path = "Habit Tracker/Views/Login/GoogleSignInButton.swift"; sourceTree = SOURCE_ROOT; };
 		214F41CA2821417A00A9D696 /* PasswordResetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasswordResetView.swift; path = "Habit Tracker/Views/Login/PasswordResetView.swift"; sourceTree = SOURCE_ROOT; };
 		2169E266282115EA00E46AF8 /* Habit Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Habit Tracker.entitlements"; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 			children = (
 				21B62899280ADA7F00E3FC49 /* UserSession.swift */,
 				21AC33D52821494800A79F7B /* LoginViewModel.swift */,
+				213C5CC32833A56700ACB95F /* SignUpViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				21B6289E280AE09A00E3FC49 /* FirebaseUser.swift in Sources */,
 				214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */,
 				21DDF03D283122AD00FE8DAC /* ErrorDetails.swift in Sources */,
+				213C5CC42833A56700ACB95F /* SignUpViewModel.swift in Sources */,
 				21AC33D62821494800A79F7B /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
