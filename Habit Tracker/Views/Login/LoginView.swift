@@ -13,11 +13,11 @@ struct LoginView: View {
     @EnvironmentObject var userSession: UserSession
     @StateObject var viewModel = LoginViewModel()
     @Environment(\.colorScheme) var colorScheme
-    enum Field: Hashable {
+    enum InputField: Hashable {
         case username
         case password
     }
-    @FocusState var field: Field?
+    @FocusState var field: InputField?
     
     var body: some View {
         GeometryReader { proxy in
@@ -88,6 +88,7 @@ struct LoginView: View {
                     } label: {
                         Image(systemName: "chevron.up")
                     }
+                    .disabled(field == .username)
                     // down arrow
                     Button {
                         switch field {
@@ -97,6 +98,11 @@ struct LoginView: View {
                     } label: {
                         Image(systemName: "chevron.down")
                     }
+                    .disabled(field == .password)
+                    Button("Done") {
+                        signIn()
+                    }
+                    .disabled(!viewModel.allFieldsFilled)
                 }
             }
             .alert(
@@ -145,6 +151,7 @@ private extension LoginView {
             .frame(maxHeight: 60)
     }
     
+    // TODO: Make a line shape ??
     var horizontalDivider: some View {
         HStack {
             VStack {
