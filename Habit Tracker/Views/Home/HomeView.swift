@@ -11,7 +11,13 @@ struct HomeView: View {
     @EnvironmentObject var userSession: UserSession
     
     var body: some View {
-        Text("home")
+        VStack {
+            Text("home")
+            Button("Logout") {
+                userSession.signOut()
+                print("logged out")
+            }
+        }
     }
 }
 
