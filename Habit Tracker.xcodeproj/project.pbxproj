@@ -29,6 +29,7 @@
 		21B6289A280ADA7F00E3FC49 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B62899280ADA7F00E3FC49 /* UserSession.swift */; };
 		21B6289C280ADD9400E3FC49 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6289B280ADD9400E3FC49 /* SignUpView.swift */; };
 		21B6289E280AE09A00E3FC49 /* FirebaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6289D280AE09900E3FC49 /* FirebaseUser.swift */; };
+		21DA7F73283B526900E43E4C /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21DA7F72283B526900E43E4C /* AuthenticationServices.framework */; };
 		21DDF03B2831224A00FE8DAC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03A2831224A00FE8DAC /* LoadingView.swift */; };
 		21DDF03D283122AD00FE8DAC /* ErrorDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */; };
 /* End PBXBuildFile section */
@@ -72,6 +73,7 @@
 		21B62899280ADA7F00E3FC49 /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		21B6289B280ADD9400E3FC49 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		21B6289D280AE09900E3FC49 /* FirebaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUser.swift; sourceTree = "<group>"; };
+		21DA7F72283B526900E43E4C /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		21DDF03A2831224A00FE8DAC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,6 +84,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21B6288C280AC89C00E3FC49 /* FirebaseAuth in Frameworks */,
+				21DA7F73283B526900E43E4C /* AuthenticationServices.framework in Frameworks */,
 				21B6288E280AC89C00E3FC49 /* FirebaseFirestore in Frameworks */,
 				21B62894280AC89C00E3FC49 /* FirebaseMessaging in Frameworks */,
 				21B62890280AC89C00E3FC49 /* FirebaseFirestoreSwift in Frameworks */,
@@ -133,6 +136,7 @@
 				21B6286E280AC4BB00E3FC49 /* Habit TrackerTests */,
 				21B62878280AC4BB00E3FC49 /* Habit TrackerUITests */,
 				21B6285C280AC4B800E3FC49 /* Products */,
+				21DA7F71283B526900E43E4C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -195,6 +199,14 @@
 				21DDF03A2831224A00FE8DAC /* LoadingView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		21DA7F71283B526900E43E4C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				21DA7F72283B526900E43E4C /* AuthenticationServices.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		21DDF0392831220D00FE8DAC /* Login */ = {

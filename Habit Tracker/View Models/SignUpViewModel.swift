@@ -9,15 +9,25 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class SignUpViewModel: ObservableObject {
+    /// The users email.
     @Published var email = ""
+    /// The users email confirmation.
     @Published var emailConfirmation = ""
+    /// The users password.
     @Published var password = ""
+    /// The users password confirmation.
     @Published var passwordConfirmation = ""
+    /// The users birthday.
     @Published var birthday = Date()
+    /// The users first name.
     @Published var firstName = ""
+    /// The users last name.
     @Published var lastName = ""
+    /// Value to indicate when some action is loading.
     @Published var isLoading = false
+    /// Value to indicate when something errors.
     @Published var didError = false
+    /// The information about the error.
     @Published var errorDetails: ErrorDetails? {
         didSet {
             didError = true
@@ -26,6 +36,7 @@ class SignUpViewModel: ObservableObject {
     private let auth = Auth.auth()
     private var firestore = Firestore.firestore()
     
+    /// A boolean value indicating whether the input fields have some text.
     var allFieldsFilled: Bool {
         let email = email.trimmingCharacters(in: .whitespacesAndNewlines)
         let emailConfirmation = emailConfirmation.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -41,6 +52,7 @@ class SignUpViewModel: ObservableObject {
     }
     
     @MainActor
+    /// Creates a new account with the given information(name, email, password, etc).
     func createAccount(session: UserSession) {
         assert(allFieldsFilled, "All input fields must be filled")
         isLoading = true
@@ -98,6 +110,50 @@ class SignUpViewModel: ObservableObject {
 
             session.currentUser = authResult.user
             session.signedIn = true
+        }
+    }
+
+}
+
+// MARK: - InputField extesion
+extension SignUpViewModel {
+    /// Represents the input fields for the sign up view.
+    enum InputField: Hashable {
+        /// test
+        case firstName, lastName, email, emailConfirmation, password, passwordConfirmation
+        
+        /// Returns the next field or returns nil if it is currently the last field.
+        func nextField() -> InputField? {
+            switch self {
+            case .firstName: return .lastName
+            case .lastName: return .email
+            case .email: return .emailConfirmation
+            case .emailConfirmation: return .password
+            case .password: return .passwordConfirmation
+            case .passwordConfirmation: return nil
+            }
+        }
+        
+        /// Returns the previous field or returns nil if it is currently the first field.
+        func previousField() -> InputField? {
+            switch self {
+            case .firstName: return nil
+            case .lastName: return .firstName
+            case .email: return .lastName
+            case .emailConfirmation: return .email
+            case .password: return .emailConfirmation
+            case .passwordConfirmation: return .password
+            }
+        }
+        
+        /// Returns true if the current field is the first case (`firstName`).
+        var isFirstField: Bool {
+            self == .firstName
+        }
+        
+        /// Returns true if the current field is the last case (`lastName`).
+        var isLastField: Bool {
+            self == .passwordConfirmation
         }
     }
 }
