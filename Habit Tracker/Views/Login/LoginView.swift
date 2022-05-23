@@ -18,103 +18,112 @@ struct LoginView: View {
         case password
     }
     @FocusState var field: InputField?
-    
+    @State private var showSignUpView = false
     var body: some View {
-        GeometryReader { proxy in
-            ScrollView(showsIndicators: false) {
-                VStack {
-                    Text("Login view")
-                    
-                    signInWithAppleButton
-                    
-                    signInWithGoogleButton
-                    
-                    horizontalDivider
-                    
-                    TextField("Email", text: $viewModel.email, prompt: Text("Email"))
-                        .textContentType(.emailAddress)
-                        .focused($field, equals: .username)
-                        .submitLabel(.next)
-                        .onSubmit {
-                            field = .password
+        NavigationView {
+            GeometryReader { proxy in
+                ScrollView(showsIndicators: false) {
+                    VStack {
+                        Text("Login view")
+                        
+                        signInWithAppleButton
+                        
+                        signInWithGoogleButton
+                        
+                        horizontalDivider
+                        
+                        NavigationLink(isActive: $viewModel.showSignUpView) {
+                            SignUpView()
+                        } label: {
+                            EmptyView()
                         }
-                    SecureField("Password", text: $viewModel.password, prompt: Text("Password"))
-                        .textContentType(.password)
-                        .focused($field, equals: .password)
-                        .submitLabel(.done)
-                        .onSubmit {
+                        
+                        TextField("Email", text: $viewModel.email, prompt: Text("Email"))
+                            .textContentType(.emailAddress)
+                            .focused($field, equals: .username)
+                            .submitLabel(.next)
+                            .onSubmit {
+                                field = .password
+                            }
+                        SecureField("Password", text: $viewModel.password, prompt: Text("Password"))
+                            .textContentType(.password)
+                            .focused($field, equals: .password)
+                            .submitLabel(.done)
+                            .onSubmit {
+                                signIn()
+                            }
+                        Button {
+                            viewModel.showPasswordResetView = true
+                        } label: {
+                            Text("Forgot email or password?")
+                                .font(.subheadline)
+                        }
+                        Button("Login") {
                             signIn()
                         }
-                    Button {
-                        viewModel.showPasswordResetView = true
-                    } label: {
-                        Text("Forgot email or password?")
-                            .font(.subheadline)
+                        .buttonStyle(.borderedProminent)
+                        .disabled(!viewModel.allFieldsFilled)
+                        
+                        Button("Sign up") {
+                            viewModel.showSignUpView = true
+                        }
+                        .buttonStyle(.borderedProminent)
                     }
-                    Button("Login") {
-                        signIn()
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(!viewModel.allFieldsFilled)
-                    
-                    Button("Sign up") {
-                        viewModel.showSignUpView = true
-                    }
-                    .buttonStyle(.borderedProminent)
+                    .disabled(userSession.isLoading)
+                    .textFieldStyle(.roundedBorder)
+                    .padding()
+                    .frame(width: proxy.size.width)
+                    .frame(minHeight: proxy.size.height)
                 }
-                .disabled(userSession.isLoading)
-                .textFieldStyle(.roundedBorder)
-                .padding()
-                .frame(width: proxy.size.width)
-                .frame(minHeight: proxy.size.height)
-            }
-            .overlay {
-                LoadingView(placeholder: "Logging in", isLoading: $userSession.isLoading)
-            }
-            .fullScreenCover(isPresented: $viewModel.showSignUpView) {
-                SignUpView()
-            }
-            .fullScreenCover(isPresented: $viewModel.showPasswordResetView) {
-                PasswordResetView()
-            }
-            .toolbar {
-                ToolbarItemGroup(placement: .keyboard) {
-                    // up arrow
-                    Button {
-                        switch field {
-                        case .password: field = .username
-                        default: break
+                .overlay {
+                    LoadingView(placeholder: "Logging in", isLoading: $userSession.isLoading)
+                }
+                .fullScreenCover(isPresented: $viewModel.showPasswordResetView) {
+                    PasswordResetView()
+                }
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        // up arrow
+                        Button {
+                            switch field {
+                            case .password: field = .username
+                            default: break
+                            }
+                        } label: {
+                            Image(systemName: "chevron.up")
                         }
-                    } label: {
-                        Image(systemName: "chevron.up")
-                    }
-                    .disabled(field == .username)
-                    // down arrow
-                    Button {
-                        switch field {
-                        case .username: field = .password
-                        default: break
+                        .disabled(field == .username)
+                        // down arrow
+                        Button {
+                            switch field {
+                            case .username: field = .password
+                            default: break
+                            }
+                        } label: {
+                            Image(systemName: "chevron.down")
                         }
-                    } label: {
-                        Image(systemName: "chevron.down")
+                        .disabled(field == .password)
+                        Button("Done") {
+                            signIn()
+                        }
+                        .disabled(!viewModel.allFieldsFilled)
                     }
-                    .disabled(field == .password)
-                    Button("Done") {
-                        signIn()
-                    }
-                    .disabled(!viewModel.allFieldsFilled)
+                }
+                .alert(
+                    userSession.errorDetails?.name ?? "Login error",
+                    isPresented: $userSession.didError,
+                    presenting: userSession.errorDetails
+                ) { details in
+                    // default ok button
+                } message: { details in
+                    Text(details.message)
                 }
             }
-            .alert(
-                userSession.errorDetails?.name ?? "Login error",
-                isPresented: $userSession.didError,
-                presenting: userSession.errorDetails
-            ) { details in
-                // default ok button
-            } message: { details in
-                Text(details.message)
-            }
+            .navigationViewStyle(.stack)
+            .navigationBarHidden(true)
         }
+        
+        
     }
 }
 
