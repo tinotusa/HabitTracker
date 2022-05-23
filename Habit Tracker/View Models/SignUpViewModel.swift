@@ -8,6 +8,7 @@
 import FirebaseAuth
 import FirebaseFirestore
 
+/// Sign up view model.
 class SignUpViewModel: ObservableObject {
     /// The users email.
     @Published var email = ""
@@ -109,7 +110,7 @@ class SignUpViewModel: ObservableObject {
             }
 
             session.currentUser = authResult.user
-            session.signedIn = true
+            session.signInState = .signedIn
         }
     }
 

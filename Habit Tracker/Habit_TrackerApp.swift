@@ -19,7 +19,7 @@ struct Habit_TrackerApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                if userSession.signedIn {
+                if userSession.isSignedIn {
                     MainView()
                         .environmentObject(userSession)
                 } else {

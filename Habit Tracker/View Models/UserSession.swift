@@ -11,7 +11,12 @@ import FirebaseFirestoreSwift
 import AuthenticationServices
 
 class UserSession: ObservableObject {
-    @Published var signedIn = false
+    enum SignInState {
+        case signedIn
+        case signedOut
+    }
+    
+    @Published var signInState: SignInState = .signedOut
     @Published var currentUser: Firebase.User? = nil
     @Published var isLoading = false
     @Published var didError = false
@@ -35,12 +40,12 @@ class UserSession: ObservableObject {
                     let snapshot = try await userRef.getDocument()
                     if !snapshot.exists {
                         DispatchQueue.main.async {
-                            self.signedIn = false
+                            self.signInState = .signedOut
                         }
                         return
                     }
                     DispatchQueue.main.async {
-                        self.signedIn = true
+                        self.signInState = .signedIn
                     }
                 } catch {
                     print(error)
@@ -51,7 +56,7 @@ class UserSession: ObservableObject {
     }
     
     var isSignedIn: Bool {
-        return currentUser != nil
+        return currentUser != nil && signInState == .signedIn
     }
     
     @MainActor
@@ -72,7 +77,7 @@ class UserSession: ObservableObject {
                 return
             }
             self.currentUser = authResult.user
-            self.signedIn = true
+            self.signInState = .signedIn
         }
     }
     
@@ -118,7 +123,7 @@ class UserSession: ObservableObject {
                     
                 }
                 self.currentUser = authResult.user
-                self.signedIn = true
+                self.signInState = .signedIn
             }
         }
     }
@@ -169,7 +174,7 @@ class UserSession: ObservableObject {
                 try userRef.setData(from: user)
             }
             self.currentUser = authResult.user
-            self.signedIn = true
+            self.signInState = .signedIn
         } catch let error as NSError {
             print(error)
             errorDetails = ErrorDetails(name: "Authentication error", message: "\(error.localizedDescription)")
@@ -183,7 +188,7 @@ class UserSession: ObservableObject {
             isLoading = false
         }
         defer {
-            signedIn = false
+            self.signInState = .signedOut
         }
         do {
             GIDSignIn.sharedInstance.signOut()
