@@ -7,24 +7,6 @@
 
 import SwiftUI
 
-enum Tab: String, CaseIterable, Identifiable {
-    var id: Self { self }
-    case journal = "Journal"
-    case home = "Home"
-    case add = "Add"
-    case calendar = "Calendar"
-    
-    
-    var imageName: String {
-        switch self {
-        case .journal: return "book"
-        case .home: return "house"
-        case .add: return "plus"
-        case .calendar: return "calendar"
-        }
-    }
-}
-
 struct HomeView: View {
     @EnvironmentObject var userSession: UserSession
     

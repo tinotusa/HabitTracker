@@ -33,6 +33,7 @@
 		21DA7F78283B90B800E43E4C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F77283B90B800E43E4C /* MainView.swift */; };
 		21DA7F7B283B92EF00E43E4C /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F7A283B92EF00E43E4C /* AddView.swift */; };
 		21DA7F7D283B942200E43E4C /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F7C283B942200E43E4C /* CustomTabBar.swift */; };
+		21DA7F7F283B94AD00E43E4C /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F7E283B94AD00E43E4C /* Tab.swift */; };
 		21DDF03B2831224A00FE8DAC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03A2831224A00FE8DAC /* LoadingView.swift */; };
 		21DDF03D283122AD00FE8DAC /* ErrorDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */; };
 /* End PBXBuildFile section */
@@ -80,6 +81,7 @@
 		21DA7F77283B90B800E43E4C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		21DA7F7A283B92EF00E43E4C /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 		21DA7F7C283B942200E43E4C /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
+		21DA7F7E283B94AD00E43E4C /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		21DDF03A2831224A00FE8DAC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -131,6 +133,7 @@
 			children = (
 				21B6289D280AE09900E3FC49 /* FirebaseUser.swift */,
 				21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */,
+				21DA7F7E283B94AD00E43E4C /* Tab.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 				21B6285F280AC4B900E3FC49 /* Habit_TrackerApp.swift in Sources */,
 				21B6289A280ADA7F00E3FC49 /* UserSession.swift in Sources */,
 				21B6289E280AE09A00E3FC49 /* FirebaseUser.swift in Sources */,
+				21DA7F7F283B94AD00E43E4C /* Tab.swift in Sources */,
 				214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */,
 				21DDF03D283122AD00FE8DAC /* ErrorDetails.swift in Sources */,
 				213C5CC42833A56700ACB95F /* SignUpViewModel.swift in Sources */,
