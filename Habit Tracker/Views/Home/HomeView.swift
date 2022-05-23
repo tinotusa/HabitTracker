@@ -60,27 +60,6 @@ struct CustomTabBar: View {
     }
 }
 
-struct AddView: View {
-    @Environment(\.dismiss) var dismiss
-    var body: some View {
-        ZStack {
-            Color.yellow.opacity(0.4)
-                .ignoresSafeArea()
-            ScrollView(showsIndicators: false) {
-                VStack {
-                    Text("Add habit")
-                    Text("something here")
-                    Button("Back") {
-                        print("pressed")
-                        dismiss()
-                    }
-                }
-            }
-        }
-        .navigationBarHidden(true)
-    }
-}
-
 struct HomeView: View {
     @EnvironmentObject var userSession: UserSession
     

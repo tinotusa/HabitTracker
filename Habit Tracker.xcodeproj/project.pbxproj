@@ -31,6 +31,7 @@
 		21DA7F73283B526900E43E4C /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21DA7F72283B526900E43E4C /* AuthenticationServices.framework */; };
 		21DA7F76283B592700E43E4C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F75283B592700E43E4C /* HomeView.swift */; };
 		21DA7F78283B90B800E43E4C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F77283B90B800E43E4C /* MainView.swift */; };
+		21DA7F7B283B92EF00E43E4C /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F7A283B92EF00E43E4C /* AddView.swift */; };
 		21DDF03B2831224A00FE8DAC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03A2831224A00FE8DAC /* LoadingView.swift */; };
 		21DDF03D283122AD00FE8DAC /* ErrorDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */; };
 /* End PBXBuildFile section */
@@ -76,6 +77,7 @@
 		21DA7F72283B526900E43E4C /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		21DA7F75283B592700E43E4C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		21DA7F77283B90B800E43E4C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		21DA7F7A283B92EF00E43E4C /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 		21DDF03A2831224A00FE8DAC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -196,6 +198,7 @@
 		21B62896280AD1D600E3FC49 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				21DA7F79283B92E300E43E4C /* Add */,
 				21DA7F74283B591D00E43E4C /* Home */,
 				21DDF0392831220D00FE8DAC /* Login */,
 				21DA7F77283B90B800E43E4C /* MainView.swift */,
@@ -218,6 +221,14 @@
 				21DA7F75283B592700E43E4C /* HomeView.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		21DA7F79283B92E300E43E4C /* Add */ = {
+			isa = PBXGroup;
+			children = (
+				21DA7F7A283B92EF00E43E4C /* AddView.swift */,
+			);
+			path = Add;
 			sourceTree = "<group>";
 		};
 		21DDF0392831220D00FE8DAC /* Login */ = {
@@ -374,6 +385,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21DA7F7B283B92EF00E43E4C /* AddView.swift in Sources */,
 				21B62898280AD1E300E3FC49 /* LoginView.swift in Sources */,
 				21DA7F78283B90B800E43E4C /* MainView.swift in Sources */,
 				21B6289C280ADD9400E3FC49 /* SignUpView.swift in Sources */,
