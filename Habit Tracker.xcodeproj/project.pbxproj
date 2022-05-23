@@ -13,7 +13,6 @@
 		214F41CB2821417A00A9D696 /* PasswordResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F41CA2821417A00A9D696 /* PasswordResetView.swift */; };
 		21AC33D62821494800A79F7B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AC33D52821494800A79F7B /* LoginViewModel.swift */; };
 		21B6285F280AC4B900E3FC49 /* Habit_TrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6285E280AC4B900E3FC49 /* Habit_TrackerApp.swift */; };
-		21B62861280AC4B900E3FC49 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B62860280AC4B900E3FC49 /* ContentView.swift */; };
 		21B62863280AC4BB00E3FC49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B62862280AC4BB00E3FC49 /* Assets.xcassets */; };
 		21B62866280AC4BB00E3FC49 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B62865280AC4BB00E3FC49 /* Preview Assets.xcassets */; };
 		21B62870280AC4BB00E3FC49 /* Habit_TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6286F280AC4BB00E3FC49 /* Habit_TrackerTests.swift */; };
@@ -30,6 +29,8 @@
 		21B6289C280ADD9400E3FC49 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6289B280ADD9400E3FC49 /* SignUpView.swift */; };
 		21B6289E280AE09A00E3FC49 /* FirebaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6289D280AE09900E3FC49 /* FirebaseUser.swift */; };
 		21DA7F73283B526900E43E4C /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21DA7F72283B526900E43E4C /* AuthenticationServices.framework */; };
+		21DA7F76283B592700E43E4C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F75283B592700E43E4C /* HomeView.swift */; };
+		21DA7F78283B90B800E43E4C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F77283B90B800E43E4C /* MainView.swift */; };
 		21DDF03B2831224A00FE8DAC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03A2831224A00FE8DAC /* LoadingView.swift */; };
 		21DDF03D283122AD00FE8DAC /* ErrorDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */; };
 /* End PBXBuildFile section */
@@ -59,7 +60,6 @@
 		21AC33D52821494800A79F7B /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		21B6285B280AC4B800E3FC49 /* Habit Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B6285E280AC4B900E3FC49 /* Habit_TrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_TrackerApp.swift; sourceTree = "<group>"; };
-		21B62860280AC4B900E3FC49 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		21B62862280AC4BB00E3FC49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		21B62865280AC4BB00E3FC49 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		21B6286B280AC4BB00E3FC49 /* Habit TrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Habit TrackerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +74,8 @@
 		21B6289B280ADD9400E3FC49 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		21B6289D280AE09900E3FC49 /* FirebaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUser.swift; sourceTree = "<group>"; };
 		21DA7F72283B526900E43E4C /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
+		21DA7F75283B592700E43E4C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		21DA7F77283B90B800E43E4C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		21DDF03A2831224A00FE8DAC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -194,8 +196,9 @@
 		21B62896280AD1D600E3FC49 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				21DA7F74283B591D00E43E4C /* Home */,
 				21DDF0392831220D00FE8DAC /* Login */,
-				21B62860280AC4B900E3FC49 /* ContentView.swift */,
+				21DA7F77283B90B800E43E4C /* MainView.swift */,
 				21DDF03A2831224A00FE8DAC /* LoadingView.swift */,
 			);
 			path = Views;
@@ -207,6 +210,14 @@
 				21DA7F72283B526900E43E4C /* AuthenticationServices.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		21DA7F74283B591D00E43E4C /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				21DA7F75283B592700E43E4C /* HomeView.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		21DDF0392831220D00FE8DAC /* Login */ = {
@@ -364,8 +375,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				21B62898280AD1E300E3FC49 /* LoginView.swift in Sources */,
+				21DA7F78283B90B800E43E4C /* MainView.swift in Sources */,
 				21B6289C280ADD9400E3FC49 /* SignUpView.swift in Sources */,
-				21B62861280AC4B900E3FC49 /* ContentView.swift in Sources */,
+				21DA7F76283B592700E43E4C /* HomeView.swift in Sources */,
 				21DDF03B2831224A00FE8DAC /* LoadingView.swift in Sources */,
 				214F41CB2821417A00A9D696 /* PasswordResetView.swift in Sources */,
 				21B6285F280AC4B900E3FC49 /* Habit_TrackerApp.swift in Sources */,
@@ -540,7 +552,6 @@
 				INFOPLIST_FILE = "Habit-Tracker-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -572,7 +583,6 @@
 				INFOPLIST_FILE = "Habit-Tracker-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;

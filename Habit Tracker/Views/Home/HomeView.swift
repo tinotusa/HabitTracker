@@ -7,14 +7,91 @@
 
 import SwiftUI
 
-struct HomeView: View {
+enum Tab: String, CaseIterable, Identifiable {
+    var id: Self { self }
+    case journal = "Journal"
+    case home = "Home"
+    case add = "Add"
+    case calendar = "Calendar"
+    
+    
+    var imageName: String {
+        switch self {
+        case .journal: return "book"
+        case .home: return "house"
+        case .add: return "plus"
+        case .calendar: return "calendar"
+        }
+    }
+}
+
+struct CustomTabBar: View {
+    @Binding var selectedTab: Tab
+    
+    init(selectedTab: Binding<Tab>) {
+        _selectedTab = selectedTab
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Spacer()
+            ForEach(Tab.allCases, id: \.self) { tab in
+                HStack {
+                    Image(systemName: tab.imageName)
+                        .font(.largeTitle)
+                        .onTapGesture {
+                            selectedTab = tab
+                        }
+                    if selectedTab == tab {
+                        Text(tab.rawValue)
+                            .font(.title2)
+                    }
+                }
+                if tab != Tab.allCases.last! {
+                    Spacer()
+                }
+            }
+            .contentShape(Rectangle())
+            Spacer()
+        }
+        .padding()
+        .padding(.horizontal)
+        .background(.blue)
+    }
+}
+
+struct AddView: View {
+    @Environment(\.dismiss) var dismiss
+    var body: some View {
+        ZStack {
+            Color.yellow.opacity(0.4)
+                .ignoresSafeArea()
+            ScrollView(showsIndicators: false) {
+                VStack {
+                    Text("Add habit")
+                    Text("something here")
+                    Button("Back") {
+                        print("pressed")
+                        dismiss()
+                    }
+                }
+            }
+        }
+        .navigationBarHidden(true)
+    }
+}
+
+struct HomeView: View {
+    @EnvironmentObject var userSession: UserSession
+    
+    var body: some View {
+        Text("home")
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
+            .environmentObject(UserSession())
     }
 }

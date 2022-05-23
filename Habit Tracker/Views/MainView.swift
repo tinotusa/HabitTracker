@@ -18,7 +18,7 @@ struct MainView: View {
                 case .journal:
                     Text("journal")
                 case .home:
-                    Text("home")
+                    HomeView()
                 case .add:
                     AddView()
                 case .calendar:
