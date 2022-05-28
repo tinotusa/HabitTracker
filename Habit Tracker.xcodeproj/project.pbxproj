@@ -36,6 +36,9 @@
 		21DA7F7F283B94AD00E43E4C /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F7E283B94AD00E43E4C /* Tab.swift */; };
 		21DDF03B2831224A00FE8DAC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03A2831224A00FE8DAC /* LoadingView.swift */; };
 		21DDF03D283122AD00FE8DAC /* ErrorDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */; };
+		21E61908283D0287007F42DC /* AddViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E61907283D0287007F42DC /* AddViewViewModel.swift */; };
+		21E6190A283D089B007F42DC /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E61909283D089B007F42DC /* Day.swift */; };
+		21E6190C283D0A8D007F42DC /* DayPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6190B283D0A8D007F42DC /* DayPickerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +87,9 @@
 		21DA7F7E283B94AD00E43E4C /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		21DDF03A2831224A00FE8DAC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDetails.swift; sourceTree = "<group>"; };
+		21E61907283D0287007F42DC /* AddViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewViewModel.swift; sourceTree = "<group>"; };
+		21E61909283D089B007F42DC /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
+		21E6190B283D0A8D007F42DC /* DayPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayPickerView.swift; path = "Habit Tracker/Models/DayPickerView.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +130,7 @@
 				21B62899280ADA7F00E3FC49 /* UserSession.swift */,
 				21AC33D52821494800A79F7B /* LoginViewModel.swift */,
 				213C5CC32833A56700ACB95F /* SignUpViewModel.swift */,
+				21E61907283D0287007F42DC /* AddViewViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -134,6 +141,7 @@
 				21B6289D280AE09900E3FC49 /* FirebaseUser.swift */,
 				21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */,
 				21DA7F7E283B94AD00E43E4C /* Tab.swift */,
+				21E61909283D089B007F42DC /* Day.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -203,6 +211,7 @@
 		21B62896280AD1D600E3FC49 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				21E6190B283D0A8D007F42DC /* DayPickerView.swift */,
 				21DA7F79283B92E300E43E4C /* Add */,
 				21DA7F74283B591D00E43E4C /* Home */,
 				21DDF0392831220D00FE8DAC /* Login */,
@@ -392,6 +401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21DA7F7B283B92EF00E43E4C /* AddView.swift in Sources */,
+				21E61908283D0287007F42DC /* AddViewViewModel.swift in Sources */,
 				21DA7F7D283B942200E43E4C /* CustomTabBar.swift in Sources */,
 				21B62898280AD1E300E3FC49 /* LoginView.swift in Sources */,
 				21DA7F78283B90B800E43E4C /* MainView.swift in Sources */,
@@ -399,8 +409,10 @@
 				21DA7F76283B592700E43E4C /* HomeView.swift in Sources */,
 				21DDF03B2831224A00FE8DAC /* LoadingView.swift in Sources */,
 				214F41CB2821417A00A9D696 /* PasswordResetView.swift in Sources */,
+				21E6190C283D0A8D007F42DC /* DayPickerView.swift in Sources */,
 				21B6285F280AC4B900E3FC49 /* Habit_TrackerApp.swift in Sources */,
 				21B6289A280ADA7F00E3FC49 /* UserSession.swift in Sources */,
+				21E6190A283D089B007F42DC /* Day.swift in Sources */,
 				21B6289E280AE09A00E3FC49 /* FirebaseUser.swift in Sources */,
 				21DA7F7F283B94AD00E43E4C /* Tab.swift in Sources */,
 				214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */,
