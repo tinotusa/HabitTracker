@@ -72,5 +72,13 @@ extension AddViewViewModel {
     func addHabit() {
         // TODO: implement
     }
+    
+    /// Removes the activity from the list.
+    func removeActivity(activity: String) {
+        guard let index = activities.firstIndex(of: activity) else {
+            return
+        }
+        activities.remove(at: index)
+    }
 
 }

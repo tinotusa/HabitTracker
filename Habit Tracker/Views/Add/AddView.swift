@@ -69,7 +69,7 @@ struct AddView: View {
                         HStack {
                             Text(activity)
                             Button {
-                                // remove
+                                viewModel.removeActivity(activity: activity)
                             } label: {
                                 Image(systemName: "xmark")
                             }
