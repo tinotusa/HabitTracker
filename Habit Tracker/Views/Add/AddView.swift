@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddView: View {
     @StateObject var viewModel = AddViewViewModel()
+    @EnvironmentObject var userSession: UserSession
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -90,7 +91,7 @@ struct AddView: View {
                 }
                 
                 Button("Add habit") {
-                    viewModel.addHabit()
+                    viewModel.addHabit(session: userSession)
                 }
             }
             .padding()
@@ -101,5 +102,6 @@ struct AddView: View {
 struct AddView_Previews: PreviewProvider {
     static var previews: some View {
         AddView()
+            .environmentObject(UserSession())
     }
 }

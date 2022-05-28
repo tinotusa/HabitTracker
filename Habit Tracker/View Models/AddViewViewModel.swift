@@ -68,9 +68,32 @@ extension AddViewViewModel {
         activityInput = ""
     }
     
-    /// Adds the habit to the database.
-    func addHabit() {
-        // TODO: implement
+    /// Adds the habit to the firestore database.
+    func addHabit(session: UserSession) {
+        guard let user = session.currentUser else { return }
+        let habitRef = firestore
+            .collection("habits")
+            .document(user.uid)
+            .collection("habits")
+            .document()
+        let habit = Habit(
+            isQuittingHabit: isQuittingHabit,
+            isStartingHabit: isStartingHabit,
+            habitName: habitName,
+            occurrenceDate: occurrenceDate,
+            occurrenceDays: occurrenceDays,
+            durationHours: durationHours,
+            durationMinutes: durationMinutes,
+            activities: activities,
+            reason: reason
+        )
+        do {
+            try habitRef.setData(from: habit)
+            
+        } catch {
+            print("Error in \(#function): \(error)")
+            
+        }
     }
     
     /// Removes the activity from the list.
@@ -80,5 +103,34 @@ extension AddViewViewModel {
         }
         activities.remove(at: index)
     }
+}
 
+
+struct Habit: Codable {
+    /// A boolean value indicating whether a habit is being quit (stopped).
+    var isQuittingHabit: Bool
+    
+    /// A boolean value indicating whether a habit is being started (created).
+    var isStartingHabit: Bool
+    
+    /// The name of the habit being quit or started.
+    var habitName: String
+    
+    /// When the habit is usually done.
+    var occurrenceDate: Date
+    
+    /// What days the habit is usually done.
+    var occurrenceDays: Set<Day>
+    
+    /// The hours it takes to complete the habit.
+    var durationHours: Int
+    
+    /// The mintues it takes to complete the habit.
+    var durationMinutes: Int
+    
+    /// A list of the activities the user has added.
+    var activities: [String]
+    
+    /// The reason for quitting or starting the habit being added.
+    var reason: String
 }
