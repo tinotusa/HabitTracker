@@ -12,6 +12,7 @@
 		214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */; };
 		214F41CB2821417A00A9D696 /* PasswordResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F41CA2821417A00A9D696 /* PasswordResetView.swift */; };
 		218B7458284206B000F55A21 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218B7457284206B000F55A21 /* Habit.swift */; };
+		218B745B2842237000F55A21 /* HomeViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218B745A2842237000F55A21 /* HomeViewViewModel.swift */; };
 		21AC33D62821494800A79F7B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AC33D52821494800A79F7B /* LoginViewModel.swift */; };
 		21B6285F280AC4B900E3FC49 /* Habit_TrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6285E280AC4B900E3FC49 /* Habit_TrackerApp.swift */; };
 		21B62863280AC4BB00E3FC49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B62862280AC4BB00E3FC49 /* Assets.xcassets */; };
@@ -65,6 +66,7 @@
 		214F41CA2821417A00A9D696 /* PasswordResetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasswordResetView.swift; path = "Habit Tracker/Views/Login/PasswordResetView.swift"; sourceTree = SOURCE_ROOT; };
 		2169E266282115EA00E46AF8 /* Habit Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Habit Tracker.entitlements"; sourceTree = "<group>"; };
 		218B7457284206B000F55A21 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
+		218B745A2842237000F55A21 /* HomeViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewViewModel.swift; sourceTree = SOURCE_ROOT; };
 		21AC33D52821494800A79F7B /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		21B6285B280AC4B800E3FC49 /* Habit Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B6285E280AC4B900E3FC49 /* Habit_TrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_TrackerApp.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 		21AC33D3282148DB00A79F7B /* View Models */ = {
 			isa = PBXGroup;
 			children = (
+				218B745A2842237000F55A21 /* HomeViewViewModel.swift */,
 				21B62899280ADA7F00E3FC49 /* UserSession.swift */,
 				21AC33D52821494800A79F7B /* LoginViewModel.swift */,
 				213C5CC32833A56700ACB95F /* SignUpViewModel.swift */,
@@ -404,6 +407,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21DA7F7B283B92EF00E43E4C /* AddView.swift in Sources */,
+				218B745B2842237000F55A21 /* HomeViewViewModel.swift in Sources */,
 				21E61908283D0287007F42DC /* AddViewViewModel.swift in Sources */,
 				21DA7F7D283B942200E43E4C /* CustomTabBar.swift in Sources */,
 				21B62898280AD1E300E3FC49 /* LoginView.swift in Sources */,

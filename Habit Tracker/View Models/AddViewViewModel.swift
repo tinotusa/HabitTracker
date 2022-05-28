@@ -52,7 +52,10 @@ class AddViewViewModel: ObservableObject {
     
     /// A reference to the firestore database.
     private lazy var firestore = Firestore.firestore()
-    
+}
+
+// MARK: Computed Properties
+extension AddViewViewModel {
     /// The total duration the habit takes to complete in seconds.
     var totalDurationSeconds: Int {
         durationHours * 60 + durationMinutes * 60
@@ -97,7 +100,7 @@ extension AddViewViewModel {
         let habit = Habit(
             isQuittingHabit: isQuittingHabit,
             isStartingHabit: isStartingHabit,
-            habitName: habitName,
+            name: habitName,
             occurrenceTime: occurrenceTime,
             occurrenceDays: occurrenceDays,
             durationHours: durationHours,

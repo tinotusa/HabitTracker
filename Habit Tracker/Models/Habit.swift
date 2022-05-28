@@ -8,7 +8,11 @@
 import Foundation
 
 /// A struct representing a habit.
-struct Habit: Codable {
+struct Habit: Codable, Identifiable {
+    /// The id of the habit.
+    var id: String
+    /// The date that the habit was created.
+    var createdAt: Date
     /// A boolean value indicating whether a habit is being quit (stopped).
     var isQuittingHabit: Bool
     
@@ -16,7 +20,7 @@ struct Habit: Codable {
     var isStartingHabit: Bool
     
     /// The name of the habit being quit or started.
-    var habitName: String
+    var name: String
     
     /// What time the habit is usually done.
     var occurrenceTime: Date
@@ -35,4 +39,30 @@ struct Habit: Codable {
     
     /// The reason for quitting or starting the habit being added.
     var reason: String
+}
+
+extension Habit {
+    init(
+        isQuittingHabit: Bool,
+        isStartingHabit: Bool,
+        name: String,
+        occurrenceTime: Date,
+        occurrenceDays: Set<Day>,
+        durationHours: Int,
+        durationMinutes: Int,
+        activities: [String],
+        reason: String
+    ) {
+        id = UUID().uuidString
+        createdAt = Date()
+        self.isQuittingHabit = isQuittingHabit
+        self.isStartingHabit = isStartingHabit
+        self.name = name
+        self.occurrenceTime = occurrenceTime
+        self.occurrenceDays = occurrenceDays
+        self.durationHours = durationHours
+        self.durationMinutes = durationMinutes
+        self.activities = activities
+        self.reason = reason
+    }
 }
