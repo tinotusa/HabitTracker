@@ -24,8 +24,8 @@ struct AddView: View {
                     Text("When do you usually do this?")
                     DayPickerView(selection: $viewModel.occurrenceDays)
                     DatePicker(
-                        "Date",
-                        selection: $viewModel.occurrenceDate,
+                        "Time",
+                        selection: $viewModel.occurrenceTime,
                         displayedComponents: [.hourAndMinute]
                     )
                     .labelsHidden()
@@ -93,7 +93,7 @@ struct AddView: View {
                 Button("Add habit") {
                     viewModel.addHabit(session: userSession)
                 }
-                .disabled(viewModel.allFieldsFilled)
+                .disabled(!viewModel.allFieldsFilled)
             }
             .padding()
         }

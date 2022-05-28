@@ -29,8 +29,8 @@ class AddViewViewModel: ObservableObject {
     /// The name of the habit being quit or started.
     @Published var habitName = ""
     
-    /// When the habit is usually done.
-    @Published var occurrenceDate = Date()
+    /// What time the habit is usually done.
+    @Published var occurrenceTime = Date()
     
     /// What days the habit is usually done.
     @Published var occurrenceDays = Set<Day>()
@@ -57,6 +57,20 @@ class AddViewViewModel: ObservableObject {
     var totalDurationSeconds: Int {
         durationHours * 60 + durationMinutes * 60
     }
+    
+    /// Returns true if all fields have some input.
+    var allFieldsFilled: Bool {
+        let habitName = habitName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let reason = reason.trimmingCharacters(in: .whitespacesAndNewlines)
+        return !(
+            !(isQuittingHabit || isStartingHabit) ||
+            habitName.isEmpty ||
+            occurrenceDays.isEmpty ||
+            !(durationHours == 0 || durationMinutes == 0) ||
+            activities.isEmpty ||
+            reason.isEmpty
+        )
+    }
 }
 
 // MARK: Functions
@@ -70,7 +84,11 @@ extension AddViewViewModel {
     
     /// Adds the habit to the firestore database.
     func addHabit(session: UserSession) {
-        guard let user = session.currentUser else { return }
+        precondition(session.currentUser != nil, "User is not logged in")
+        assert(allFieldsFilled, "All fields not filled in")
+        guard let user = session.currentUser else {
+            return
+        }
         let habitRef = firestore
             .collection("habits")
             .document(user.uid)
@@ -80,7 +98,7 @@ extension AddViewViewModel {
             isQuittingHabit: isQuittingHabit,
             isStartingHabit: isStartingHabit,
             habitName: habitName,
-            occurrenceDate: occurrenceDate,
+            occurrenceTime: occurrenceTime,
             occurrenceDays: occurrenceDays,
             durationHours: durationHours,
             durationMinutes: durationMinutes,
@@ -89,23 +107,21 @@ extension AddViewViewModel {
         )
         do {
             try habitRef.setData(from: habit)
-            
         } catch {
             print("Error in \(#function): \(error)")
-            
         }
     }
     
     /// Removes the activity from the list.
     func removeActivity(activity: String) {
         guard let index = activities.firstIndex(of: activity) else {
-            return
+            preconditionFailure("Activity: \(activity) isn't in the array of activities.")
         }
         activities.remove(at: index)
     }
 }
 
-
+/// A struct representing a habit.
 struct Habit: Codable {
     /// A boolean value indicating whether a habit is being quit (stopped).
     var isQuittingHabit: Bool
@@ -116,8 +132,8 @@ struct Habit: Codable {
     /// The name of the habit being quit or started.
     var habitName: String
     
-    /// When the habit is usually done.
-    var occurrenceDate: Date
+    /// What time the habit is usually done.
+    var occurrenceTime: Date
     
     /// What days the habit is usually done.
     var occurrenceDays: Set<Day>
