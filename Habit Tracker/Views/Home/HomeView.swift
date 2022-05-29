@@ -25,26 +25,28 @@ struct HomeView: View {
                     Text(habit.name)
                 }
             }
-//            HStack {
-//                Button("prev") {
-//                    Task {
-//                        await viewModel.getPreviousHabits(userSession: userSession)
-//                    }
-//                }
-//                .disabled(!viewModel.hasPreviousPage)
+            HStack {
+                Button("prev") {
+                    Task {
+                        await viewModel.getPreviousHabits(userSession: userSession)
+                    }
+                }
+                .disabled(!viewModel.hasPreviousPage)
 //                
-//                Button("Next") {
-//                    Task {
-//                        await viewModel.getNextHabits(userSession: userSession)
-//                    }
-//                }
-//                .disabled(!viewModel.hasNextPage)
-//            }
+                Button("Next") {
+                    Task {
+                        await viewModel.getNextHabits(userSession: userSession)
+                    }
+                }
+                .disabled(!viewModel.hasNextPage)
+            }
         
         }
         .onAppear {
             Task {
-                await viewModel.getHabits(userSession: userSession)
+                if userSession.isSignedIn {
+                    await viewModel.getHabits(userSession: userSession)
+                }
             }
         }
     }
