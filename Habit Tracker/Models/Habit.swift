@@ -65,4 +65,18 @@ extension Habit {
         self.activities = activities
         self.reason = reason
     }
+    
+    static var example: Habit {
+        Habit(
+            isQuittingHabit: true,
+            isStartingHabit: false,
+            name: "test name",
+            occurrenceTime: Date(),
+            occurrenceDays: [.monday, .tuesday],
+            durationHours: 0,
+            durationMinutes: 10,
+            activities: ["activity 1", "activity 2"],
+            reason: "some test reason"
+        )
+    }
 }

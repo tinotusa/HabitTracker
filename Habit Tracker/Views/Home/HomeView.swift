@@ -12,40 +12,44 @@ struct HomeView: View {
     @StateObject var viewModel = HomeViewViewModel()
     
     var body: some View {
-        VStack {
-            Text("home")
-            Button("Logout") {
-                userSession.signOut()
-                print("logged out")
-            }
-            ForEach(viewModel.habits) { habit in
-                VStack {
-                    Text(habit.isQuittingHabit ? "Quiting" : "Forming")
-                        .foregroundColor(habit.isQuittingHabit ? .red : .green)
-                    Text(habit.name)
+        NavigationView {
+            VStack {
+                Text("home")
+                Button("Logout") {
+                    userSession.signOut()
+                    print("logged out")
                 }
-            }
-            HStack {
-                Button("prev") {
-                    Task {
-                        await viewModel.getPreviousHabits(userSession: userSession)
+                ForEach(viewModel.habits) { habit in
+                    NavigationLink(destination: HabitCalendar(habit: habit)) {
+                        VStack {
+                            Text(habit.isQuittingHabit ? "Quiting" : "Forming")
+                                .foregroundColor(habit.isQuittingHabit ? .red : .green)
+                            Text(habit.name)
+                        }
                     }
+                    .buttonStyle(.plain)
                 }
-                .disabled(!viewModel.hasPreviousPage)
-//                
-                Button("Next") {
-                    Task {
-                        await viewModel.getNextHabits(userSession: userSession)
+                HStack {
+                    Button("prev") {
+                        Task {
+                            await viewModel.getPreviousHabits(userSession: userSession)
+                        }
                     }
+                    .disabled(!viewModel.hasPreviousPage)
+                    Button("Next") {
+                        Task {
+                            await viewModel.getNextHabits(userSession: userSession)
+                        }
+                    }
+                    .disabled(!viewModel.hasNextPage)
                 }
-                .disabled(!viewModel.hasNextPage)
+            
             }
-        
-        }
-        .onAppear {
-            Task {
-                if userSession.isSignedIn {
-                    await viewModel.getHabits(userSession: userSession)
+            .onAppear {
+                Task {
+                    if userSession.isSignedIn {
+                        await viewModel.getHabits(userSession: userSession)
+                    }
                 }
             }
         }

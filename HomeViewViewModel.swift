@@ -52,7 +52,7 @@ extension HomeViewViewModel {
             .collectionGroup("habits")
             .order(by: "createdAt")
             .limit(to: maxQueryLimit)
-       
+       habits = []
         do {
             let snapshot = try await query.getDocuments()
             nextDocument =  snapshot.documents.count < maxQueryLimit ? nil : snapshot.documents.last

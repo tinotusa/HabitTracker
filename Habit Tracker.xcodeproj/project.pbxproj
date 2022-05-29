@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21071C26284367BF007C7DC4 /* HabitCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21071C25284367BF007C7DC4 /* HabitCalendar.swift */; };
 		213C5CC42833A56700ACB95F /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213C5CC32833A56700ACB95F /* SignUpViewModel.swift */; };
 		214F41C328212BDE00A9D696 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 214F41C228212BDE00A9D696 /* GoogleSignIn */; };
 		214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */; };
@@ -61,6 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		21071C25284367BF007C7DC4 /* HabitCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCalendar.swift; sourceTree = "<group>"; };
 		213C5CC32833A56700ACB95F /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoogleSignInButton.swift; path = "Habit Tracker/Views/Login/GoogleSignInButton.swift"; sourceTree = SOURCE_ROOT; };
 		214F41CA2821417A00A9D696 /* PasswordResetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasswordResetView.swift; path = "Habit Tracker/Views/Login/PasswordResetView.swift"; sourceTree = SOURCE_ROOT; };
@@ -128,6 +130,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		21071C24284367A8007C7DC4 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				21071C25284367BF007C7DC4 /* HabitCalendar.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
 		21AC33D3282148DB00A79F7B /* View Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +227,7 @@
 		21B62896280AD1D600E3FC49 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				21071C24284367A8007C7DC4 /* Calendar */,
 				21E6190B283D0A8D007F42DC /* DayPickerView.swift */,
 				21DA7F79283B92E300E43E4C /* Add */,
 				21DA7F74283B591D00E43E4C /* Home */,
@@ -412,6 +423,7 @@
 				21DA7F7D283B942200E43E4C /* CustomTabBar.swift in Sources */,
 				21B62898280AD1E300E3FC49 /* LoginView.swift in Sources */,
 				21DA7F78283B90B800E43E4C /* MainView.swift in Sources */,
+				21071C26284367BF007C7DC4 /* HabitCalendar.swift in Sources */,
 				21B6289C280ADD9400E3FC49 /* SignUpView.swift in Sources */,
 				218B7458284206B000F55A21 /* Habit.swift in Sources */,
 				21DA7F76283B592700E43E4C /* HomeView.swift in Sources */,
