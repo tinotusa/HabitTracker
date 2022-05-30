@@ -12,6 +12,10 @@
 		214F41C328212BDE00A9D696 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 214F41C228212BDE00A9D696 /* GoogleSignIn */; };
 		214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */; };
 		214F41CB2821417A00A9D696 /* PasswordResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F41CA2821417A00A9D696 /* PasswordResetView.swift */; };
+		215249622844F53F00FDA66E /* JournalEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215249612844F53F00FDA66E /* JournalEntryView.swift */; };
+		215249642845021900FDA66E /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215249632845021900FDA66E /* RatingView.swift */; };
+		215249662845027800FDA66E /* JournalEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215249652845027800FDA66E /* JournalEntry.swift */; };
+		215249682845029600FDA66E /* JournalEntryViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215249672845029600FDA66E /* JournalEntryViewViewModel.swift */; };
 		218B7458284206B000F55A21 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218B7457284206B000F55A21 /* Habit.swift */; };
 		218B745B2842237000F55A21 /* HomeViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218B745A2842237000F55A21 /* HomeViewViewModel.swift */; };
 		21AC33D62821494800A79F7B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AC33D52821494800A79F7B /* LoginViewModel.swift */; };
@@ -66,6 +70,10 @@
 		213C5CC32833A56700ACB95F /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoogleSignInButton.swift; path = "Habit Tracker/Views/Login/GoogleSignInButton.swift"; sourceTree = SOURCE_ROOT; };
 		214F41CA2821417A00A9D696 /* PasswordResetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasswordResetView.swift; path = "Habit Tracker/Views/Login/PasswordResetView.swift"; sourceTree = SOURCE_ROOT; };
+		215249612844F53F00FDA66E /* JournalEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalEntryView.swift; sourceTree = "<group>"; };
+		215249632845021900FDA66E /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		215249652845027800FDA66E /* JournalEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalEntry.swift; sourceTree = "<group>"; };
+		215249672845029600FDA66E /* JournalEntryViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalEntryViewViewModel.swift; sourceTree = "<group>"; };
 		2169E266282115EA00E46AF8 /* Habit Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Habit Tracker.entitlements"; sourceTree = "<group>"; };
 		218B7457284206B000F55A21 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		218B745A2842237000F55A21 /* HomeViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewViewModel.swift; sourceTree = SOURCE_ROOT; };
@@ -138,6 +146,14 @@
 			path = Calendar;
 			sourceTree = "<group>";
 		};
+		215249602844F52D00FDA66E /* Journal */ = {
+			isa = PBXGroup;
+			children = (
+				215249612844F53F00FDA66E /* JournalEntryView.swift */,
+			);
+			path = Journal;
+			sourceTree = "<group>";
+		};
 		21AC33D3282148DB00A79F7B /* View Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +162,7 @@
 				21AC33D52821494800A79F7B /* LoginViewModel.swift */,
 				213C5CC32833A56700ACB95F /* SignUpViewModel.swift */,
 				21E61907283D0287007F42DC /* AddViewViewModel.swift */,
+				215249672845029600FDA66E /* JournalEntryViewViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -158,6 +175,7 @@
 				21DA7F7E283B94AD00E43E4C /* Tab.swift */,
 				21E61909283D089B007F42DC /* Day.swift */,
 				218B7457284206B000F55A21 /* Habit.swift */,
+				215249652845027800FDA66E /* JournalEntry.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -187,9 +205,9 @@
 			isa = PBXGroup;
 			children = (
 				21AC33D4282148E200A79F7B /* Models */,
+				21B62896280AD1D600E3FC49 /* Views */,
 				21AC33D3282148DB00A79F7B /* View Models */,
 				2169E266282115EA00E46AF8 /* Habit Tracker.entitlements */,
-				21B62896280AD1D600E3FC49 /* Views */,
 				21B62895280AD19600E3FC49 /* Habit-Tracker-Info.plist */,
 				21B62888280AC65A00E3FC49 /* GoogleService-Info.plist */,
 				21B6285E280AC4B900E3FC49 /* Habit_TrackerApp.swift */,
@@ -227,6 +245,7 @@
 		21B62896280AD1D600E3FC49 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				215249602844F52D00FDA66E /* Journal */,
 				21071C24284367A8007C7DC4 /* Calendar */,
 				21E6190B283D0A8D007F42DC /* DayPickerView.swift */,
 				21DA7F79283B92E300E43E4C /* Add */,
@@ -235,6 +254,7 @@
 				21DA7F77283B90B800E43E4C /* MainView.swift */,
 				21DDF03A2831224A00FE8DAC /* LoadingView.swift */,
 				21DA7F7C283B942200E43E4C /* CustomTabBar.swift */,
+				215249632845021900FDA66E /* RatingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -417,9 +437,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				215249682845029600FDA66E /* JournalEntryViewViewModel.swift in Sources */,
 				21DA7F7B283B92EF00E43E4C /* AddView.swift in Sources */,
 				218B745B2842237000F55A21 /* HomeViewViewModel.swift in Sources */,
 				21E61908283D0287007F42DC /* AddViewViewModel.swift in Sources */,
+				215249642845021900FDA66E /* RatingView.swift in Sources */,
 				21DA7F7D283B942200E43E4C /* CustomTabBar.swift in Sources */,
 				21B62898280AD1E300E3FC49 /* LoginView.swift in Sources */,
 				21DA7F78283B90B800E43E4C /* MainView.swift in Sources */,
@@ -428,6 +450,7 @@
 				218B7458284206B000F55A21 /* Habit.swift in Sources */,
 				21DA7F76283B592700E43E4C /* HomeView.swift in Sources */,
 				21DDF03B2831224A00FE8DAC /* LoadingView.swift in Sources */,
+				215249662845027800FDA66E /* JournalEntry.swift in Sources */,
 				214F41CB2821417A00A9D696 /* PasswordResetView.swift in Sources */,
 				21E6190C283D0A8D007F42DC /* DayPickerView.swift in Sources */,
 				21B6285F280AC4B900E3FC49 /* Habit_TrackerApp.swift in Sources */,
@@ -437,6 +460,7 @@
 				21DA7F7F283B94AD00E43E4C /* Tab.swift in Sources */,
 				214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */,
 				21DDF03D283122AD00FE8DAC /* ErrorDetails.swift in Sources */,
+				215249622844F53F00FDA66E /* JournalEntryView.swift in Sources */,
 				213C5CC42833A56700ACB95F /* SignUpViewModel.swift in Sources */,
 				21AC33D62821494800A79F7B /* LoginViewModel.swift in Sources */,
 			);

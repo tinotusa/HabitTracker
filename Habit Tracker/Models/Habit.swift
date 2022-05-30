@@ -43,6 +43,7 @@ struct Habit: Codable, Identifiable {
 
 extension Habit {
     init(
+        id: String,
         isQuittingHabit: Bool,
         isStartingHabit: Bool,
         name: String,
@@ -53,7 +54,7 @@ extension Habit {
         activities: [String],
         reason: String
     ) {
-        id = UUID().uuidString
+        self.id = id
         createdAt = Date()
         self.isQuittingHabit = isQuittingHabit
         self.isStartingHabit = isStartingHabit
@@ -68,6 +69,7 @@ extension Habit {
     
     static var example: Habit {
         Habit(
+            id: UUID().uuidString,
             isQuittingHabit: true,
             isStartingHabit: false,
             name: "test name",

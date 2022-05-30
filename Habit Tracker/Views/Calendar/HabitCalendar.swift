@@ -17,6 +17,7 @@ struct HabitCalendar: View {
     let habit: Habit
     @State private var date = Date()
     let columns = Array(repeating: GridItem(.flexible()), count: 7)
+    @State private var showAddJournalEntryView = false
     
     var body: some View {
         VStack {
@@ -62,8 +63,13 @@ struct HabitCalendar: View {
                         Spacer()
                     }
                 }
-                
             }
+            Button("Add journal entry") {
+                showAddJournalEntryView = true
+            }
+        }
+        .fullScreenCover(isPresented: $showAddJournalEntryView) {
+            JournalEntryView(habit: habit)
         }
     }
     

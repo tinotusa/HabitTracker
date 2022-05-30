@@ -98,6 +98,7 @@ extension AddViewViewModel {
             .collection("habits")
             .document()
         let habit = Habit(
+            id: habitRef.documentID,
             isQuittingHabit: isQuittingHabit,
             isStartingHabit: isStartingHabit,
             name: habitName,
