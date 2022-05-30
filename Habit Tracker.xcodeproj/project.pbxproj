@@ -16,6 +16,9 @@
 		215249642845021900FDA66E /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215249632845021900FDA66E /* RatingView.swift */; };
 		215249662845027800FDA66E /* JournalEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215249652845027800FDA66E /* JournalEntry.swift */; };
 		215249682845029600FDA66E /* JournalEntryViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215249672845029600FDA66E /* JournalEntryViewViewModel.swift */; };
+		2152496A2845042200FDA66E /* HabitCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215249692845042200FDA66E /* HabitCalendarViewModel.swift */; };
+		2152496C2845049A00FDA66E /* DateValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152496B2845049A00FDA66E /* DateValue.swift */; };
+		2152496F28450EF200FDA66E /* Date+isEqual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152496E28450EF200FDA66E /* Date+isEqual.swift */; };
 		218B7458284206B000F55A21 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218B7457284206B000F55A21 /* Habit.swift */; };
 		218B745B2842237000F55A21 /* HomeViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218B745A2842237000F55A21 /* HomeViewViewModel.swift */; };
 		21AC33D62821494800A79F7B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AC33D52821494800A79F7B /* LoginViewModel.swift */; };
@@ -74,6 +77,9 @@
 		215249632845021900FDA66E /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		215249652845027800FDA66E /* JournalEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalEntry.swift; sourceTree = "<group>"; };
 		215249672845029600FDA66E /* JournalEntryViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalEntryViewViewModel.swift; sourceTree = "<group>"; };
+		215249692845042200FDA66E /* HabitCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCalendarViewModel.swift; sourceTree = "<group>"; };
+		2152496B2845049A00FDA66E /* DateValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateValue.swift; sourceTree = "<group>"; };
+		2152496E28450EF200FDA66E /* Date+isEqual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+isEqual.swift"; sourceTree = "<group>"; };
 		2169E266282115EA00E46AF8 /* Habit Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Habit Tracker.entitlements"; sourceTree = "<group>"; };
 		218B7457284206B000F55A21 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		218B745A2842237000F55A21 /* HomeViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewViewModel.swift; sourceTree = SOURCE_ROOT; };
@@ -154,6 +160,14 @@
 			path = Journal;
 			sourceTree = "<group>";
 		};
+		2152496D28450EE500FDA66E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2152496E28450EF200FDA66E /* Date+isEqual.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		21AC33D3282148DB00A79F7B /* View Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +177,7 @@
 				213C5CC32833A56700ACB95F /* SignUpViewModel.swift */,
 				21E61907283D0287007F42DC /* AddViewViewModel.swift */,
 				215249672845029600FDA66E /* JournalEntryViewViewModel.swift */,
+				215249692845042200FDA66E /* HabitCalendarViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -176,6 +191,7 @@
 				21E61909283D089B007F42DC /* Day.swift */,
 				218B7457284206B000F55A21 /* Habit.swift */,
 				215249652845027800FDA66E /* JournalEntry.swift */,
+				2152496B2845049A00FDA66E /* DateValue.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -204,6 +220,7 @@
 		21B6285D280AC4B800E3FC49 /* Habit Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				2152496D28450EE500FDA66E /* Extensions */,
 				21AC33D4282148E200A79F7B /* Models */,
 				21B62896280AD1D600E3FC49 /* Views */,
 				21AC33D3282148DB00A79F7B /* View Models */,
@@ -442,6 +459,7 @@
 				218B745B2842237000F55A21 /* HomeViewViewModel.swift in Sources */,
 				21E61908283D0287007F42DC /* AddViewViewModel.swift in Sources */,
 				215249642845021900FDA66E /* RatingView.swift in Sources */,
+				2152496C2845049A00FDA66E /* DateValue.swift in Sources */,
 				21DA7F7D283B942200E43E4C /* CustomTabBar.swift in Sources */,
 				21B62898280AD1E300E3FC49 /* LoginView.swift in Sources */,
 				21DA7F78283B90B800E43E4C /* MainView.swift in Sources */,
@@ -451,7 +469,9 @@
 				21DA7F76283B592700E43E4C /* HomeView.swift in Sources */,
 				21DDF03B2831224A00FE8DAC /* LoadingView.swift in Sources */,
 				215249662845027800FDA66E /* JournalEntry.swift in Sources */,
+				2152496F28450EF200FDA66E /* Date+isEqual.swift in Sources */,
 				214F41CB2821417A00A9D696 /* PasswordResetView.swift in Sources */,
+				2152496A2845042200FDA66E /* HabitCalendarViewModel.swift in Sources */,
 				21E6190C283D0A8D007F42DC /* DayPickerView.swift in Sources */,
 				21B6285F280AC4B900E3FC49 /* Habit_TrackerApp.swift in Sources */,
 				21B6289A280ADA7F00E3FC49 /* UserSession.swift in Sources */,

@@ -7,17 +7,15 @@
 
 import SwiftUI
 
-struct DateValue: Identifiable {
-    let id = UUID().uuidString
-    let day: Int
-    let date: Date
-}
-
 struct HabitCalendar: View {
     let habit: Habit
+    
+    @EnvironmentObject var userSession: UserSession
     @State private var date = Date()
-    let columns = Array(repeating: GridItem(.flexible()), count: 7)
     @State private var showAddJournalEntryView = false
+    @StateObject var viewModel = HabitCalendarViewModel()
+    
+    private let columns = Array(repeating: GridItem(.flexible()), count: 7)
     
     var body: some View {
         VStack {
@@ -54,10 +52,11 @@ struct HabitCalendar: View {
                 ForEach(monthDates) { date in
                     if date.day != -1 {
                         Text("\(date.day)")
-                            .background(sameDate(date.date, Date()) ? .green : .clear)
+                            .background(viewModel.journalHasEntry(for: date.date) ? .green : .clear)
                             .onTapGesture {
-                                print(date.date)
-                                print(Date())
+                                Task {
+                                    await viewModel.getJournalEntries(for: date.date)
+                                }
                             }
                     } else  {
                         Spacer()
@@ -67,26 +66,24 @@ struct HabitCalendar: View {
             Button("Add journal entry") {
                 showAddJournalEntryView = true
             }
+            Text("Entries")
+            ScrollView(showsIndicators: false) {
+                ForEach(viewModel.entriesForSelectedDate) { entry in
+                    Text(entry.entry)
+                }
+            }
+        }
+        .onAppear {
+            viewModel.setUp(userSession: userSession, habit: habit)
+            Task {
+                await viewModel.getJournalEntries()
+            }
         }
         .fullScreenCover(isPresented: $showAddJournalEntryView) {
             JournalEntryView(habit: habit)
         }
     }
-    
-    func sameDate(_ date1: Date, _ date2: Date) -> Bool {
-        let order = Calendar.current.compare(date1, to: date2, toGranularity: .day)
-        switch order {
-        case .orderedSame: return true
-        default: return false
-        }
-    }
-    
-    func day(for date: Date) -> Int {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.day], from: date)
-        return components.day ?? 0
-    }
-    
+
     var monthDates: [DateValue] {
         let calendar = Calendar(identifier: .gregorian)
         let startDate = calendar.date(from: calendar.dateComponents([.year, .month], from: date))!
@@ -133,5 +130,6 @@ struct HabitCalendar: View {
 struct HabitCalendar_Previews: PreviewProvider {
     static var previews: some View {
         HabitCalendar(habit: Habit.example)
+            .environmentObject(UserSession())
     }
 }
