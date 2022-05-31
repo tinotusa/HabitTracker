@@ -22,7 +22,7 @@ struct MainView: View {
                 case .add:
                     AddView()
                 case .calendar:
-                    Text("calendar")
+                    CalendarView()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
