@@ -15,4 +15,10 @@ extension Date {
         default: return false
         }
     }
+    
+    var longDate: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter.string(from: self)
+    }
 }

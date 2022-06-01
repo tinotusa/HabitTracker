@@ -8,9 +8,39 @@
 import SwiftUI
 
 struct CalendarView: View {
+    @State private var date = Date()
+    @StateObject var viewModel = CalendarViewViewModel()
+    @EnvironmentObject var userSession: UserSession
+    @State private var selectedDate = Date()
+    @State private var showingDayHistory = false
+
     var body: some View {
-        VStack {
-            Text("hello world")
+        NavigationView {
+            VStack {
+                NavigationLink(destination: DayHistoryView(date: selectedDate), isActive: $showingDayHistory) {
+                    EmptyView()
+                }
+                Text("Calendar")
+                BaseCalendarView(date: $date) { currentDate in
+                    selectedDate = currentDate
+                    self.showingDayHistory = true
+                } isDateHighlighted: { date in
+                    // TODO: why does this undo itself? onAppear??
+                    return viewModel.hasJournalEntry(for: date)
+                }
+            }
+            .onChange(of: date) { _ in
+                Task {
+                    await viewModel.getHabitsForMonth(date: date)
+                }
+            }
+            .task {
+                if !userSession.isSignedIn {
+                    return
+                }
+                viewModel.setUp(userSession: userSession, date: date)
+                await viewModel.getHabitsForMonth(date: date)
+            }
         }
     }
 }
@@ -18,5 +48,6 @@ struct CalendarView: View {
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
         CalendarView()
+            .environmentObject(UserSession())
     }
 }

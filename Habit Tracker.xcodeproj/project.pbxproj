@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		21071C26284367BF007C7DC4 /* HabitCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21071C25284367BF007C7DC4 /* HabitCalendar.swift */; };
+		211040742845ED7B00DC1D17 /* HomeViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211040732845ED7B00DC1D17 /* HomeViewViewModel.swift */; };
 		2128011A2845C23A00D24C35 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212801192845C23A00D24C35 /* CalendarView.swift */; };
 		2128011C2845C69100D24C35 /* BaseCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2128011B2845C69100D24C35 /* BaseCalendarView.swift */; };
+		2128011E2845C80C00D24C35 /* CalendarViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2128011D2845C80C00D24C35 /* CalendarViewViewModel.swift */; };
 		213C5CC42833A56700ACB95F /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213C5CC32833A56700ACB95F /* SignUpViewModel.swift */; };
 		214F41C328212BDE00A9D696 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 214F41C228212BDE00A9D696 /* GoogleSignIn */; };
 		214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */; };
@@ -22,7 +24,6 @@
 		2152496C2845049A00FDA66E /* DateValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152496B2845049A00FDA66E /* DateValue.swift */; };
 		2152496F28450EF200FDA66E /* Date+isEqual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152496E28450EF200FDA66E /* Date+isEqual.swift */; };
 		218B7458284206B000F55A21 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218B7457284206B000F55A21 /* Habit.swift */; };
-		218B745B2842237000F55A21 /* HomeViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218B745A2842237000F55A21 /* HomeViewViewModel.swift */; };
 		21AC33D62821494800A79F7B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AC33D52821494800A79F7B /* LoginViewModel.swift */; };
 		21B6285F280AC4B900E3FC49 /* Habit_TrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6285E280AC4B900E3FC49 /* Habit_TrackerApp.swift */; };
 		21B62863280AC4BB00E3FC49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B62862280AC4BB00E3FC49 /* Assets.xcassets */; };
@@ -40,6 +41,8 @@
 		21B6289A280ADA7F00E3FC49 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B62899280ADA7F00E3FC49 /* UserSession.swift */; };
 		21B6289C280ADD9400E3FC49 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6289B280ADD9400E3FC49 /* SignUpView.swift */; };
 		21B6289E280AE09A00E3FC49 /* FirebaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6289D280AE09900E3FC49 /* FirebaseUser.swift */; };
+		21C16C032847731100502804 /* DayHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C16C022847731100502804 /* DayHistoryView.swift */; };
+		21C16C0528478F3400502804 /* DayHistoryViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C16C0428478F3400502804 /* DayHistoryViewViewModel.swift */; };
 		21DA7F73283B526900E43E4C /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21DA7F72283B526900E43E4C /* AuthenticationServices.framework */; };
 		21DA7F76283B592700E43E4C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F75283B592700E43E4C /* HomeView.swift */; };
 		21DA7F78283B90B800E43E4C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F77283B90B800E43E4C /* MainView.swift */; };
@@ -72,8 +75,10 @@
 
 /* Begin PBXFileReference section */
 		21071C25284367BF007C7DC4 /* HabitCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCalendar.swift; sourceTree = "<group>"; };
+		211040732845ED7B00DC1D17 /* HomeViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewViewModel.swift; sourceTree = "<group>"; };
 		212801192845C23A00D24C35 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		2128011B2845C69100D24C35 /* BaseCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCalendarView.swift; sourceTree = "<group>"; };
+		2128011D2845C80C00D24C35 /* CalendarViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CalendarViewViewModel.swift; path = "Habit Tracker/Views/Calendar/CalendarViewViewModel.swift"; sourceTree = SOURCE_ROOT; };
 		213C5CC32833A56700ACB95F /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoogleSignInButton.swift; path = "Habit Tracker/Views/Login/GoogleSignInButton.swift"; sourceTree = SOURCE_ROOT; };
 		214F41CA2821417A00A9D696 /* PasswordResetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasswordResetView.swift; path = "Habit Tracker/Views/Login/PasswordResetView.swift"; sourceTree = SOURCE_ROOT; };
@@ -86,7 +91,6 @@
 		2152496E28450EF200FDA66E /* Date+isEqual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+isEqual.swift"; sourceTree = "<group>"; };
 		2169E266282115EA00E46AF8 /* Habit Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Habit Tracker.entitlements"; sourceTree = "<group>"; };
 		218B7457284206B000F55A21 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
-		218B745A2842237000F55A21 /* HomeViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewViewModel.swift; sourceTree = SOURCE_ROOT; };
 		21AC33D52821494800A79F7B /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		21B6285B280AC4B800E3FC49 /* Habit Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B6285E280AC4B900E3FC49 /* Habit_TrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_TrackerApp.swift; sourceTree = "<group>"; };
@@ -103,6 +107,8 @@
 		21B62899280ADA7F00E3FC49 /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		21B6289B280ADD9400E3FC49 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		21B6289D280AE09900E3FC49 /* FirebaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUser.swift; sourceTree = "<group>"; };
+		21C16C022847731100502804 /* DayHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayHistoryView.swift; sourceTree = "<group>"; };
+		21C16C0428478F3400502804 /* DayHistoryViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayHistoryViewViewModel.swift; sourceTree = "<group>"; };
 		21DA7F72283B526900E43E4C /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		21DA7F75283B592700E43E4C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		21DA7F77283B90B800E43E4C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -184,13 +190,15 @@
 		21AC33D3282148DB00A79F7B /* View Models */ = {
 			isa = PBXGroup;
 			children = (
-				218B745A2842237000F55A21 /* HomeViewViewModel.swift */,
+				2128011D2845C80C00D24C35 /* CalendarViewViewModel.swift */,
 				21B62899280ADA7F00E3FC49 /* UserSession.swift */,
 				21AC33D52821494800A79F7B /* LoginViewModel.swift */,
 				213C5CC32833A56700ACB95F /* SignUpViewModel.swift */,
 				21E61907283D0287007F42DC /* AddViewViewModel.swift */,
 				215249672845029600FDA66E /* JournalEntryViewViewModel.swift */,
 				215249692845042200FDA66E /* HabitCalendarViewModel.swift */,
+				211040732845ED7B00DC1D17 /* HomeViewViewModel.swift */,
+				21C16C0428478F3400502804 /* DayHistoryViewViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -275,6 +283,7 @@
 		21B62896280AD1D600E3FC49 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				21C16C01284772FC00502804 /* Day History */,
 				212801182845C22B00D24C35 /* Calendar */,
 				215249602844F52D00FDA66E /* Journal */,
 				21071C24284367A8007C7DC4 /* Habit Calendar */,
@@ -288,6 +297,14 @@
 				215249632845021900FDA66E /* RatingView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		21C16C01284772FC00502804 /* Day History */ = {
+			isa = PBXGroup;
+			children = (
+				21C16C022847731100502804 /* DayHistoryView.swift */,
+			);
+			path = "Day History";
 			sourceTree = "<group>";
 		};
 		21DA7F71283B526900E43E4C /* Frameworks */ = {
@@ -470,14 +487,16 @@
 			files = (
 				215249682845029600FDA66E /* JournalEntryViewViewModel.swift in Sources */,
 				21DA7F7B283B92EF00E43E4C /* AddView.swift in Sources */,
-				218B745B2842237000F55A21 /* HomeViewViewModel.swift in Sources */,
 				21E61908283D0287007F42DC /* AddViewViewModel.swift in Sources */,
+				211040742845ED7B00DC1D17 /* HomeViewViewModel.swift in Sources */,
 				215249642845021900FDA66E /* RatingView.swift in Sources */,
 				2152496C2845049A00FDA66E /* DateValue.swift in Sources */,
+				21C16C032847731100502804 /* DayHistoryView.swift in Sources */,
 				21DA7F7D283B942200E43E4C /* CustomTabBar.swift in Sources */,
 				21B62898280AD1E300E3FC49 /* LoginView.swift in Sources */,
 				21DA7F78283B90B800E43E4C /* MainView.swift in Sources */,
 				21071C26284367BF007C7DC4 /* HabitCalendar.swift in Sources */,
+				21C16C0528478F3400502804 /* DayHistoryViewViewModel.swift in Sources */,
 				2128011C2845C69100D24C35 /* BaseCalendarView.swift in Sources */,
 				21B6289C280ADD9400E3FC49 /* SignUpView.swift in Sources */,
 				218B7458284206B000F55A21 /* Habit.swift in Sources */,
@@ -491,6 +510,7 @@
 				21B6285F280AC4B900E3FC49 /* Habit_TrackerApp.swift in Sources */,
 				2128011A2845C23A00D24C35 /* CalendarView.swift in Sources */,
 				21B6289A280ADA7F00E3FC49 /* UserSession.swift in Sources */,
+				2128011E2845C80C00D24C35 /* CalendarViewViewModel.swift in Sources */,
 				21E6190A283D089B007F42DC /* Day.swift in Sources */,
 				21B6289E280AE09A00E3FC49 /* FirebaseUser.swift in Sources */,
 				21DA7F7F283B94AD00E43E4C /* Tab.swift in Sources */,
