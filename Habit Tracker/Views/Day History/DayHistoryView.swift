@@ -20,8 +20,8 @@ struct DayHistoryView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(viewModel.journalEntries) { entry in
-                            VStack {// TODO: Change to habit name
-                                Text(entry.entry)
+                            VStack {
+                                Text(entry.habitName)
                                 RatingView(rating: .constant(entry.rating))
                             }
                             .contentShape(Rectangle())
@@ -43,7 +43,7 @@ struct DayHistoryView: View {
                         }
                     }
                     Text("instead of:")
-                    Text("Habit name here")
+                    Text(selectedEntry.habitName)
                     Text("Rating of the day")
                     RatingView(rating: .constant(selectedEntry.rating))
                 } else {

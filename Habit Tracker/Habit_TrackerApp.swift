@@ -23,7 +23,7 @@ struct Habit_TrackerApp: App {
 
         let settings = Firestore.firestore().settings
         settings.host = "localhost:8080"
-        settings.isPersistenceEnabled = true
+        settings.isPersistenceEnabled = false
         settings.isSSLEnabled = false
         Firestore.firestore().settings = settings
         #elseif DEBUG

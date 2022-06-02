@@ -32,7 +32,13 @@ extension JournalEntryViewViewModel {
             .collection(habit.id)
             .document()
         
-        let journalEntry = JournalEntry(entry: entry, activities: activities, rating: rating)
+        let journalEntry = JournalEntry(
+            id: journalRef.documentID,
+            habitName: habit.name,
+            entry: entry,
+            activities: activities,
+            rating: rating
+        )
         do {
             try journalRef.setData(from: journalEntry)
         } catch {

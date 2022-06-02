@@ -17,14 +17,16 @@ struct JournalEntry: Codable, Identifiable {
         /// A boolean value that represents whether the activity was completed.
         var isCompleted: Bool
     }
+    /// The id of the entry.
+    var id: String
+    /// The name of the habit.
+    var habitName: String
     /// The journal entry.
     let entry: String
     /// The acitvities the use has written.
     let activities: [Activity]
     /// The rating of the day.
     let rating: Int
-    /// The id of the entry.
-    var id = UUID().uuidString
     /// The creating date of the entry.
     var dateCreated = Date()
 }
