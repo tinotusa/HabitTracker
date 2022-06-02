@@ -48,16 +48,15 @@ extension HabitCalendarViewModel {
             .whereField("dateCreated", isGreaterThanOrEqualTo: startDate)
             .whereField("dateCreated", isLessThanOrEqualTo: endDate)
             .limit(to: maxQueryLimit)
-        
-        entriesForSelectedDate = []
 
         do {
             let snapshot = try await query.getDocuments()
+            var temp = [JournalEntry]()
             for document in snapshot.documents {
                 let journalEntry = try document.data(as: JournalEntry.self)
-                entriesForSelectedDate.append(journalEntry)
+                temp.append(journalEntry)
             }
-            
+            entriesForSelectedDate = temp
         } catch {
             print("Error in \(#function)\n\(error)")
         }
@@ -65,12 +64,12 @@ extension HabitCalendarViewModel {
     }
 
     /// Gets the journal entries for the given `habit`.
-    func getJournalEntries() async {
+    func getJournalEntries(inMonthOf date: Date) async {
         precondition(userSession.isSignedIn, "User is not signed in ")
         guard let user = userSession.currentUser else { return }
 
         let calendar = Calendar.current
-        let monthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: habit.createdAt))!
+        let monthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: date))!
         let monthDates: [Date] = calendar.range(of: .day, in: .month, for: monthStart)!.compactMap { day -> Date in
             calendar.date(byAdding: .day, value: day, to: monthStart)!
         }
@@ -85,10 +84,13 @@ extension HabitCalendarViewModel {
         
         do {
             let snapshot = try await query.getDocuments()
+            var temp = [JournalEntry]()
             for document in snapshot.documents {
                 let journalEntry = try document.data(as: JournalEntry.self)
-                journalEntries.append(journalEntry)
+                temp.append(journalEntry)
             }
+            clearSelectedEntries() // entries are cleared so that the view doesn't display old entries for a different month
+            journalEntries = temp
         } catch {
             print("Error in \(#function)\n\(error)")
         }
@@ -103,6 +105,11 @@ extension HabitCalendarViewModel {
             }
         }
         return false
+    }
+
+    /// Clears the entries in the current `entriesForSelectedDate` array.
+    func clearSelectedEntries() {
+        entriesForSelectedDate = []
     }
 }
 

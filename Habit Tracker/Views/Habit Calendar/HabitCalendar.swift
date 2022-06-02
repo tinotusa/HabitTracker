@@ -40,14 +40,17 @@ struct HabitCalendar: View {
                 }
             }
         }
-        .onAppear {
+        .onChange(of: date) { date in
+            Task {
+                await viewModel.getJournalEntries(inMonthOf: date)
+            }
+        }
+        .task {
             if !userSession.isSignedIn {
                 return
             }
             viewModel.setUp(userSession: userSession, habit: habit)
-            Task {
-                await viewModel.getJournalEntries()
-            }
+            await viewModel.getJournalEntries(inMonthOf: date)
         }
         .fullScreenCover(isPresented: $showAddJournalEntryView) {
             JournalEntryView(habit: habit)
