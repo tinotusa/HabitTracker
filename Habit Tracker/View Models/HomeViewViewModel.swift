@@ -52,16 +52,17 @@ extension HomeViewViewModel {
             .collectionGroup("habits")
             .order(by: "createdAt")
             .limit(to: maxQueryLimit)
-       habits = []
+
         do {
             let snapshot = try await query.getDocuments()
             nextDocument =  snapshot.documents.count < maxQueryLimit ? nil : snapshot.documents.last
             previousDocument = nil
-            
+            var tempHabits = [Habit]()
             for document in snapshot.documents {
                 let habit = try document.data(as: Habit.self)
-                habits.append(habit)
+                tempHabits.append(habit)
             }
+            habits = tempHabits
         } catch {
             print("Error in \(#function): \(error)")
         }
