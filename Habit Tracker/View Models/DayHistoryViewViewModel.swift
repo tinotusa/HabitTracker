@@ -48,7 +48,6 @@ extension DayHistoryViewViewModel {
                 for document in snapshot.documents {
                     let entry = try document.data(as: JournalEntry.self)
                     temp.append(entry)
-                    print(temp)
                 }
             }
             journalEntries = temp

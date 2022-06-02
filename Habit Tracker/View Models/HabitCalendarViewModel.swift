@@ -53,7 +53,6 @@ extension HabitCalendarViewModel {
 
         do {
             let snapshot = try await query.getDocuments()
-            print("here", snapshot.documents.count)
             for document in snapshot.documents {
                 let journalEntry = try document.data(as: JournalEntry.self)
                 entriesForSelectedDate.append(journalEntry)
