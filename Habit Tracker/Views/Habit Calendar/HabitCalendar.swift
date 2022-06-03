@@ -53,6 +53,10 @@ struct HabitCalendar: View {
             await viewModel.getJournalEntries(inMonthOf: date)
         }
         .fullScreenCover(isPresented: $showAddJournalEntryView) {
+            Task {
+                await viewModel.getJournalEntries(inMonthOf: date)
+            }
+        } content: {
             JournalEntryView(habit: habit)
         }
     }
