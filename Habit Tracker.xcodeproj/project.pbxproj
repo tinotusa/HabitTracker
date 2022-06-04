@@ -36,7 +36,6 @@
 		21B6288E280AC89C00E3FC49 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 21B6288D280AC89C00E3FC49 /* FirebaseFirestore */; };
 		21B62890280AC89C00E3FC49 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 21B6288F280AC89C00E3FC49 /* FirebaseFirestoreSwift */; };
 		21B62892280AC89C00E3FC49 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 21B62891280AC89C00E3FC49 /* FirebaseFunctions */; };
-		21B62894280AC89C00E3FC49 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 21B62893280AC89C00E3FC49 /* FirebaseMessaging */; };
 		21B62898280AD1E300E3FC49 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B62897280AD1E300E3FC49 /* LoginView.swift */; };
 		21B6289A280ADA7F00E3FC49 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B62899280ADA7F00E3FC49 /* UserSession.swift */; };
 		21B6289C280ADD9400E3FC49 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6289B280ADD9400E3FC49 /* SignUpView.swift */; };
@@ -109,6 +108,7 @@
 		21B6289D280AE09900E3FC49 /* FirebaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUser.swift; sourceTree = "<group>"; };
 		21C16C022847731100502804 /* DayHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayHistoryView.swift; sourceTree = "<group>"; };
 		21C16C0428478F3400502804 /* DayHistoryViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayHistoryViewViewModel.swift; sourceTree = "<group>"; };
+		21CDC546284B1CAE00710020 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		21DA7F72283B526900E43E4C /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		21DA7F75283B592700E43E4C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		21DA7F77283B90B800E43E4C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -130,7 +130,6 @@
 				21B6288C280AC89C00E3FC49 /* FirebaseAuth in Frameworks */,
 				21DA7F73283B526900E43E4C /* AuthenticationServices.framework in Frameworks */,
 				21B6288E280AC89C00E3FC49 /* FirebaseFirestore in Frameworks */,
-				21B62894280AC89C00E3FC49 /* FirebaseMessaging in Frameworks */,
 				21B62890280AC89C00E3FC49 /* FirebaseFirestoreSwift in Frameworks */,
 				21B62892280AC89C00E3FC49 /* FirebaseFunctions in Frameworks */,
 				214F41C328212BDE00A9D696 /* GoogleSignIn in Frameworks */,
@@ -251,6 +250,7 @@
 				21B6285E280AC4B900E3FC49 /* Habit_TrackerApp.swift */,
 				21B62862280AC4BB00E3FC49 /* Assets.xcassets */,
 				21B62864280AC4BB00E3FC49 /* Preview Content */,
+				21CDC546284B1CAE00710020 /* TODO.md */,
 			);
 			path = "Habit Tracker";
 			sourceTree = "<group>";
@@ -363,7 +363,6 @@
 				21B6288D280AC89C00E3FC49 /* FirebaseFirestore */,
 				21B6288F280AC89C00E3FC49 /* FirebaseFirestoreSwift */,
 				21B62891280AC89C00E3FC49 /* FirebaseFunctions */,
-				21B62893280AC89C00E3FC49 /* FirebaseMessaging */,
 				214F41C228212BDE00A9D696 /* GoogleSignIn */,
 			);
 			productName = "Habit Tracker";
@@ -1026,11 +1025,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 21B6288A280AC89C00E3FC49 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFunctions;
-		};
-		21B62893280AC89C00E3FC49 /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 21B6288A280AC89C00E3FC49 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

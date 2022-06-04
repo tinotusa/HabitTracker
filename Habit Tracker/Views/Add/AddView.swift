@@ -91,11 +91,29 @@ struct AddView: View {
                 }
                 
                 Button("Add habit") {
-                    viewModel.addHabit(session: userSession)
+                    Task {
+                        await viewModel.addHabit(session: userSession)
+                    }
                 }
                 .disabled(!viewModel.allFieldsFilled)
             }
             .padding()
+        }
+        .alert(
+            "Get permissions",
+            isPresented: $viewModel.showSettingsForPermissions,
+            presenting: viewModel.permissionsDetails
+        ) { details in
+            Button(role: .cancel){
+                // Default close
+            } label: {
+                Text("Deny")
+            }
+            Button("Accept") {
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            }
+        } message: { details in
+            Text(details.message)
         }
     }
 }

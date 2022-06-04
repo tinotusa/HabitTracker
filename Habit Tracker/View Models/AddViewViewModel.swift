@@ -8,6 +8,12 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import UserNotifications
+
+struct PermissionDetails {
+    let title: String
+    let message: String
+}
 
 /// Add view view model.
 @MainActor
@@ -52,6 +58,17 @@ class AddViewViewModel: ObservableObject {
     
     /// A reference to the firestore database.
     private lazy var firestore = Firestore.firestore()
+    
+    /// A boolean value that shows the state of the notifications permissions.
+    @Published var showSettingsForPermissions = false
+    
+    var permissionsDetails: PermissionDetails? {
+        didSet {
+            if permissionsDetails != nil {
+                showSettingsForPermissions = true
+            }
+        }
+    }
 }
 
 // MARK: Computed Properties
@@ -85,8 +102,16 @@ extension AddViewViewModel {
         activityInput = ""
     }
     
+    func getNotificationsSettings(center: UNUserNotificationCenter) async -> UNNotificationSettings {
+        await withCheckedContinuation { continuation in
+            center.getNotificationSettings { settings in
+                continuation.resume(returning: settings)
+            }
+        }
+    }
+    
     /// Adds the habit to the firestore database.
-    func addHabit(session: UserSession) {
+    func addHabit(session: UserSession) async {
         precondition(session.currentUser != nil, "User is not logged in")
         assert(allFieldsFilled, "All fields not filled in")
         guard let user = session.currentUser else {
@@ -111,6 +136,87 @@ extension AddViewViewModel {
         )
         do {
             try habitRef.setData(from: habit)
+            // TODO: Move to some notifications manager?
+            let center = UNUserNotificationCenter.current()
+            let hasPermission = try await center.requestAuthorization(options: [.alert, .badge, .sound])
+            if !hasPermission {
+                permissionsDetails = PermissionDetails(
+                    title: "Allow reminders for habits",
+                    message: "Please allow the notifications for this app," +
+                        " so that it can remind you when you need to complete a certain habit"
+                )
+                return
+            }
+            let settings = await getNotificationsSettings(center: center)
+            guard (settings.authorizationStatus == .authorized ||
+                   settings.authorizationStatus == .provisional) else {
+                return
+            }
+            
+            if settings.lockScreenSetting == .enabled ||
+                settings.notificationCenterSetting == .enabled ||
+                settings.alertSetting == .enabled ||
+                settings.authorizationStatus == .authorized
+            {
+                // create notification type
+                let content = UNMutableNotificationContent()
+                content.title = habit.isQuittingHabit ? "Quitting \(habit.name)" : "Starting \(habit.name)"
+                content.subtitle = "this is the subtitle"
+                content.sound = .default
+                content.body = habit.isQuittingHabit ?
+                "You are quitting \(habit.name), try to do this instead: \(habit.activities.randomElement()!)" :
+                "You are starting \(habit.name). Make sure to do it to help the habit stick"
+                
+                for day in habit.occurrenceDays {
+                    // Trigger
+                    var dateComponents = DateComponents()
+                    dateComponents.weekday = day.rawValue + 1
+                    let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: habit.occurrenceTime)
+                    dateComponents.hour = timeComponents.hour ?? 0
+                    dateComponents.minute = (timeComponents.minute ?? 0)
+                    #if EMULATORS
+                    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
+                    #else
+                    let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+                    #endif
+                    
+                    // Request
+                    let id = UUID().uuidString
+                    let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+                    try await center.add(request)
+                    
+                    // check up trigger?
+                    let reminderContent = UNMutableNotificationContent()
+                    reminderContent.title = "Write journal entry"
+                    reminderContent.sound = .default
+                    reminderContent.body = "You should have finished \(habit.name), how do you feel?"
+                    reminderContent.userInfo = [
+                        "USER_ID": user.uid,
+                        "HABIT_ID": habit.id
+                    ]
+                    reminderContent.categoryIdentifier = "JOURNAL_ENTRY"
+                    
+                    var reminderDateComponents = DateComponents()
+                    reminderDateComponents.weekday = day.rawValue + 1
+                    reminderDateComponents.hour = timeComponents.hour ?? 0 + habit.durationHours
+                    reminderDateComponents.minute = (timeComponents.minute ?? 0) + habit.durationMinutes
+                    #if EMULATORS
+                    let reminderTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 6, repeats: false)
+                    #else
+                    let reminderTrigger = UNCalendarNotificationTrigger(dateMatching: reminderDateComponents, repeats: true)
+                    #endif
+                    
+                    // Request
+                    let reminderID = UUID().uuidString
+                    let reminderRequest = UNNotificationRequest(identifier: reminderID, content: reminderContent, trigger: reminderTrigger)
+                    try await center.add(reminderRequest)
+                }
+                // schedule notification
+            } else {
+                let content = UNMutableNotificationContent()
+                content.sound = .default
+                // TODO: implement
+            }
         } catch {
             print("Error in \(#function): \(error)")
         }
