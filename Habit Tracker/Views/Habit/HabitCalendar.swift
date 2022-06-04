@@ -8,12 +8,17 @@
 import SwiftUI
 
 struct HabitCalendar: View {
-    let habit: Habit
+    @State private var habit: Habit
     
     @EnvironmentObject var userSession: UserSession
     @State private var date = Date()
     @State private var showAddJournalEntryView = false
     @StateObject var viewModel = HabitCalendarViewModel()
+    @State private var showEditingView = false
+    
+    init(habit: Habit) {
+        _habit = State(wrappedValue: habit)
+    }
     
     var body: some View {
         VStack {
@@ -40,6 +45,13 @@ struct HabitCalendar: View {
                 }
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button("Edit") {
+                    showEditingView = true
+                }
+            }
+        }
         .onChange(of: date) { date in
             Task {
                 await viewModel.getJournalEntries(inMonthOf: date)
@@ -58,6 +70,14 @@ struct HabitCalendar: View {
             }
         } content: {
             JournalEntryView(habit: habit)
+        }
+        .sheet(isPresented: $showEditingView) {
+            EditHabitView(habit: habit)
+                .onDisappear {
+                    Task {
+                        habit = await viewModel.getHabit(id: habit.id, userSession: userSession)
+                    }
+                }
         }
     }
 }

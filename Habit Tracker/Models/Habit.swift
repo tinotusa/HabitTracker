@@ -8,7 +8,7 @@
 import Foundation
 
 /// A struct representing a habit.
-struct Habit: Codable, Identifiable {
+struct Habit: Codable, Identifiable, Equatable {
     /// The id of the habit.
     var id: String
     /// The date that the habit was created.
@@ -39,6 +39,12 @@ struct Habit: Codable, Identifiable {
     
     /// The reason for quitting or starting the habit being added.
     var reason: String
+    
+    /// The local notification id.
+    var localNotificationID: String
+    
+    /// The reminder local notification id.
+    var localReminderNotificationID: String
 }
 
 extension Habit {
@@ -65,6 +71,24 @@ extension Habit {
         self.durationMinutes = durationMinutes
         self.activities = activities
         self.reason = reason
+        localNotificationID = UUID().uuidString
+        localReminderNotificationID = UUID().uuidString
+    }
+    
+    init(copy habit: Habit) {
+        self.id = habit.id
+        createdAt = habit.createdAt
+        self.isQuittingHabit = habit.isQuittingHabit
+        self.isStartingHabit = habit.isStartingHabit
+        self.name = habit.name
+        self.occurrenceTime = habit.occurrenceTime
+        self.occurrenceDays = habit.occurrenceDays
+        self.durationHours = habit.durationHours
+        self.durationMinutes = habit.durationMinutes
+        self.activities = habit.activities
+        self.reason = habit.reason
+        localNotificationID = habit.localNotificationID
+        localReminderNotificationID = habit.localReminderNotificationID
     }
     
     static var example: Habit {

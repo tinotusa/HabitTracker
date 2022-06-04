@@ -111,6 +111,25 @@ extension HabitCalendarViewModel {
     func clearSelectedEntries() {
         entriesForSelectedDate = []
     }
+    
+    /// Gets habit with the specified id.
+    func getHabit(id: String, userSession: UserSession) async -> Habit {
+        precondition(userSession.isSignedIn, "User is not singed in.")
+        guard let user = userSession.currentUser else { fatalError("User is not signed in") }
+        let docRef = firestore.collection("habits")
+            .document(user.uid)
+            .collection("habits")
+            .document(id)
+        
+        do {
+            let snapshot = try await docRef.getDocument()
+            let habit = try snapshot.data(as: Habit.self)
+            return habit
+        } catch {
+            print("\(error)")
+        }
+        fatalError("No habit found")
+    }
 }
 
 private extension HabitCalendarViewModel {

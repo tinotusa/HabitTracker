@@ -181,7 +181,7 @@ extension AddViewViewModel {
                     #endif
                     
                     // Request
-                    let id = UUID().uuidString
+                    let id = habit.localNotificationID
                     let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
                     try await center.add(request)
                     
@@ -207,7 +207,7 @@ extension AddViewViewModel {
                     #endif
                     
                     // Request
-                    let reminderID = UUID().uuidString
+                    let reminderID = habit.localReminderNotificationID
                     let reminderRequest = UNNotificationRequest(identifier: reminderID, content: reminderContent, trigger: reminderTrigger)
                     try await center.add(reminderRequest)
                 }
