@@ -23,6 +23,43 @@ final class NotificationManager: ObservableObject {
         }
     }
     @Published var navigationBindingActive = false
+    
+    static var notificationCenter = UNUserNotificationCenter.current()
+    
+    static func request(
+        identifier: String,
+        title: String,
+        body: String,
+        dateComponents: DateComponents,
+        repeats: Bool,
+        categoryIdentifier: String? = nil,
+        userInfo: [AnyHashable: Any]? = nil
+    ) -> UNNotificationRequest {
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = .default
+        if categoryIdentifier != nil {
+            content.categoryIdentifier = categoryIdentifier!
+        }
+        if userInfo != nil {
+            content.userInfo = userInfo!
+        }
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: repeats)
+        
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        return request
+    }
+    
+    static func add(request: UNNotificationRequest) async -> Bool {
+        do {
+            try await notificationCenter.add(request)
+            return true
+        } catch {
+            print("\(error)")
+        }
+        return false
+    }
 }
 
 class NotificationCenterDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {

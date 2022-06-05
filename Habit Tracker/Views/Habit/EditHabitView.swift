@@ -38,6 +38,7 @@ struct EditHabitView: View {
                 Stepper("Habit duration hours \(habit.durationHours)", value: $habit.durationHours, in: 0 ... 24)
                 Stepper("Habit duration minutes \(habit.durationMinutes)", value: $habit.durationMinutes, in: 0 ... 60)
                 Text("Activities")
+                // TODO: This is a problem (after 1 character the field loses focus)
                 ForEach($habit.activities, id: \.self) { $activity in
                     TextField("Activity", text: $activity, prompt: Text("Placeholder"))
                 }
@@ -99,7 +100,9 @@ struct EditHabitView: View {
 
 extension EditHabitView {
     func saveChanges() {
-        viewModel.saveHabit(habit, userSession: userSession)
+        Task {
+            await viewModel.saveHabit(habit, userSession: userSession)
+        }
     }
 }
 
