@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseFunctions
 
 @MainActor
 final class HabitCalendarViewModel: ObservableObject {
@@ -16,6 +17,7 @@ final class HabitCalendarViewModel: ObservableObject {
     var userSession: UserSession!
     
     private lazy var firestore = Firestore.firestore()
+    private lazy var functions = Functions.functions(region: "australia-southeast1")
     private let maxQueryLimit = 50
 }
 
@@ -129,6 +131,24 @@ extension HabitCalendarViewModel {
             print("\(error)")
         }
         fatalError("No habit found")
+    }
+    
+    /// Deletes a habit from the database.
+    func delete(habit: Habit, userSession: UserSession) async {
+        precondition(userSession.isSignedIn, "User is not logged in.")
+        guard let user = userSession.currentUser else {
+            preconditionFailure("User is not logged in.")
+        }
+        do {
+            let _ = try await functions.httpsCallable("deleteHabit").call([
+                "userID": user.uid,
+                "habitPath": "habits/\(user.uid)/habits/\(habit.id)",
+                "journalPath": "journalEntries/\(user.uid)/\(habit.id)"
+            ])
+            NotificationManager.removePendingNotifications(withIdentifiers: [habit.localNotificationID, habit.localReminderNotificationID])
+        } catch {
+            print("Error in \(#function)\n\(error)")
+        }
     }
 }
 

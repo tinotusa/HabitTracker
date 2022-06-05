@@ -60,6 +60,10 @@ final class NotificationManager: ObservableObject {
         }
         return false
     }
+    
+    static func removePendingNotifications(withIdentifiers ids: [String]) {
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: ids)
+    }
 }
 
 class NotificationCenterDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {

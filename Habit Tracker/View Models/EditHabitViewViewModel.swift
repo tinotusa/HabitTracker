@@ -6,11 +6,15 @@
 //
 
 import FirebaseFirestore
+import FirebaseFunctions
 
+/// ViewModel for EditHabitView
 @MainActor
 final class EditHabitViewViewModel: ObservableObject {
-    @Published var name: String = ""
+    /// A boolean value indicating whether the edit operation had an error.
     @Published var didError = false
+    
+    /// The information about the error.
     @Published var errorDetails: ErrorDetails? {
         didSet {
             if errorDetails != nil {
@@ -18,9 +22,12 @@ final class EditHabitViewViewModel: ObservableObject {
             }
         }
     }
+    
+    /// A boolean value indicating whether the save operation was successful or not.
     @Published var hasSavedSuccessfully = false
     private lazy var firestore = Firestore.firestore()
     
+    /// Saves the edited habit.
     @discardableResult
     func saveHabit(_ habit: Habit, userSession: UserSession) async -> Bool {
         precondition(userSession.isSignedIn, "User is not signed in.")
