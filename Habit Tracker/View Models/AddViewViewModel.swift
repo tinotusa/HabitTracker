@@ -51,7 +51,7 @@ class AddViewViewModel: ObservableObject {
     @Published var activityInput = ""
     
     /// A list of the activities the user has added.
-    @Published var activities = [String]() // TODO: Change name
+    @Published var activities = [Activity]() // TODO: Change name
     
     /// The reason for quitting or starting the habit being added.
     @Published var reason = ""
@@ -98,7 +98,7 @@ extension AddViewViewModel {
     /// Adds the current activity to the list of activities.
     func addActivity() {
         if activityInput.isEmpty { return }
-        activities.append(activityInput)
+        activities.append(Activity(name: activityInput))
         activityInput = ""
     }
     
@@ -164,7 +164,7 @@ extension AddViewViewModel {
                 content.subtitle = "this is the subtitle"
                 content.sound = .default
                 content.body = habit.isQuittingHabit ?
-                "You are quitting \(habit.name), try to do this instead: \(habit.activities.randomElement()!)" :
+                "You are quitting \(habit.name), try to do this instead: \(habit.activities.randomElement()!.name)" :
                 "You are starting \(habit.name). Make sure to do it to help the habit stick"
                 
                 for day in habit.occurrenceDays {
@@ -223,7 +223,7 @@ extension AddViewViewModel {
     }
     
     /// Removes the activity from the list.
-    func removeActivity(activity: String) {
+    func removeActivity(activity: Activity) {
         guard let index = activities.firstIndex(of: activity) else {
             preconditionFailure("Activity: \(activity) isn't in the array of activities.")
         }

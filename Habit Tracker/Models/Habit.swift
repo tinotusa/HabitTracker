@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct Activity: Identifiable, Codable, Equatable {
+    var id = UUID().uuidString
+    var name: String
+}
+
 /// A struct representing a habit.
 struct Habit: Codable, Identifiable, Equatable {
     /// The id of the habit.
@@ -35,7 +40,7 @@ struct Habit: Codable, Identifiable, Equatable {
     var durationMinutes: Int
     
     /// A list of the activities the user has added.
-    var activities: [String]
+    var activities: [Activity]
     
     /// The reason for quitting or starting the habit being added.
     var reason: String
@@ -57,7 +62,7 @@ extension Habit {
         occurrenceDays: Set<Day>,
         durationHours: Int,
         durationMinutes: Int,
-        activities: [String],
+        activities: [Activity],
         reason: String
     ) {
         self.id = id
@@ -101,7 +106,7 @@ extension Habit {
             occurrenceDays: [.monday, .tuesday],
             durationHours: 0,
             durationMinutes: 10,
-            activities: ["activity 1", "activity 2"],
+            activities: [.init(name: "activity 1"), .init(name: "activity 2")],
             reason: "some test reason"
         )
     }

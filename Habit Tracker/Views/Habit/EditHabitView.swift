@@ -39,8 +39,8 @@ struct EditHabitView: View {
                 Stepper("Habit duration minutes \(habit.durationMinutes)", value: $habit.durationMinutes, in: 0 ... 60)
                 Text("Activities")
                 // TODO: This is a problem (after 1 character the field loses focus)
-                ForEach($habit.activities, id: \.self) { $activity in
-                    TextField("Activity", text: $activity, prompt: Text("Placeholder"))
+                ForEach($habit.activities) { $activity in
+                    TextField("Activity", text: $activity.name, prompt: Text("Placeholder"))
                 }
                 Text("Reason for quitting / starting habit")
                 TextEditor(text: $habit.reason)

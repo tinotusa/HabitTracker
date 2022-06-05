@@ -66,9 +66,9 @@ struct AddView: View {
                             viewModel.addActivity()
                         }
                     }
-                    ForEach(viewModel.activities, id: \.self) { activity in
+                    ForEach(viewModel.activities) { activity in
                         HStack {
-                            Text(activity)
+                            Text(activity.name)
                             Button {
                                 viewModel.removeActivity(activity: activity)
                             } label: {

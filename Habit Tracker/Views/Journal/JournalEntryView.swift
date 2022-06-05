@@ -39,7 +39,7 @@ struct JournalEntryView: View {
         }
         .onAppear {
             viewModel.activities = habit.activities.map { activity in
-                JournalEntry.Activity(name: activity, isCompleted: false)
+                JournalEntry.Activity(name: activity.name, isCompleted: false)
             }
         }
     }
