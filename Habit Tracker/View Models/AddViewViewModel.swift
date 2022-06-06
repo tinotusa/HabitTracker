@@ -62,10 +62,23 @@ class AddViewViewModel: ObservableObject {
     /// A boolean value that shows the state of the notifications permissions.
     @Published var showSettingsForPermissions = false
     
+    /// Holds the current state of permissions.
     var permissionsDetails: PermissionDetails? {
         didSet {
             if permissionsDetails != nil {
                 showSettingsForPermissions = true
+            }
+        }
+    }
+    
+    /// A boolean value indicating the view had an error.
+    @Published var didError = false
+    
+    /// Holds the error information.
+    @Published var errorDetails: ErrorDetails? {
+        didSet {
+            if errorDetails != nil {
+                didError = true
             }
         }
     }
@@ -102,26 +115,20 @@ extension AddViewViewModel {
         activityInput = ""
     }
     
-    func getNotificationsSettings(center: UNUserNotificationCenter) async -> UNNotificationSettings {
-        await withCheckedContinuation { continuation in
-            center.getNotificationSettings { settings in
-                continuation.resume(returning: settings)
-            }
-        }
-    }
-    
     /// Adds the habit to the firestore database.
     func addHabit(session: UserSession) async {
         precondition(session.currentUser != nil, "User is not logged in")
         assert(allFieldsFilled, "All fields not filled in")
         guard let user = session.currentUser else {
-            return
+            preconditionFailure("User is not logged in.")
         }
+
         let habitRef = firestore
             .collection("habits")
             .document(user.uid)
             .collection("habits")
             .document()
+
         let habit = Habit(
             id: habitRef.documentID,
             isQuittingHabit: isQuittingHabit,
@@ -136,86 +143,67 @@ extension AddViewViewModel {
         )
         do {
             try habitRef.setData(from: habit)
-            // TODO: Move to some notifications manager?
-            let center = UNUserNotificationCenter.current()
-            let hasPermission = try await center.requestAuthorization(options: [.alert, .badge, .sound])
-            if !hasPermission {
+            let notificationManager = NotificationManager()
+            
+            await notificationManager.requestAuthorization(options: [.alert, .badge, .sound])
+            
+            if await !notificationManager.hasPermissions() {
                 permissionsDetails = PermissionDetails(
                     title: "Allow reminders for habits",
                     message: "Please allow the notifications for this app," +
                         " so that it can remind you when you need to complete a certain habit"
                 )
-                return
-            }
-            let settings = await getNotificationsSettings(center: center)
-            guard (settings.authorizationStatus == .authorized ||
-                   settings.authorizationStatus == .provisional) else {
-                return
             }
             
-            if settings.lockScreenSetting == .enabled ||
-                settings.notificationCenterSetting == .enabled ||
-                settings.alertSetting == .enabled ||
-                settings.authorizationStatus == .authorized
-            {
-                // create notification type
-                let content = UNMutableNotificationContent()
-                content.title = habit.isQuittingHabit ? "Quitting \(habit.name)" : "Starting \(habit.name)"
-                content.subtitle = "this is the subtitle"
-                content.sound = .default
-                content.body = habit.isQuittingHabit ?
-                "You are quitting \(habit.name), try to do this instead: \(habit.activities.randomElement()!.name)" :
-                "You are starting \(habit.name). Make sure to do it to help the habit stick"
+            let title = habit.isQuittingHabit ? "Quitting \(habit.name)" : "Starting \(habit.name)"
+            let body = habit.isQuittingHabit ?
+            "You are quitting \(habit.name), try to do this instead: \(habit.activities.randomElement()!.name)" :
+            "You are starting \(habit.name). Make sure to do it to help the habit stick"
+            
+            let reminderTitle = "Write journal entry"
+            let reminderBody = "You should have finished \(habit.name), how do you feel?"
+            let reminderUserInfo = [
+                "USER_ID": user.uid,
+                "HABIT_ID": habit.id
+            ]
+            let reminderCategoryIdentifier = "JOURNAL_ENTRY"
+            
+            for day in habit.occurrenceDays {
+                var dateComponents = DateComponents()
+                dateComponents.weekday = day.rawValue + 1
+                let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: habit.occurrenceTime)
+                dateComponents.hour = timeComponents.hour ?? 0
+                dateComponents.minute = (timeComponents.minute ?? 0)
                 
-                for day in habit.occurrenceDays {
-                    // Trigger
-                    var dateComponents = DateComponents()
-                    dateComponents.weekday = day.rawValue + 1
-                    let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: habit.occurrenceTime)
-                    dateComponents.hour = timeComponents.hour ?? 0
-                    dateComponents.minute = (timeComponents.minute ?? 0)
-                    #if EMULATORS
-                    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
-                    #else
-                    let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-                    #endif
-                    
-                    // Request
-                    let id = habit.localNotificationID
-                    let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
-                    try await center.add(request)
-                    
-                    // check up trigger?
-                    let reminderContent = UNMutableNotificationContent()
-                    reminderContent.title = "Write journal entry"
-                    reminderContent.sound = .default
-                    reminderContent.body = "You should have finished \(habit.name), how do you feel?"
-                    reminderContent.userInfo = [
-                        "USER_ID": user.uid,
-                        "HABIT_ID": habit.id
-                    ]
-                    reminderContent.categoryIdentifier = "JOURNAL_ENTRY"
-                    
-                    var reminderDateComponents = DateComponents()
-                    reminderDateComponents.weekday = day.rawValue + 1
-                    reminderDateComponents.hour = timeComponents.hour ?? 0 + habit.durationHours
-                    reminderDateComponents.minute = (timeComponents.minute ?? 0) + habit.durationMinutes
-                    #if EMULATORS
-                    let reminderTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 6, repeats: false)
-                    #else
-                    let reminderTrigger = UNCalendarNotificationTrigger(dateMatching: reminderDateComponents, repeats: true)
-                    #endif
-                    
-                    // Request
-                    let reminderID = habit.localReminderNotificationID
-                    let reminderRequest = UNNotificationRequest(identifier: reminderID, content: reminderContent, trigger: reminderTrigger)
-                    try await center.add(reminderRequest)
+                let request = NotificationManager.request(
+                    identifier: habit.localNotificationID,
+                    title: title,
+                    body: body,
+                    dateComponents: dateComponents,
+                    repeats: true
+                )
+                
+                let successfulNotificationAdd = await NotificationManager.add(request: request)
+    
+                var reminderDateComponents = DateComponents()
+                reminderDateComponents.weekday = day.rawValue + 1
+                reminderDateComponents.hour = timeComponents.hour ?? 0 + habit.durationHours
+                reminderDateComponents.minute = (timeComponents.minute ?? 0) + habit.durationMinutes
+                
+                let reminderRequest = NotificationManager.request(
+                    identifier: habit.localReminderNotificationID,
+                    title: reminderTitle,
+                    body: reminderBody,
+                    dateComponents: reminderDateComponents,
+                    repeats: true,
+                    categoryIdentifier: reminderCategoryIdentifier,
+                    userInfo: reminderUserInfo
+                )
+
+                let successfulReminderNotificationAdd = await NotificationManager.add(request: reminderRequest)
+                if !(successfulNotificationAdd && successfulReminderNotificationAdd) {
+                    errorDetails = ErrorDetails(name: "Notification error", message: "Failed to add notifications for this habit.")
                 }
-                // schedule notification
-            } else {
-                let content = UNMutableNotificationContent()
-                content.sound = .default
-                // TODO: implement
             }
         } catch {
             print("Error in \(#function): \(error)")

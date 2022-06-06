@@ -18,7 +18,9 @@ final class EditHabitViewViewModel: ObservableObject {
     @Published var errorDetails: ErrorDetails? {
         didSet {
             if errorDetails != nil {
-                didError = true
+                DispatchQueue.main.async {
+                    self.didError = true
+                }
             }
         }
     }
@@ -95,10 +97,12 @@ final class EditHabitViewViewModel: ObservableObject {
                 hasSavedSuccessfully = true
             }
         } catch {
-            errorDetails = ErrorDetails(
-                name: "Save Error",
-                message: "Failed to save changes. Please try again."
-            )
+            DispatchQueue.main.async {
+                self.errorDetails = ErrorDetails(
+                    name: "Save Error",
+                    message: "Failed to save changes. Please try again."
+                )
+            }
             print("Error in \(#function)\n\(error)")
             return false
         }

@@ -22,8 +22,10 @@ class UserSession: ObservableObject {
     @Published var didError = false
     @Published var errorDetails: ErrorDetails? {
         didSet {
-            if errorDetails != nil{
-                didError = true
+            if errorDetails != nil {
+                DispatchQueue.main.async {
+                    self.didError = true
+                }
             }
         }
     }
@@ -49,7 +51,9 @@ class UserSession: ObservableObject {
                     }
                 } catch {
                     print(error)
-                    errorDetails = ErrorDetails(name: "Login error", message: error.localizedDescription)
+                    DispatchQueue.main.async {
+                        self.errorDetails = ErrorDetails(name: "Login error", message: error.localizedDescription)
+                    }
                 }
             }
         }

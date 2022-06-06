@@ -64,6 +64,32 @@ final class NotificationManager: ObservableObject {
     static func removePendingNotifications(withIdentifiers ids: [String]) {
         notificationCenter.removePendingNotificationRequests(withIdentifiers: ids)
     }
+    
+    func getNotificationsSettings() async -> UNNotificationSettings {
+        await withCheckedContinuation { continuation in
+            NotificationManager.notificationCenter.getNotificationSettings { settings in
+                continuation.resume(returning: settings)
+            }
+        }
+    }
+    
+    func hasPermissions() async -> Bool {
+        let settings = await getNotificationsSettings()
+        return (
+            settings.lockScreenSetting          == .enabled ||
+            settings.notificationCenterSetting  == .enabled ||
+            settings.alertSetting               == .enabled ||
+            settings.authorizationStatus        == .authorized
+        )
+    }
+    
+    func requestAuthorization(options: UNAuthorizationOptions) async {
+        do {
+            try await Self.notificationCenter.requestAuthorization(options: options)
+        } catch {
+            print("Error in \(#function)\n\(error)")
+        }
+    }
 }
 
 class NotificationCenterDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
