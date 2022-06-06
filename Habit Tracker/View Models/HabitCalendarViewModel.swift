@@ -11,10 +11,12 @@ import FirebaseFunctions
 
 @MainActor
 final class HabitCalendarViewModel: ObservableObject {
-    @Published var journalEntries = [JournalEntry]()
-    @Published var entriesForSelectedDate = [JournalEntry]()
     var habit: Habit!
     var userSession: UserSession!
+    
+    @Published var journalEntries = [JournalEntry]()
+    @Published var entriesForSelectedDate = [JournalEntry]()
+    @Published var showingDeleteConfirmation = false
     
     private lazy var firestore = Firestore.firestore()
     private lazy var functions = Functions.functions(region: "australia-southeast1")

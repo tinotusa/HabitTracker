@@ -51,8 +51,7 @@ struct HabitCalendar: View {
                 HStack {
                     Button(role: .destructive) {
                         Task {
-                            await viewModel.delete(habit: habit, userSession: userSession)
-                            dismiss()
+                            viewModel.showingDeleteConfirmation = true
                         }
                     } label: {
                         Image(systemName: "trash")
@@ -90,6 +89,21 @@ struct HabitCalendar: View {
                         habit = await viewModel.getHabit(id: habit.id, userSession: userSession)
                     }
                 }
+        }
+        .confirmationDialog(
+            "Delete habit",
+            isPresented: $viewModel.showingDeleteConfirmation
+        ) {
+            Button(role: .destructive) {
+                Task {
+                    await viewModel.delete(habit: habit, userSession: userSession)
+                    dismiss()
+                }
+            } label: {
+                Text("Delete")
+            }
+        } message: {
+            Text("Are you sure you want to delete this habit?")
         }
     }
 }
