@@ -23,12 +23,14 @@ struct JournalEntryView: View {
             TextEditor(text: $viewModel.entry)
                 .frame(height: 160)
                 .border(.gray)
-            Text("Which of these things did you do?")
-            ForEach($viewModel.activities) { $activity in
-                HStack {
-                    Text(activity.name)
-                    Toggle("activity", isOn: $activity.isCompleted)
-                        .labelsHidden()
+            if habit.isQuittingHabit {
+                Text("Which of these things did you do?")
+                ForEach($viewModel.activities) { $activity in
+                    HStack {
+                        Text(activity.name)
+                        Toggle("activity", isOn: $activity.isCompleted)
+                            .labelsHidden()
+                    }
                 }
             }
             Text("How do you feel?")
