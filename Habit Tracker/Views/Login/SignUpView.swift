@@ -57,14 +57,14 @@ struct SignUpView: View {
                 
                 Group {
                     SecureField("Password", text: $viewModel.password, prompt: Text("Password"))
-                        .textContentType(.password)
+                        .textContentType(.newPassword)
                         .submitLabel(.next)
                         .onSubmit {
                             nextField()
                         }
                         .focused($inputField, equals: .password)
                     SecureField("Password Confirmation", text: $viewModel.passwordConfirmation, prompt: Text("Password confirmation"))
-                        .textContentType(.password)
+                        .textContentType(.newPassword)
                         .submitLabel(.next)
                         .onSubmit {
                             nextField()

@@ -5,15 +5,24 @@
 //  Created by Tino on 28/5/2022.
 //
 
+import FirebaseFunctions
 import FirebaseFirestore
 
 @MainActor
 final class HomeViewViewModel: ObservableObject {
-    @Published var habits: [Habit]
+    /// The habits to be displayed.
+    @Published var habits = [Habit]()
+    /// A boolean value indicating wheter the database has more data in the list.
     @Published var hasNextPage = false
+    /// A boolean value indicating whether the database has more data.
     @Published var hasPreviousPage = false
+    /// A boolean value indicating whether the account termination confirmation dialog is displayed.
+    @Published var showingAccountTerminationDialog = false
     
     private lazy var firestore = Firestore.firestore()
+    private lazy var functions = Functions.functions(region: "australia-southeast1")
+    
+    /// The next document to be queried from.
     private var nextDocument: DocumentSnapshot? {
         didSet {
             if nextDocument == nil {
@@ -23,6 +32,8 @@ final class HomeViewViewModel: ObservableObject {
             }
         }
     }
+    
+    /// The previous document to be queried from.
     private var previousDocument: DocumentSnapshot? {
         didSet {
             if previousDocument == nil {
@@ -32,15 +43,9 @@ final class HomeViewViewModel: ObservableObject {
             }
         }
     }
+    
+    /// The max query limit for habits.
     private let maxQueryLimit = 10
-    
-    init() {
-        habits = []
-    }
-}
-
-private extension HomeViewViewModel {
-    
 }
 
 extension HomeViewViewModel {
@@ -143,6 +148,36 @@ extension HomeViewViewModel {
                 }
             }
             habits = tempHabits.reversed()
+        } catch {
+            print("Error in \(#function)\n\(error)")
+        }
+    }
+    
+    /// Deletes the user from the database.
+    /// - parameter userSession: The current user that is logged in.
+    func deleteUser(userSession: UserSession) async {
+        guard let user = userSession.currentUser else {
+            preconditionFailure("User is not logged in")
+        }
+        do {
+            var notificationIDS = [String]()
+            let collectionRef = firestore
+                .collection("habits")
+                .document(user.uid)
+                .collection("habits")
+            let snapshot = try await collectionRef.getDocuments()
+            
+            for document in snapshot.documents {
+                if let id1 = document.get("localNotificationID") as? String {
+                    notificationIDS.append(id1)
+                }
+                if let id2 = document.get("localReminderNotificationID") as? String {
+                    notificationIDS.append(id2)
+                }
+            }
+            NotificationManager.removePendingNotifications(withIdentifiers: notificationIDS)
+            let _ = try await functions.httpsCallable("deleteUser").call(["userID": user.uid])
+            try await user.delete()
         } catch {
             print("Error in \(#function)\n\(error)")
         }

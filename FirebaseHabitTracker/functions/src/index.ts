@@ -40,6 +40,7 @@ exports.deleteHabit = functions
         "Must be authenticated to delete a habit."
       )
     }
+
     // Is the caller the creator of the habit?
     if (context.auth!.uid != data.userID) {
       throw new functions.https.HttpsError(
@@ -70,7 +71,6 @@ exports.deleteHabit = functions
       force: true
     })
 
-
     return {
       habitPath: habitPath,
       journalPath: journalPath,
@@ -78,3 +78,51 @@ exports.deleteHabit = functions
 })
 
 // Deletes the user from the database.
+exports.deleteUser = functions
+  .region("australia-southeast1")
+  .runWith({
+    timeoutSeconds: 540,
+    memory: "2GB"
+  })
+  .https
+  .onCall(async (data, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError("permission-denied", "Must be authenticated in order to delete a user.")
+    }
+
+    let userID = data.userID
+    if (userID != context.auth!.uid) {
+      throw new functions.https.HttpsError("permission-denied", "Must be the account creator in order to delete.")
+    }
+    functions.logger.log(`Deleting user ${userID}`)
+
+    await firebase_tools.firestore
+      .delete(`users/${userID}`, {
+        project: process.env.GCLOUD_PROJECT,
+        recursive: true,
+        yes: true,
+        force: true
+      })
+
+    functions.logger.log(`Deleting habits for user ${userID}`)
+    await firebase_tools.firestore
+    .delete(`habits/${userID}`, {
+      project: process.env.GCLOUD_PROJECT,
+      recursive: true,
+      yes: true,
+      force: true
+    })
+
+    functions.logger.log(`Deleting journal entries for user ${userID}`)
+    await firebase_tools.firestore
+    .delete(`journalEntries/${userID}`, {
+      project: process.env.GCLOUD_PROJECT,
+      recursive: true,
+      yes: true,
+      force: true
+    })
+
+    return {
+      userID: userID
+    }
+})

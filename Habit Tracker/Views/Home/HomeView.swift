@@ -19,6 +19,11 @@ struct HomeView: View {
                     userSession.signOut()
                     print("logged out")
                 }
+                Button(role: .destructive) {
+                    viewModel.showingAccountTerminationDialog = true
+                } label: {
+                    Text("Delete account")
+                }
                 ForEach(viewModel.habits) { habit in
                     NavigationLink(destination: HabitCalendar(habit: habit)) {
                         VStack {
@@ -44,6 +49,21 @@ struct HomeView: View {
                     .disabled(!viewModel.hasNextPage)
                 }
             
+            }
+            .confirmationDialog(
+                "Account termination",
+                isPresented: $viewModel.showingAccountTerminationDialog
+            ) {
+                Button(role: .destructive) {
+                    Task {
+                        await viewModel.deleteUser(userSession: userSession)
+                        userSession.signOut()
+                    }
+                } label: {
+                    Text("Delete")
+                }
+            } message: {
+                Text("Are you sure you want to delete your acount?")
             }
             .onAppear {
                 Task {
