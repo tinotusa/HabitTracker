@@ -58,21 +58,23 @@ struct AddView: View {
                 }
                 
                 // where does it usually happen?
-                Group {
-                    Text("What do you want to do instead?")
-                    HStack {
-                        TextField("", text: $viewModel.activityInput, prompt: Text("I want to..."))
-                        Button("Add") {
-                            viewModel.addActivity()
-                        }
-                    }
-                    ForEach(viewModel.activities) { activity in
+                if viewModel.isQuittingHabit {
+                    Group {
+                        Text("What do you want to do instead?")
                         HStack {
-                            Text(activity.name)
-                            Button {
-                                viewModel.removeActivity(activity: activity)
-                            } label: {
-                                Image(systemName: "xmark")
+                            TextField("", text: $viewModel.activityInput, prompt: Text("I want to..."))
+                            Button("Add") {
+                                viewModel.addActivity()
+                            }
+                        }
+                        ForEach(viewModel.activities) { activity in
+                            HStack {
+                                Text(activity.name)
+                                Button {
+                                    viewModel.removeActivity(activity: activity)
+                                } label: {
+                                    Image(systemName: "xmark")
+                                }
                             }
                         }
                     }

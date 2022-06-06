@@ -100,7 +100,7 @@ extension AddViewViewModel {
             habitName.isEmpty ||
             occurrenceDays.isEmpty ||
             !(durationHours == 0 || durationMinutes == 0) ||
-            activities.isEmpty ||
+            (isQuittingHabit && activities.isEmpty) ||
             reason.isEmpty
         )
     }
