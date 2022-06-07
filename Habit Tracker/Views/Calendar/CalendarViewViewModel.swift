@@ -29,8 +29,9 @@ extension CalendarViewViewModel {
     }
     
     func getHabitsForMonth(date: Date) async {
-        precondition(userSession.isSignedIn, "User is not signed in.")
-        
+        guard let user = userSession.currentUser else {
+            preconditionFailure("User is not logged in.")
+        }
         // TODO: Move to date as extension
         let calendar = Calendar.current
         let dateComps = calendar.dateComponents([.month, .year], from: date)
@@ -47,21 +48,16 @@ extension CalendarViewViewModel {
         
         var temp = [JournalEntry]()
         do {
-            let result = try await functions.httpsCallable("getAllHabitIDs").call()
-            guard let dict = result.data as? [String: [String]] else { return }
-            guard let collectionIDS = dict["collections"] else { return }
-            for collectionID in collectionIDS {
-                let query = firestore
-                    .collectionGroup(collectionID)
-                    .whereField("dateCreated", isGreaterThanOrEqualTo: startDate)
-                    .whereField("dateCreated", isLessThanOrEqualTo: endDate)
-                    .limit(to: maxQueryLimit)
-                
-                let snapshot = try await query.getDocuments()
-                for document in snapshot.documents {
-                    let journalEntry = try document.data(as: JournalEntry.self)
-                    temp.append(journalEntry)
-                }
+            let query = firestore
+                .collectionGroup("journalEntries")
+                .whereField("createdBy", isEqualTo: user.uid)
+                .whereField("dateCreated", isGreaterThanOrEqualTo: startDate)
+                .whereField("dateCreated", isLessThanOrEqualTo: endDate)
+                .limit(to: maxQueryLimit)
+            let snapshot = try await query.getDocuments()
+            for document in snapshot.documents {
+                let journalEntry = try document.data(as: JournalEntry.self)
+                temp.append(journalEntry)
             }
             entriesForSelectedDate = temp
         } catch {

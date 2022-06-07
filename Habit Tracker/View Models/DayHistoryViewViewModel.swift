@@ -24,31 +24,28 @@ final class DayHistoryViewViewModel: ObservableObject {
 }
 
 extension DayHistoryViewViewModel {
-    func getHabits(for date: Date) async {
+    func getHabits(for date: Date, userSession: UserSession) async {
+        guard let user = userSession.currentUser else {
+            preconditionFailure("User is not logged in.")
+        }
         do {
-            let result = try await functions.httpsCallable("getAllHabitIDs").call()
-            
-            guard let data = result.data as? [String: [String]] else { return }
-            guard let collectionIDS = data["collections"] else { return }
-            
             let calendar = Calendar.current
             let components = calendar.dateComponents([.year, .month, .day], from: date)
             let startDate = calendar.date(from: components)!
             let endDate = calendar.date(byAdding: .day, value: 1, to: startDate)!
             
             var temp = [JournalEntry]()
-            for collectionID in collectionIDS {
-                let query = firestore
-                    .collectionGroup(collectionID)
-                    .whereField("dateCreated", isGreaterThanOrEqualTo: startDate)
-                    .whereField("dateCreated", isLessThanOrEqualTo: endDate)
-                    .limit(to: maxQueryLimit)
-                
-                let snapshot = try await query.getDocuments()
-                for document in snapshot.documents {
-                    let entry = try document.data(as: JournalEntry.self)
-                    temp.append(entry)
-                }
+            let query = firestore
+                .collectionGroup("journalEntries")
+                .whereField("createdBy", isEqualTo: user.uid)
+                .whereField("dateCreated", isGreaterThanOrEqualTo: startDate)
+                .whereField("dateCreated", isLessThanOrEqualTo: endDate)
+                .limit(to: maxQueryLimit)
+            
+            let snapshot = try await query.getDocuments()
+            for document in snapshot.documents {
+                let entry = try document.data(as: JournalEntry.self)
+                temp.append(entry)
             }
             journalEntries = temp
         } catch {

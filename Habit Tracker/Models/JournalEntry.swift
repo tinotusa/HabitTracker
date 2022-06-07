@@ -19,6 +19,8 @@ struct JournalEntry: Codable, Identifiable {
     }
     /// The id of the entry.
     var id: String
+    /// The id of creator..
+    var createdBy: String
     /// The name of the habit.
     var habitName: String
     /// The journal entry.

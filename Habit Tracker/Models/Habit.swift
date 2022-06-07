@@ -16,6 +16,10 @@ struct Activity: Identifiable, Codable, Equatable {
 struct Habit: Codable, Identifiable, Equatable {
     /// The id of the habit.
     var id: String
+    
+    /// The id of creator.
+    var createdBy: String
+    
     /// The date that the habit was created.
     var createdAt: Date
     /// A boolean value indicating whether a habit is being quit (stopped).
@@ -55,6 +59,7 @@ struct Habit: Codable, Identifiable, Equatable {
 extension Habit {
     init(
         id: String,
+        createdBy: String,
         isQuittingHabit: Bool,
         isStartingHabit: Bool,
         name: String,
@@ -66,6 +71,7 @@ extension Habit {
         reason: String
     ) {
         self.id = id
+        self.createdBy = createdBy
         createdAt = Date()
         self.isQuittingHabit = isQuittingHabit
         self.isStartingHabit = isStartingHabit
@@ -80,25 +86,26 @@ extension Habit {
         localReminderNotificationID = UUID().uuidString
     }
     
-    init(copy habit: Habit) {
-        self.id = habit.id
-        createdAt = habit.createdAt
-        self.isQuittingHabit = habit.isQuittingHabit
-        self.isStartingHabit = habit.isStartingHabit
-        self.name = habit.name
-        self.occurrenceTime = habit.occurrenceTime
-        self.occurrenceDays = habit.occurrenceDays
-        self.durationHours = habit.durationHours
-        self.durationMinutes = habit.durationMinutes
-        self.activities = habit.activities
-        self.reason = habit.reason
-        localNotificationID = habit.localNotificationID
-        localReminderNotificationID = habit.localReminderNotificationID
-    }
+//    init(copy habit: Habit) {
+//        self.id = habit.id
+//        createdAt = habit.createdAt
+//        self.isQuittingHabit = habit.isQuittingHabit
+//        self.isStartingHabit = habit.isStartingHabit
+//        self.name = habit.name
+//        self.occurrenceTime = habit.occurrenceTime
+//        self.occurrenceDays = habit.occurrenceDays
+//        self.durationHours = habit.durationHours
+//        self.durationMinutes = habit.durationMinutes
+//        self.activities = habit.activities
+//        self.reason = habit.reason
+//        localNotificationID = habit.localNotificationID
+//        localReminderNotificationID = habit.localReminderNotificationID
+//    }
     
     static var example: Habit {
         Habit(
             id: UUID().uuidString,
+            createdBy: UUID().uuidString,
             isQuittingHabit: true,
             isStartingHabit: false,
             name: "test name",

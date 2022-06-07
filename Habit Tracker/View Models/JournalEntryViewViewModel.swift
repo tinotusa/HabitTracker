@@ -29,11 +29,12 @@ extension JournalEntryViewViewModel {
         let journalRef = firestore
             .collection("journalEntries")
             .document(user.uid)
-            .collection(habit.id)
+            .collection("journalEntries")
             .document()
         
         let journalEntry = JournalEntry(
             id: journalRef.documentID,
+            createdBy: user.uid,
             habitName: habit.name,
             entry: entry,
             activities: activities,

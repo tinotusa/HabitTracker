@@ -32,10 +32,13 @@ final class EditHabitViewViewModel: ObservableObject {
     /// Saves the edited habit.
     @discardableResult
     func saveHabit(_ habit: Habit, userSession: UserSession) async -> Bool {
-        precondition(userSession.isSignedIn, "User is not signed in.")
-        guard let user = userSession.currentUser else { return false }
+        guard let user = userSession.currentUser else {
+            preconditionFailure("User is not logged in.")
+        }
         
-        let query = firestore.collectionGroup("habits")
+        let query = firestore
+            .collectionGroup("habits")
+            .whereField("createdBy", isEqualTo: user.uid)
             .whereField("id", isEqualTo: habit.id)
             .limit(to: 1)
         

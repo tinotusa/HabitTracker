@@ -52,9 +52,12 @@ extension HomeViewViewModel {
     /// Gets the habits from the database.
     /// - parameter userSession: The current user that is logged in.
     func getHabits(userSession: UserSession) async {
-        precondition(userSession.isSignedIn, "User is not logged in")
+        guard let user = userSession.currentUser else {
+            preconditionFailure("User is not logged in.")
+        }
         let query = firestore
             .collectionGroup("habits")
+            .whereField("createdBy", isEqualTo: user.uid)
             .order(by: "createdAt")
             .limit(to: maxQueryLimit)
 
@@ -76,11 +79,14 @@ extension HomeViewViewModel {
     /// Gets the next page of habits.
     /// - parameter userSession: The current user that is logged in.
     func getNextHabits(userSession: UserSession) async {
-        precondition(userSession.isSignedIn, "User is not logged in")
+        guard let user = userSession.currentUser else {
+            preconditionFailure("User is not logged in.")
+        }
         guard let nextDocument = nextDocument else { return }
         
         let query = firestore
             .collectionGroup("habits")
+            .whereField("createdBy", isEqualTo: user.uid)
             .order(by: "createdAt")
             .start(atDocument: nextDocument)
             .limit(to: maxQueryLimit)
@@ -99,6 +105,7 @@ extension HomeViewViewModel {
             if self.nextDocument != nil {
                 let nextPageQuery = firestore
                     .collectionGroup("habits")
+                    .whereField("createdBy", isEqualTo: user.uid)
                     .order(by: "createdAt")
                     .start(atDocument: self.nextDocument!)
                     .limit(to: maxQueryLimit)
@@ -115,11 +122,14 @@ extension HomeViewViewModel {
     /// Gets the previous page of habits.
     /// - parameter userSession: The current user that is logged in.
     func getPreviousHabits(userSession: UserSession) async {
-        precondition(userSession.isSignedIn, "User is not signed in.")
+        guard let user = userSession.currentUser else {
+            preconditionFailure("User is not logged in.")
+        }
         guard let previousDocument = previousDocument else { return }
   
         let query = firestore
             .collectionGroup("habits")
+            .whereField("createdBy", isEqualTo: user.uid)
             .order(by: "createdAt", descending: true)
             .start(atDocument: previousDocument)
             .limit(to: maxQueryLimit)
@@ -138,6 +148,7 @@ extension HomeViewViewModel {
             if self.previousDocument != nil {
                 let prevPageQuery = firestore
                     .collectionGroup("habits")
+                    .whereField("createdBy", isEqualTo: user.uid)
                     .order(by: "createdAt", descending: true)
                     .limit(to: maxQueryLimit)
                     .start(atDocument: self.previousDocument!)
@@ -160,12 +171,15 @@ extension HomeViewViewModel {
             preconditionFailure("User is not logged in")
         }
         do {
+            // Remove the pending notifications.
+            let allHabitsQueryLlimit = 100
             var notificationIDS = [String]()
-            let collectionRef = firestore
-                .collection("habits")
-                .document(user.uid)
-                .collection("habits")
-            let snapshot = try await collectionRef.getDocuments()
+            let query = firestore
+                .collectionGroup("habits")
+                .whereField("createdBy", isEqualTo: user.uid)
+                .limit(to: allHabitsQueryLlimit)
+            
+            let snapshot = try await query.getDocuments()
             
             for document in snapshot.documents {
                 if let id1 = document.get("localNotificationID") as? String {
@@ -176,7 +190,10 @@ extension HomeViewViewModel {
                 }
             }
             NotificationManager.removePendingNotifications(withIdentifiers: notificationIDS)
+            
+            // Delete documents associated with the user and sign out.
             let _ = try await functions.httpsCallable("deleteUser").call(["userID": user.uid])
+            userSession.signOut()
             try await user.delete()
         } catch {
             print("Error in \(#function)\n\(error)")

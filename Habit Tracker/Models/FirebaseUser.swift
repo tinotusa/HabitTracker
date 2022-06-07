@@ -8,6 +8,7 @@
 import Foundation
 
 struct FirebaseUser: Codable {
+    var id: String
     var firstName: String
     var lastName: String
     var email: String
@@ -15,6 +16,12 @@ struct FirebaseUser: Codable {
     var dateCreated = Date()
     
     static var ExampleUser: FirebaseUser {
-        FirebaseUser(firstName: "Test name", lastName: "test last", email: "test@test.com", birthday: Date())
+        FirebaseUser(
+            id: UUID().uuidString,
+            firstName: "Test name",
+            lastName: "test last",
+            email: "test@test.com",
+            birthday: Date()
+        )
     }
 }

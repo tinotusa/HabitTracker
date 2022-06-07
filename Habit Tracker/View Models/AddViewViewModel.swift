@@ -131,6 +131,7 @@ extension AddViewViewModel {
 
         let habit = Habit(
             id: habitRef.documentID,
+            createdBy: user.uid,
             isQuittingHabit: isQuittingHabit,
             isStartingHabit: isStartingHabit,
             name: habitName,

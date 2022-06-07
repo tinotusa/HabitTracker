@@ -114,6 +114,7 @@ class UserSession: ObservableObject {
                     let user = GIDSignIn.sharedInstance.currentUser
                     if !snapshot.exists {
                         let user = FirebaseUser(
+                            id: authResult.user.uid,
                             firstName: user?.profile?.givenName ?? "Not set",
                             lastName: user?.profile?.familyName ?? "Not set",
                             email: user?.profile?.email ?? "Not set",
@@ -170,6 +171,7 @@ class UserSession: ObservableObject {
             let snapshot = try await userRef.getDocument()
             if !snapshot.exists {
                 let user = FirebaseUser(
+                    id: userRef.documentID,
                     firstName: firstName,
                     lastName: lastName,
                     email: email,

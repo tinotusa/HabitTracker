@@ -1,8 +1,116 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // type checks
+    function userFieldsAreValidTypes(docData) {
+      return docData.id is string &&
+        docData.firstName is string &&
+        docData.lastName is string &&
+        docData.email is string &&
+        docData.birthday is timestamp;
+    }
+
+    function habitFieldsAreValidTypes(docData) {
+      return docData.id is string &&
+        docData.createdBy is string &&
+        docData.name is string &&
+        docData.isQuittingHabit is bool &&
+        docData.isStartingHabit is bool &&
+        docData.occurrenceTime is timestamp &&
+        docData.occurrenceDays is list &&
+        docData.durationHours is int &&
+        docData.durationMinutes is int &&
+        docData.activities is list &&
+        docData.reason is string &&
+        docData.localNotificationID is string &&
+        docData.localReminderNotificationID is string
+    }
+
+    // update checks
+    function userUpdateFieldsAreValid(docData) {
+      return docData.diff(resource.data).affectedKeys().hasOnly(["firstName", "lastName", "email", "birthday"])
+    }
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAccountCreator() {
+      return request.auth.uid == resource.data.id;
+    }
+
+    function isHabitCreator() {
+      return request.auth.uid == resource.data.createdBy;
+    }
+
+    function habitUpdateFieldsAreValid(docData) {
+      return docData.diff(resource.data).affectedKeys().hasOnly([
+        "id",
+        "name",
+        "createdAt",
+        "isQuittingHabit",
+        "isStartingHabit",
+        "occurrenceTime",
+        "occurrenceDays",
+        "durationHours",
+        "durationMinutes",
+        "activities",
+        "reason",
+        "localNotificationID",
+        "localReminderNotificationID"
+      ])
+    }
+
+    function isJournalEntryCreator() {
+      return request.auth.uid == resource.data.createdBy
+    }
+
+    function journalEntryFieldsAreValidTypes(docData) {
+      return docData.id is string &&
+        docData.createdBy is string &&
+        docData.habitName is string &&
+        docData.entry is string &&
+        docData.activities is list &&
+        docData.rating is int &&
+        docData.dateCreated is timestamp
+    }
+
+    function journalEntryUpdateFieldsAreValid(docData) {
+      return docData.diff(resource.data).affectedKeys().hasOnly([
+        "id",
+        "createdBy",
+        "habitName",
+        "entry",
+        "activities",
+        "rating",
+        "dateCreated",
+      ])
+    }
+
     match /{document=**} {
-      allow read, write: if true;
+      allow read, write: if false;
+    }
+
+    match /users/{userID} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && userFieldsAreValidTypes(request.resource.data);
+      allow update: if isAuthenticated() && isAccountCreator() &&
+        userUpdateFieldsAreValid(request.resource.data);
+    }
+
+    match /{habits=**}/habits/{habitID} {
+      allow get: if isAuthenticated() && isHabitCreator()
+      allow list: if isAuthenticated() && isHabitCreator() && request.query.limit <= 100;
+      allow create: if isAuthenticated() && habitFieldsAreValidTypes(request.resource.data);
+      allow update: if isAuthenticated() && isHabitCreator() && habitUpdateFieldsAreValid(request.resource.data);
+    }
+    
+    match /{journalEntries=**}/journalEntries/{journalEntryID} {
+      allow get: if isAuthenticated() && isJournalEntryCreator();
+      allow list: if isAuthenticated() && isJournalEntryCreator() && request.query.limit <= 100;
+
+      allow create: if isAuthenticated() && journalEntryFieldsAreValidTypes(request.resource.data);
+      allow update: if isAuthenticated() && isJournalEntryCreator() && journalEntryUpdateFieldsAreValid(request.resource.data)
     }
   }
 }

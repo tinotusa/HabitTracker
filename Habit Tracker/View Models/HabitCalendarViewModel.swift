@@ -48,7 +48,8 @@ extension HabitCalendarViewModel {
         let query = firestore
             .collection("journalEntries")
             .document(user.uid)
-            .collection(habit.id)
+            .collection("journalEntries")
+            .whereField("createdBy", isEqualTo: user.uid)
             .whereField("dateCreated", isGreaterThanOrEqualTo: startDate)
             .whereField("dateCreated", isLessThanOrEqualTo: endDate)
             .limit(to: maxQueryLimit)
@@ -81,7 +82,8 @@ extension HabitCalendarViewModel {
         let query = firestore
             .collection("journalEntries")
             .document(user.uid)
-            .collection(habit.id)
+            .collection("journalEntries")
+            .whereField("createdBy", isEqualTo: user.uid)
             .whereField("dateCreated", isGreaterThanOrEqualTo: monthDates.first!)
             .whereField("dateCreated", isLessThanOrEqualTo: monthDates.last!)
             .limit(to: maxQueryLimit)

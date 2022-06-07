@@ -91,6 +91,7 @@ class SignUpViewModel: ObservableObject {
             }
 
             let firebaseUser = FirebaseUser(
+                id: authResult.user.uid,
                 firstName: firstName,
                 lastName: lastName,
                 email: email,

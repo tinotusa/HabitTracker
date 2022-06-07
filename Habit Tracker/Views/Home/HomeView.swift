@@ -57,7 +57,6 @@ struct HomeView: View {
                 Button(role: .destructive) {
                     Task {
                         await viewModel.deleteUser(userSession: userSession)
-                        userSession.signOut()
                     }
                 } label: {
                     Text("Delete")

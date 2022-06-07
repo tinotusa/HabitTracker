@@ -56,7 +56,7 @@ struct DayHistoryView: View {
             
         }
         .task {
-            await viewModel.getHabits(for: date)
+            await viewModel.getHabits(for: date, userSession: userSession)
         }
     }
 }
