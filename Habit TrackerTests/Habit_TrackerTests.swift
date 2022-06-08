@@ -9,28 +9,38 @@ import XCTest
 @testable import Habit_Tracker
 
 class Habit_TrackerTests: XCTestCase {
-
+    var viewModel: CalendarViewViewModel!
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        viewModel = CalendarViewViewModel(calendarService: MockCalendarService())
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        viewModel = nil
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    /// Tests to see if the init has empty entires.
+    func test_init() {
+        XCTAssertTrue(viewModel.entriesForSelectedDate.isEmpty)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    /// Tests to see if the view model will return no entries.
+    func test_getHabitsForMonth_withNoEntries() async {
+        await viewModel.getHabitsForMonth(date: Date())
+        XCTAssertTrue(viewModel.entriesForSelectedDate.isEmpty)
+    }
+    
+    /// Add an entry and check if it is found in the entries array.
+    func test_hasJournalEntry() {
+        for _ in 0 ..< 10 {
+            let entry = JournalEntry.example // The date created is today (Date()).
+            viewModel.entriesForSelectedDate.append(entry)
         }
+        XCTAssertTrue(viewModel.hasJournalEntry(for: Date()))
     }
-
+    
+    /// Tests to see if hasJournalEntry is false when there are no entries added.
+    func test_hasJournalEntry_withoutAddingAnyEntries() {
+        XCTAssertFalse(viewModel.hasJournalEntry(for: Date()))
+    }
 }

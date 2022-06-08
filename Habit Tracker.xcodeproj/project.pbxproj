@@ -55,17 +55,22 @@
 		21E61908283D0287007F42DC /* AddViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E61907283D0287007F42DC /* AddViewViewModel.swift */; };
 		21E6190A283D089B007F42DC /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E61909283D089B007F42DC /* Day.swift */; };
 		21E6190C283D0A8D007F42DC /* DayPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6190B283D0A8D007F42DC /* DayPickerView.swift */; };
+		21E937712850ADEC00D041F8 /* MockCalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E937702850ADEC00D041F8 /* MockCalendarService.swift */; };
+		21E937772850AEE400D041F8 /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E937762850AEE400D041F8 /* CalendarService.swift */; };
+		21E9377B2850B40000D041F8 /* FirebaseUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9377A2850B40000D041F8 /* FirebaseUserTests.swift */; };
+		21E9377D2850B60600D041F8 /* DayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9377C2850B60600D041F8 /* DayTests.swift */; };
+		21E9377F2850BA1D00D041F8 /* HabitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9377E2850BA1D00D041F8 /* HabitTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		21B6286C280AC4BB00E3FC49 /* PBXContainerItemProxy */ = {
+		21B62876280AC4BB00E3FC49 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 21B62853280AC4B800E3FC49 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 21B6285A280AC4B800E3FC49;
 			remoteInfo = "Habit Tracker";
 		};
-		21B62876280AC4BB00E3FC49 /* PBXContainerItemProxy */ = {
+		21E937782850B2AB00D041F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 21B62853280AC4B800E3FC49 /* Project object */;
 			proxyType = 1;
@@ -124,6 +129,11 @@
 		21E61907283D0287007F42DC /* AddViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewViewModel.swift; sourceTree = "<group>"; };
 		21E61909283D089B007F42DC /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		21E6190B283D0A8D007F42DC /* DayPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayPickerView.swift; path = "Habit Tracker/Models/DayPickerView.swift"; sourceTree = SOURCE_ROOT; };
+		21E937702850ADEC00D041F8 /* MockCalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCalendarService.swift; sourceTree = "<group>"; };
+		21E937762850AEE400D041F8 /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarService.swift; sourceTree = "<group>"; };
+		21E9377A2850B40000D041F8 /* FirebaseUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserTests.swift; sourceTree = "<group>"; };
+		21E9377C2850B60600D041F8 /* DayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTests.swift; sourceTree = "<group>"; };
+		21E9377E2850BA1D00D041F8 /* HabitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +256,7 @@
 		21B6285D280AC4B800E3FC49 /* Habit Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				21E937722850AEB300D041F8 /* Services */,
 				2152496D28450EE500FDA66E /* Extensions */,
 				21AC33D4282148E200A79F7B /* Models */,
 				21B62896280AD1D600E3FC49 /* Views */,
@@ -272,7 +283,11 @@
 		21B6286E280AC4BB00E3FC49 /* Habit TrackerTests */ = {
 			isa = PBXGroup;
 			children = (
+				21E9376F2850ADD500D041F8 /* Classes */,
 				21B6286F280AC4BB00E3FC49 /* Habit_TrackerTests.swift */,
+				21E9377A2850B40000D041F8 /* FirebaseUserTests.swift */,
+				21E9377C2850B60600D041F8 /* DayTests.swift */,
+				21E9377E2850BA1D00D041F8 /* HabitTests.swift */,
 			);
 			path = "Habit TrackerTests";
 			sourceTree = "<group>";
@@ -348,6 +363,22 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		21E9376F2850ADD500D041F8 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				21E937702850ADEC00D041F8 /* MockCalendarService.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		21E937722850AEB300D041F8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				21E937762850AEE400D041F8 /* CalendarService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -386,7 +417,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				21B6286D280AC4BB00E3FC49 /* PBXTargetDependency */,
+				21E937792850B2AB00D041F8 /* PBXTargetDependency */,
 			);
 			name = "Habit TrackerTests";
 			productName = "Habit TrackerTests";
@@ -508,6 +539,7 @@
 				218B7458284206B000F55A21 /* Habit.swift in Sources */,
 				21DA7F76283B592700E43E4C /* HomeView.swift in Sources */,
 				21DDF03B2831224A00FE8DAC /* LoadingView.swift in Sources */,
+				21E937772850AEE400D041F8 /* CalendarService.swift in Sources */,
 				215249662845027800FDA66E /* JournalEntry.swift in Sources */,
 				2152496F28450EF200FDA66E /* Date+isEqual.swift in Sources */,
 				21BD7CB1284B630300A9A8B2 /* EditHabitViewViewModel.swift in Sources */,
@@ -533,7 +565,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21E9377B2850B40000D041F8 /* FirebaseUserTests.swift in Sources */,
 				21B62870280AC4BB00E3FC49 /* Habit_TrackerTests.swift in Sources */,
+				21E9377D2850B60600D041F8 /* DayTests.swift in Sources */,
+				21E9377F2850BA1D00D041F8 /* HabitTests.swift in Sources */,
+				21E937712850ADEC00D041F8 /* MockCalendarService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,15 +585,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		21B6286D280AC4BB00E3FC49 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 21B6285A280AC4B800E3FC49 /* Habit Tracker */;
-			targetProxy = 21B6286C280AC4BB00E3FC49 /* PBXContainerItemProxy */;
-		};
 		21B62877280AC4BB00E3FC49 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 21B6285A280AC4B800E3FC49 /* Habit Tracker */;
 			targetProxy = 21B62876280AC4BB00E3FC49 /* PBXContainerItemProxy */;
+		};
+		21E937792850B2AB00D041F8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 21B6285A280AC4B800E3FC49 /* Habit Tracker */;
+			targetProxy = 21E937782850B2AB00D041F8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

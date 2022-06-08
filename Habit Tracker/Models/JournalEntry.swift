@@ -32,3 +32,16 @@ struct JournalEntry: Codable, Identifiable {
     /// The creating date of the entry.
     var dateCreated = Date()
 }
+
+extension JournalEntry {
+    static var example: JournalEntry {
+        JournalEntry(
+            id: UUID().uuidString,
+            createdBy: UUID().uuidString,
+            habitName: "test habit",
+            entry: "some test entryy",
+            activities: [],
+            rating: 4
+        )
+    }
+}

@@ -38,7 +38,6 @@ struct CalendarView: View {
                 if !userSession.isSignedIn {
                     return
                 }
-                viewModel.setUp(userSession: userSession, date: date)
                 await viewModel.getHabitsForMonth(date: date)
             }
         }
