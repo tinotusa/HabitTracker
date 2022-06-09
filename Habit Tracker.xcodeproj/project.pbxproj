@@ -60,6 +60,8 @@
 		21E9377B2850B40000D041F8 /* FirebaseUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9377A2850B40000D041F8 /* FirebaseUserTests.swift */; };
 		21E9377D2850B60600D041F8 /* DayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9377C2850B60600D041F8 /* DayTests.swift */; };
 		21E9377F2850BA1D00D041F8 /* HabitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9377E2850BA1D00D041F8 /* HabitTests.swift */; };
+		21EE866C28520A620028F726 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EE866B28520A620028F726 /* InputField.swift */; };
+		21EE866E2852162E0028F726 /* TextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EE866D2852162E0028F726 /* TextStyles.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +136,8 @@
 		21E9377A2850B40000D041F8 /* FirebaseUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserTests.swift; sourceTree = "<group>"; };
 		21E9377C2850B60600D041F8 /* DayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTests.swift; sourceTree = "<group>"; };
 		21E9377E2850BA1D00D041F8 /* HabitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTests.swift; sourceTree = "<group>"; };
+		21EE866B28520A620028F726 /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
+		21EE866D2852162E0028F726 /* TextStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyles.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +260,7 @@
 		21B6285D280AC4B800E3FC49 /* Habit Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				21EE866A28520A450028F726 /* View Modifiers */,
 				21E937722850AEB300D041F8 /* Services */,
 				2152496D28450EE500FDA66E /* Extensions */,
 				21AC33D4282148E200A79F7B /* Models */,
@@ -377,6 +382,15 @@
 				21E937762850AEE400D041F8 /* CalendarService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		21EE866A28520A450028F726 /* View Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				21EE866B28520A620028F726 /* InputField.swift */,
+				21EE866D2852162E0028F726 /* TextStyles.swift */,
+			);
+			path = "View Modifiers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -528,7 +542,9 @@
 				211040742845ED7B00DC1D17 /* HomeViewViewModel.swift in Sources */,
 				215249642845021900FDA66E /* RatingView.swift in Sources */,
 				2152496C2845049A00FDA66E /* DateValue.swift in Sources */,
+				21EE866C28520A620028F726 /* InputField.swift in Sources */,
 				21C16C032847731100502804 /* DayHistoryView.swift in Sources */,
+				21EE866E2852162E0028F726 /* TextStyles.swift in Sources */,
 				21DA7F7D283B942200E43E4C /* CustomTabBar.swift in Sources */,
 				21B62898280AD1E300E3FC49 /* LoginView.swift in Sources */,
 				21DA7F78283B90B800E43E4C /* MainView.swift in Sources */,

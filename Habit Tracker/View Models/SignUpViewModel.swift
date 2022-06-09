@@ -34,6 +34,13 @@ class SignUpViewModel: ObservableObject {
             didError = true
         }
     }
+    let firstNamePrompt = "First name"
+    let lastNamePrompt = "Last name"
+    let emailPrompt = "Email"
+    let emailConfirmationPrompt = "Email confirmation"
+    let passwordPrompt = "Password"
+    let passwordConfirmationPrompt = "Password confirmation"
+    
     private let auth = Auth.auth()
     private var firestore = Firestore.firestore()
     
