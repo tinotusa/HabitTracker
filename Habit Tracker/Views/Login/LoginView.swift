@@ -157,7 +157,7 @@ private extension LoginView {
     }
     
     var forgotLoginDetailsButton: some View {
-        Button("Forgot password or email?") {
+        Button("Forgot your password?") {
             viewModel.showPasswordResetView = true
         }
     }

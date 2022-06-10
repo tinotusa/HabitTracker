@@ -6,63 +6,68 @@
 //
 
 import SwiftUI
-import FirebaseAuth
-
-class PasswordResetViewModel: ObservableObject {
-    @Published var email = ""
-    @Published var didError = false
-    @Published var errorDetails: ErrorDetails? {
-        didSet {
-            if errorDetails != nil {
-                didError = true
-            }
-        }
-    }
-    
-    private lazy var auth = Auth.auth()
-
-    func sendResetEmail() {
-        auth.sendPasswordReset(withEmail: email) { [unowned self] error in
-            if let error = error {
-                errorDetails = ErrorDetails(
-                    name: "Password reset error",
-                    message: "\(error.localizedDescription)"
-                )
-                return
-            }
-        }
-        
-    }
-}
 
 struct PasswordResetView: View {
     @StateObject var viewModel = PasswordResetViewModel()
     @Environment(\.dismiss) var dismiss
+    
     var body: some View {
-        VStack {
-            Text("Password reset view")
-            TextField("Email", text: $viewModel.email, prompt: Text("Email"))
-            Button("Send reset email") {
-                viewModel.sendResetEmail()
-            }
-            Button("Back") {
-                dismiss()
+        GeometryReader { proxy in
+            ZStack(alignment: .topLeading) {
+                Color("backgroundColour")
+                    .ignoresSafeArea()
+                
+                closeButton
+                
+                VStack(spacing: 24) {
+                    Text("Reset password")
+                        .bodyStyle()
+                    
+                    TextField("Email", text: $viewModel.email, prompt: Text(viewModel.emailPlaceholder))
+                        .inputField(imageName: "envelope.fill", contentType: .emailAddress)
+                    
+                    sendResetButton(proxy: proxy)
+                }
+                .padding()
+                .frame(width: proxy.size.width)
+                .frame(minHeight: proxy.size.height)
             }
         }
         .alert(
-            "Password reset error",
+            viewModel.errorDetails?.name ?? "Error",
             isPresented: $viewModel.didError,
             presenting: viewModel.errorDetails
         ) { detail in
-            Button(role: .cancel) {
-                // something
-            } label: {
-                Text("OK")
-            }
+            // Default close button
         } message: { details in
             Text(details.message)
         }
     }
+}
+
+extension PasswordResetView {
+    var closeButton: some View {
+        Button {
+            dismiss()
+        } label: {
+            HStack {
+                Image(systemName: "xmark")
+                Text("Close")
+            }
+        }
+        .bodyStyle()
+        .padding()
+        .zIndex(1)
+    }
+    
+    func sendResetButton(proxy: GeometryProxy) -> some View {
+        Button("Send reset email") {
+            viewModel.sendResetEmail()
+        }
+        .disabled(!viewModel.allFieldsFilled)
+        .buttonStyle(LongButtonStyle(proxy: proxy))
+    }
+    
 }
 
 struct PasswordResetView_Previews: PreviewProvider {
