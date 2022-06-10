@@ -7,21 +7,6 @@
 
 import SwiftUI
 
-struct LongButtonStyle: ButtonStyle {
-    let proxy: GeometryProxy
-    
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .padding()
-            .frame(maxWidth: proxy.size.width * 0.7)
-            .bodyStyle()
-            .background(Color("primaryColour"))
-            .cornerRadius(30)
-            .shadow(color: .black.opacity(0.6), radius: 5, x: 0, y: 5)
-    }
-}
-
-
 struct SignUpView: View {
     @EnvironmentObject var userSession: UserSession
     @Environment(\.dismiss) var dismiss
