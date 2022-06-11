@@ -94,7 +94,7 @@ extension HomeViewViewModel {
         do {
             let snapshot = try await query.getDocuments()
             previousDocument = nextDocument
-            habits = []
+//            habits = []
             self.nextDocument = snapshot.documents.last
 
             for document in snapshot.documents {

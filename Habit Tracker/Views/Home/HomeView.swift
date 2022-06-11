@@ -10,74 +10,70 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var userSession: UserSession
     @StateObject var viewModel = HomeViewViewModel()
+    @EnvironmentObject var notificationManager: NotificationManager
     
     var body: some View {
         NavigationView {
-            VStack {
-                Text("home")
-                Button("Logout") {
-                    userSession.signOut()
-                    print("logged out")
-                }
-                Button(role: .destructive) {
-                    viewModel.showingAccountTerminationDialog = true
-                } label: {
-                    Text("Delete account")
-                }
-                ForEach(viewModel.habits) { habit in
-                    NavigationLink(destination: HabitCalendar(habit: habit)) {
-                        VStack {
-                            Text(habit.isQuittingHabit ? "Quiting" : "Forming")
-                                .foregroundColor(habit.isQuittingHabit ? .red : .green)
-                            Text(habit.name)
+            ZStack {
+                BackgroundView()
+                
+                VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
+                    HStack(alignment: .lastTextBaseline) {
+                        Text("Habits")
+                            .titleStyle()
+                        Spacer()
+                        // TODO: Maybe put the edit button here (can edit user info)
+                        Button("Logout") {
+                            userSession.signOut()
+                            print("logged out")
+                        }
+                        .captionStyle()
+                        .foregroundColor(.textColour)
+                    }
+                    
+                    ScrollView(showsIndicators: false) {
+                        ForEach(viewModel.habits) { habit in
+                            NavigationLink(destination: HabitCalendar(habit: habit)) {
+                                HabitRowView(habit: habit)
+                            }
+                        }
+                        if viewModel.hasNextPage {
+                            RowLoadingView()
+                                .onAppear {
+                                    Task {
+                                        await viewModel.getNextHabits(userSession: userSession)
+                                    }
+                                }
                         }
                     }
-                    .buttonStyle(.plain)
                 }
-                HStack {
-                    Button("prev") {
-                        Task {
-                            await viewModel.getPreviousHabits(userSession: userSession)
-                        }
-                    }
-                    .disabled(!viewModel.hasPreviousPage)
-                    Button("Next") {
-                        Task {
-                            await viewModel.getNextHabits(userSession: userSession)
-                        }
-                    }
-                    .disabled(!viewModel.hasNextPage)
-                }
-            
+                .padding()
             }
-            .confirmationDialog(
-                "Account termination",
-                isPresented: $viewModel.showingAccountTerminationDialog
-            ) {
-                Button(role: .destructive) {
-                    Task {
-                        await viewModel.deleteUser(userSession: userSession)
-                    }
-                } label: {
-                    Text("Delete")
-                }
-            } message: {
-                Text("Are you sure you want to delete your acount?")
-            }
-            .onAppear {
-                Task {
-                    if userSession.isSignedIn {
-                        await viewModel.getHabits(userSession: userSession)
-                    }
+            .task {
+                if userSession.isSignedIn {
+                    await viewModel.getHabits(userSession: userSession)
                 }
             }
+            .overlay {
+                NavigationLink(
+                    destination: JournalEntryView(habit: notificationManager.currentHabit ?? Habit.example),
+                    isActive: $notificationManager.navigationBindingActive
+                ) {
+                    EmptyView()
+                }
+            }
+            .navigationBarHidden(true)
+            .navigationViewStyle(.stack)
         }
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
-            .environmentObject(UserSession())
+        NavigationView {
+            HomeView()
+                .environmentObject(UserSession())
+                .environmentObject(NotificationManager())
+        }
     }
 }

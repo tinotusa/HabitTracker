@@ -7,18 +7,27 @@
 
 import SwiftUI
 
-struct LongButtonStyle: ButtonStyle {
+struct LongButtonStyle: ViewModifier {
     let proxy: GeometryProxy
     
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
+    func body(content: Content) -> some View {
+        content
             .padding()
             .frame(maxWidth: proxy.size.width * 0.7)
-            .bodyStyle()
-            .background(configuration.isPressed ? Color("primaryColour").opacity(0.8) : Color("primaryColour"))
+            .title2Style()
+            .background(Color.primaryColour)
             .cornerRadius(30)
-            .scaleEffect(configuration.isPressed ? 0.98 : 1)
-            .shadow(color: .black.opacity(0.6), radius: 5, x: 0, y: 5)
-            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
+            .shadow(
+                color: .black.opacity(Constants.shadowOpacity),
+                radius: Constants.shadowRadius,
+                x: 0,
+                y: 5
+            )
+    }
+}
+
+extension View {
+    func longButtonStyle(proxy: GeometryProxy) -> some View {
+        modifier(LongButtonStyle(proxy: proxy))
     }
 }

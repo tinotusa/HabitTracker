@@ -25,7 +25,6 @@ struct CalendarView: View {
                     selectedDate = currentDate
                     self.showingDayHistory = true
                 } isDateHighlighted: { date in
-                    // TODO: why does this undo itself? onAppear??
                     return viewModel.hasJournalEntry(for: date)
                 }
             }

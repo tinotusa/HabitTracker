@@ -14,14 +14,13 @@ struct PasswordResetView: View {
     var body: some View {
         GeometryReader { proxy in
             ZStack(alignment: .topLeading) {
-                Color("backgroundColour")
-                    .ignoresSafeArea()
+                BackgroundView()
                 
                 closeButton
                 
-                VStack(spacing: 24) {
+                VStack(spacing: Constants.vstackSpacing) {
                     Text("Reset password")
-                        .bodyStyle()
+                        .title2Style()
                     
                     TextField("Email", text: $viewModel.email, prompt: Text(viewModel.emailPlaceholder))
                         .inputField(imageName: "envelope.fill", contentType: .emailAddress)
@@ -55,17 +54,19 @@ extension PasswordResetView {
                 Text("Close")
             }
         }
-        .bodyStyle()
+        .title2Style()
         .padding()
         .zIndex(1)
     }
     
     func sendResetButton(proxy: GeometryProxy) -> some View {
-        Button("Send reset email") {
+        Button {
             viewModel.sendResetEmail()
+        } label: {
+            Text("Send reset email")
+                .longButtonStyle(proxy: proxy)
         }
         .disabled(!viewModel.allFieldsFilled)
-        .buttonStyle(LongButtonStyle(proxy: proxy))
     }
     
 }

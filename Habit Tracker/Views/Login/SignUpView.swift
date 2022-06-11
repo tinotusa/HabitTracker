@@ -16,13 +16,12 @@ struct SignUpView: View {
     var body: some View {
         GeometryReader { proxy in
             ZStack(alignment: .topLeading) {
-                Color("backgroundColour")
-                    .ignoresSafeArea()
+                BackgroundView()
                 
                 backButton
                     
                 ScrollView(showsIndicators: false) {
-                    VStack(spacing: 24) {
+                    VStack(spacing: Constants.vstackSpacing) {
                         Text("Register")
                             .titleStyle()
                         
@@ -129,7 +128,7 @@ private extension SignUpView {
     
     var birthdayInput: some View {
         DatePicker("Birthday", selection: $viewModel.birthday, in: ...Date(), displayedComponents: [.date])
-            .bodyStyle()
+            .title2Style()
     }
     
     // MARK: - Buttons
@@ -146,8 +145,8 @@ private extension SignUpView {
             createAccount()
         } label: {
             Text("Sign up")
+                .longButtonStyle(proxy: proxy)
         }
-        .buttonStyle(LongButtonStyle(proxy: proxy))
         .disabled(!viewModel.allFieldsFilled)
     }
     
@@ -158,13 +157,13 @@ private extension SignUpView {
             HStack {
                 Image(systemName: "chevron.left")
                     .font(.title)
-                    .foregroundColor(Color("textColour"))
+                    .foregroundColor(.textColour)
                 Text("Back")
-                    .bodyStyle()
+                    .title2Style()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .background(Color("backgroundColour"))
+        .background(Color.backgroundColour)
         .padding(.leading)
         .zIndex(1)
     }

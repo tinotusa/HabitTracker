@@ -18,19 +18,19 @@ struct InputField: ViewModifier {
             HStack {
                 content
                     .textContentType(contentType)
-                    .foregroundColor(Color("textColour"))
-                    .font(.custom("SF Pro", size: 24, relativeTo: .body))
+                    .foregroundColor(.textColour)
+                    .title2Style()
                     .disableAutocorrection(true)
                     .submitLabel(.next)
                     .onSubmit {
                         onSubmitAction?()
                     }
                 Image(systemName: imageName)
-                    .foregroundColor(Color("textColour"))
+                    .foregroundColor(.textColour)
                     .font(.title)
             }
             Rectangle()
-                .foregroundColor(Color("textColour").opacity(0.8))
+                .foregroundColor(.textColour.opacity(0.8))
                 .frame(height: 1)
         }
     }
@@ -45,17 +45,17 @@ struct PasswordField: ViewModifier {
             HStack {
                 content
                     .textContentType(contentType)
-                    .foregroundColor(Color("textColour"))
-                    .font(.custom("SF Pro", size: 24, relativeTo: .body))
+                    .foregroundColor(.textColour)
+                    .title2Style()
                     .onSubmit {
                         onSubmitAction?()
                     }
                 Image(systemName: "lock.fill")
-                    .foregroundColor(Color("textColour"))
+                    .foregroundColor(.textColour)
                     .font(.title)
             }
             Rectangle()
-                .foregroundColor(Color("textColour").opacity(0.8))
+                .foregroundColor(.textColour.opacity(0.8))
                 .frame(height: 1)
         }
     }

@@ -13,29 +13,30 @@ struct MainView: View {
     @EnvironmentObject var notificationManager: NotificationManager
     
     var body: some View {
-        NavigationView {
-            ZStack(alignment: .bottom) {
-                NavigationLink(destination: JournalEntryView(habit: notificationManager.currentHabit ?? Habit.example), isActive: $notificationManager.navigationBindingActive) {
-                    EmptyView()
+        TabView(selection: $selectedTab) {
+            Text("journal")
+                .tag(Tab.journal)
+                .tabItem {
+                    Label(Tab.journal.rawValue, systemImage: Tab.journal.imageName)
                 }
-                Group {
-                    switch selectedTab {
-                    case .journal:
-                        Text("journal")
-                    case .home:
-                        HomeView()
-                    case .add:
-                        AddView()
-                    case .calendar:
-                        CalendarView()
-                    }
+            HomeView()
+                .tag(Tab.home)
+                .tabItem {
+                    Label(Tab.home.rawValue, systemImage: Tab.home.imageName)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                CustomTabBar(selectedTab: $selectedTab)
-            }
-            .ignoresSafeArea(.keyboard)
-            .navigationBarHidden(true)
+            AddView()
+                .tag(Tab.add)
+                .tabItem {
+                    Label(Tab.add.rawValue, systemImage: Tab.add.imageName)
+                }
+            
+            CalendarView()
+                .tag(Tab.calendar)
+                .tabItem {
+                    Label(Tab.calendar.rawValue, systemImage: Tab.calendar.imageName)
+                }
         }
+        
     }
 }
 

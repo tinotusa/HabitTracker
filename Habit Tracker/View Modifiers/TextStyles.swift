@@ -10,15 +10,17 @@ import SwiftUI
 struct TextStyles: View {
     var body: some View {
         ZStack {
-            Color("backgroundColour")
-                .ignoresSafeArea()
+            BackgroundView()
+            
             VStack {
                 Text("Styles:")
-                    .foregroundColor(Color("textColour"))
+                    .foregroundColor(.textColour)
                 Text("Title style")
                     .titleStyle()
-                Text("Body style")
-                    .bodyStyle()
+                Text("Title 2 style")
+                    .title2Style()
+                Text("Caption style")
+                    .captionStyle()
             }
         }
         
@@ -29,8 +31,9 @@ struct TextStyles: View {
 struct TextStyle {
     static let fontName = "SF Pro"
     static let titleSize = 40.0
-    static let bodySize = 24.0
-    static let colour = Color("textColour")
+    static let captionSize = 20.0
+    static let title2Size = 24.0
+    static let colour = Color.textColour // TODO: might remove this (colour can be added to a specific text when needed)
 }
 
 struct TitleStyle: ViewModifier {
@@ -41,10 +44,16 @@ struct TitleStyle: ViewModifier {
     }
 }
 
-struct BodyStyle: ViewModifier {
+struct CaptionStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(.custom(TextStyle.fontName, size: TextStyle.bodySize, relativeTo: .body))
+            .font(.custom(TextStyle.fontName, size: TextStyle.captionSize, relativeTo: .subheadline))
+    }
+}
+struct Title2Style: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.custom(TextStyle.fontName, size: TextStyle.title2Size, relativeTo: .body))
             .foregroundColor(TextStyle.colour)
     }
 }
@@ -54,8 +63,12 @@ extension View {
         modifier(TitleStyle())
     }
     
-    func bodyStyle() -> some View {
-        modifier(BodyStyle())
+    func title2Style() -> some View {
+        modifier(Title2Style())
+    }
+    
+    func captionStyle() -> some View {
+        modifier(CaptionStyle())
     }
 }
 

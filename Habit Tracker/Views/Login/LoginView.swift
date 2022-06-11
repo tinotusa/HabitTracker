@@ -20,8 +20,7 @@ struct LoginView: View {
         NavigationView {
             GeometryReader { proxy in
                 ZStack {
-                    Color("backgroundColour")
-                        .ignoresSafeArea()
+                    BackgroundView()
                     
                     NavigationLink(isActive: $viewModel.showSignUpView) {
                         SignUpView()
@@ -30,7 +29,7 @@ struct LoginView: View {
                     }
                     
                     ScrollView(showsIndicators: false) {
-                        VStack(spacing: 24) {
+                        VStack(spacing: Constants.vstackSpacing) {
                             Text("Habit tracker")
                                 .titleStyle()
                             
@@ -115,7 +114,7 @@ private extension LoginView {
     var rememberMeButton: some View {
         HStack {
             Text("Remember me")
-                .bodyStyle()
+                .title2Style()
             Spacer()
             Toggle("Remember me", isOn: $rememberMe)
                 .labelsHidden()
@@ -132,8 +131,9 @@ private extension LoginView {
             userSession.signIn(withEmail: viewModel.email, password: viewModel.password)
         } label: {
             Text("Login")
+                .longButtonStyle(proxy: proxy)
         }
-        .buttonStyle(LongButtonStyle(proxy: proxy))
+        
         .disabled(!viewModel.allFieldsFilled)
     }
     
@@ -142,8 +142,9 @@ private extension LoginView {
             viewModel.showSignUpView = true
         } label: {
             Text("Sign up")
+                .longButtonStyle(proxy: proxy)
         }
-        .buttonStyle(LongButtonStyle(proxy: proxy))
+        
     }
     
     var horizontalDivider: some View {
@@ -153,7 +154,7 @@ private extension LoginView {
                 .font(.subheadline)
             Rectangle().frame(height: 1)
         }
-        .foregroundColor(Color("textColour").opacity(0.4))
+        .foregroundColor(.textColour.opacity(0.4))
     }
     
     var forgotLoginDetailsButton: some View {
