@@ -88,7 +88,7 @@ extension HomeViewViewModel {
             .collectionGroup("habits")
             .whereField("createdBy", isEqualTo: user.uid)
             .order(by: "createdAt")
-            .start(atDocument: nextDocument)
+            .start(afterDocument: nextDocument)
             .limit(to: maxQueryLimit)
 
         do {
