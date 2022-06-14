@@ -12,37 +12,46 @@ struct MainView: View {
     @State private var selectedTab: Tab = .home
     @EnvironmentObject var notificationManager: NotificationManager
     
+    init() {
+        UITabBar.appearance().isHidden = true
+    }
+    
     var body: some View {
         TabView(selection: $selectedTab) {
             Text("journal")
                 .tag(Tab.journal)
                 .tabItem {
-                    Label(Tab.journal.rawValue, systemImage: Tab.journal.imageName)
+                    Label(Tab.journal.tabName, systemImage: Tab.journal.imageName)
                 }
+
             HomeView()
                 .tag(Tab.home)
                 .tabItem {
-                    Label(Tab.home.rawValue, systemImage: Tab.home.imageName)
+                    Label(Tab.home.tabName, systemImage: Tab.home.imageName)
                 }
+
             AddView()
                 .tag(Tab.add)
                 .tabItem {
-                    Label(Tab.add.rawValue, systemImage: Tab.add.imageName)
+                    Label(Tab.add.tabName, systemImage: Tab.add.imageName)
                 }
-            
+
             CalendarView()
                 .tag(Tab.calendar)
                 .tabItem {
-                    Label(Tab.calendar.rawValue, systemImage: Tab.calendar.imageName)
+                    Label(Tab.calendar.tabName, systemImage: Tab.calendar.imageName)
                 }
         }
-        
+        .overlay(alignment: .bottom) {
+            CustomTabBar(selectedTab: $selectedTab)
+        }
     }
 }
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
+            .environmentObject(UserSession())
             .environmentObject(NotificationManager())
     }
 }

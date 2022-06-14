@@ -12,4 +12,5 @@ struct Constants {
     static let shadowOpacity = 0.8
     static let shadowRadius = 5.0
     static let vstackSpacing = 30.0
+    static let habitRowVstackSpacing = 15.0
 }

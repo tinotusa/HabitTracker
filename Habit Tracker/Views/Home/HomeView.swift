@@ -17,7 +17,7 @@ struct HomeView: View {
             ZStack {
                 BackgroundView()
                 
-                VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
+                VStack(alignment: .leading) {
                     HStack(alignment: .lastTextBaseline) {
                         Text("Habits")
                             .titleStyle()
@@ -32,20 +32,23 @@ struct HomeView: View {
                     }
                     
                     ScrollView(showsIndicators: false) {
-                        ForEach(viewModel.habits) { habit in
-                            NavigationLink(destination: HabitCalendar(habit: habit)) {
-                                HabitRowView(habit: habit)
+                        VStack(spacing: Constants.habitRowVstackSpacing) {
+                            ForEach(viewModel.habits) { habit in
+                                NavigationLink(destination: HabitCalendar(habit: habit)) {
+                                    HabitRowView(habit: habit)
+                                }
+                            }
+                            if viewModel.hasNextPage {
+                                RowLoadingView()
+                                    .onAppear {
+                                        Task {
+                                            await viewModel.getNextHabits(userSession: userSession)
+                                        }
+                                    }
                             }
                         }
-                        if viewModel.hasNextPage {
-                            RowLoadingView()
-                                .onAppear {
-                                    Task {
-                                        await viewModel.getNextHabits(userSession: userSession)
-                                    }
-                                }
-                        }
                     }
+                    Spacer()
                 }
                 .padding()
             }

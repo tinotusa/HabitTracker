@@ -16,29 +16,30 @@ struct CustomTabBar: View {
     
     var body: some View {
         HStack {
-            Spacer()
             ForEach(Tab.allCases, id: \.self) { tab in
-                HStack {
+                VStack {
                     Image(systemName: tab.imageName)
-                        .font(.largeTitle)
+                        .font(.title)
+                        .aspectRatio(contentMode: .fit)
                         .onTapGesture {
-                            selectedTab = tab
+                            withAnimation {
+                                selectedTab = tab
+                            }
                         }
-                    if selectedTab == tab {
-                        Text(tab.rawValue)
-                            .font(.title2)
-                    }
+                        .frame(maxWidth: .infinity)
+                    Text(tab.tabName)
                 }
-                if tab != Tab.allCases.last! {
-                    Spacer()
-                }
+                .padding(.vertical)
+                .contentShape(Rectangle())
+                .foregroundColor(tab == selectedTab ? .highlightColour : .textColour)
             }
-            .contentShape(Rectangle())
-            Spacer()
         }
-        .padding()
+        
+        .background(
+            Color.primaryColour
+        )
+        .cornerRadius(Constants.cornerRadius)
         .padding(.horizontal)
-        .background(.blue)
     }
 }
 
