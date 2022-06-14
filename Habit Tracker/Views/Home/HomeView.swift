@@ -30,6 +30,7 @@ struct HomeView: View {
                         .captionStyle()
                         .foregroundColor(.textColour)
                     }
+                    .padding(.horizontal)
                     
                     ScrollView(showsIndicators: false) {
                         VStack(spacing: Constants.habitRowVstackSpacing) {
@@ -47,10 +48,11 @@ struct HomeView: View {
                                     }
                             }
                         }
+                        .padding()
                     }
                     Spacer()
                 }
-                .padding()
+                
             }
             .task {
                 if userSession.isSignedIn {
