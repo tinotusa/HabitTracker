@@ -16,4 +16,7 @@ extension Color {
     static let quittingColour = Color("quittingColour")
     static let primaryColour = Color("primaryColour")
     static let textColour = Color("textColour")
+    static let activityDeleteColour = Color("activityDeleteColour")
+    static let textFieldBackgroundColour = Color("textFieldBackgroundColour")
+    static let textFieldTextColour = Color("textFieldTextColour")
 }

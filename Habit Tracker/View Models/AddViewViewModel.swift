@@ -9,6 +9,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import UserNotifications
+import SwiftUI
 
 struct PermissionDetails {
     let title: String
@@ -82,6 +83,10 @@ class AddViewViewModel: ObservableObject {
             }
         }
     }
+    
+    let reasonPrompt = LocalizedStringKey("Reason")
+    let activityInputPrompt = LocalizedStringKey("Activity")
+    let habitNamePrompt = LocalizedStringKey("Name")
 }
 
 // MARK: Computed Properties

@@ -63,6 +63,10 @@
 		21E9377B2850B40000D041F8 /* FirebaseUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9377A2850B40000D041F8 /* FirebaseUserTests.swift */; };
 		21E9377D2850B60600D041F8 /* DayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9377C2850B60600D041F8 /* DayTests.swift */; };
 		21E9377F2850BA1D00D041F8 /* HabitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9377E2850BA1D00D041F8 /* HabitTests.swift */; };
+		21EE77CD2859F46D007DB59D /* HighlightCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EE77CC2859F46D007DB59D /* HighlightCard.swift */; };
+		21EE77CF2859F4A2007DB59D /* BasicShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EE77CE2859F4A2007DB59D /* BasicShadow.swift */; };
+		21EE77D32859FCD6007DB59D /* ActivityDeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EE77D22859FCD6007DB59D /* ActivityDeleteButton.swift */; };
+		21EE77D52859FCFA007DB59D /* WhiteBoxTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EE77D42859FCFA007DB59D /* WhiteBoxTextFieldStyle.swift */; };
 		21EE866C28520A620028F726 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EE866B28520A620028F726 /* InputField.swift */; };
 		21EE866E2852162E0028F726 /* TextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EE866D2852162E0028F726 /* TextStyles.swift */; };
 		21F2F8D42854864A00F517F0 /* Color+CustomColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F2F8D32854864A00F517F0 /* Color+CustomColours.swift */; };
@@ -146,6 +150,10 @@
 		21E9377A2850B40000D041F8 /* FirebaseUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserTests.swift; sourceTree = "<group>"; };
 		21E9377C2850B60600D041F8 /* DayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTests.swift; sourceTree = "<group>"; };
 		21E9377E2850BA1D00D041F8 /* HabitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTests.swift; sourceTree = "<group>"; };
+		21EE77CC2859F46D007DB59D /* HighlightCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightCard.swift; sourceTree = "<group>"; };
+		21EE77CE2859F4A2007DB59D /* BasicShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicShadow.swift; sourceTree = "<group>"; };
+		21EE77D22859FCD6007DB59D /* ActivityDeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDeleteButton.swift; sourceTree = "<group>"; };
+		21EE77D42859FCFA007DB59D /* WhiteBoxTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteBoxTextFieldStyle.swift; sourceTree = "<group>"; };
 		21EE866B28520A620028F726 /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
 		21EE866D2852162E0028F726 /* TextStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyles.swift; sourceTree = "<group>"; };
 		21F2F8D32854864A00F517F0 /* Color+CustomColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+CustomColours.swift"; sourceTree = "<group>"; };
@@ -216,6 +224,9 @@
 			children = (
 				2152496E28450EF200FDA66E /* Date+isEqual.swift */,
 				21F2F8D32854864A00F517F0 /* Color+CustomColours.swift */,
+				21EE77CC2859F46D007DB59D /* HighlightCard.swift */,
+				21EE77CE2859F4A2007DB59D /* BasicShadow.swift */,
+				21EE77D42859FCFA007DB59D /* WhiteBoxTextFieldStyle.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -373,6 +384,7 @@
 			isa = PBXGroup;
 			children = (
 				21DA7F7A283B92EF00E43E4C /* AddView.swift */,
+				21EE77D22859FCD6007DB59D /* ActivityDeleteButton.swift */,
 			);
 			path = Add;
 			sourceTree = "<group>";
@@ -562,6 +574,7 @@
 				21E61908283D0287007F42DC /* AddViewViewModel.swift in Sources */,
 				21BD7CAF284B50D100A9A8B2 /* EditHabitView.swift in Sources */,
 				211040742845ED7B00DC1D17 /* HomeViewViewModel.swift in Sources */,
+				21EE77CD2859F46D007DB59D /* HighlightCard.swift in Sources */,
 				215249642845021900FDA66E /* RatingView.swift in Sources */,
 				2152496C2845049A00FDA66E /* DateValue.swift in Sources */,
 				21EE866C28520A620028F726 /* InputField.swift in Sources */,
@@ -599,7 +612,10 @@
 				214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */,
 				2138AF2C28533D7E0055072E /* PasswordResetViewModel.swift in Sources */,
 				21DDF03D283122AD00FE8DAC /* ErrorDetails.swift in Sources */,
+				21EE77CF2859F4A2007DB59D /* BasicShadow.swift in Sources */,
 				215249622844F53F00FDA66E /* JournalEntryView.swift in Sources */,
+				21EE77D32859FCD6007DB59D /* ActivityDeleteButton.swift in Sources */,
+				21EE77D52859FCFA007DB59D /* WhiteBoxTextFieldStyle.swift in Sources */,
 				213C5CC42833A56700ACB95F /* SignUpViewModel.swift in Sources */,
 				21AC33D62821494800A79F7B /* LoginViewModel.swift in Sources */,
 			);
