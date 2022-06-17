@@ -25,40 +25,29 @@ struct BaseCalendarView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 10) {
             HStack {
-                Button {
-                    moveMonth(by: -1)
-                } label: {
-                    Image(systemName: "chevron.left")
-                }
+                previousMonthButton
                 Spacer()
                 Text("\(month), \(String(year))")
+                    .title2Style()
                 Spacer()
-                Button {
-                    moveMonth(by: 1)
-                } label: {
-                    Image(systemName: "chevron.right")
-                }
+                nextMonthButton
             }
+            
             HStack {
                 ForEach(weekdaySymbols, id: \.self) { symbol in
                     Text(symbol)
-                    if symbol != "Sat" {
-                        Spacer()
-                    }
+                        .frame(maxWidth: .infinity)
+                        .captionStyle()
+                        .foregroundColor(.textColour)
                 }
             }
-            .padding(.horizontal)
-            Divider()
+            
             LazyVGrid(columns: columns) {
                 ForEach(monthDates) { dateValue in
                     if dateValue.day != -1 {
-                        Text("\(dateValue.day)")
-                            .background(isDateHighlighted?(dateValue.date) ?? false ? .green : .clear)
-                            .onTapGesture {
-                                dateTapFunction?(dateValue.date)
-                            }
+                        dayView(dateValue: dateValue)
                     } else  {
                         Spacer()
                     }
@@ -66,35 +55,72 @@ struct BaseCalendarView: View {
             }
         }
     }
+}
+
+private extension BaseCalendarView {
+    @ViewBuilder
+    func dayView(dateValue: DateValue) -> some View {
+        Text("\(dateValue.day)")
+            .padding(.vertical)
+            .lineLimit(1)
+            .captionStyle()
+            .foregroundColor(.calendarTextColour)
+            .frame(maxWidth: .infinity)
+            .background(
+                isDateHighlighted?(dateValue.date) ?? false ?
+                Color.primaryColour :
+                Color.calendarBackgroundColour
+            )
+            .cornerRadius(Constants.cornerRadius)
+            .onTapGesture {
+                dateTapFunction?(dateValue.date)
+            }
+    }
+    
+    var previousMonthButton: some View {
+        Button {
+            moveMonth(by: -1)
+        } label: {
+            Image(systemName: "chevron.left")
+                .title2Style()
+        }
+    }
+    
+    var nextMonthButton: some View {
+        Button {
+            moveMonth(by: 1)
+        } label: {
+            Image(systemName: "chevron.right")
+                .title2Style()
+        }
+    }
     
     var month: String {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.locale = .autoupdatingCurrent
+        let calendar = Calendar.current
         let components = calendar.dateComponents([.month], from: date)
         guard let month = components.month else { return "Error" }
         return calendar.monthSymbols[month - 1]
     }
     
     var weekdaySymbols: [String] {
-        let calendar = Calendar(identifier: .gregorian)
-        return calendar.weekdaySymbols
+        return Calendar.current.shortWeekdaySymbols
     }
     
     var year: Int {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.locale = .autoupdatingCurrent
-        
+        let calendar = Calendar.current
         let components = calendar.dateComponents([.year], from: date)
         guard let year = components.year else { return 0 }
         return year
     }
     
     func moveMonth(by amount: Int) {
-        date = Calendar.current.date(byAdding: .month, value: amount, to: date) ?? Date()
+        withAnimation {
+            date = Calendar.current.date(byAdding: .month, value: amount, to: date) ?? Date()
+        }
     }
     
     var monthDates: [DateValue] {
-        let calendar = Calendar(identifier: .gregorian)
+        let calendar = Calendar.current
         let startDate = calendar.date(from: calendar.dateComponents([.year, .month], from: date))!
         let range = calendar.range(of: .day, in: .month, for: startDate)!
         var days: [DateValue] = range.compactMap { day -> DateValue in

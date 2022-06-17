@@ -16,29 +16,37 @@ struct CalendarView: View {
 
     var body: some View {
         NavigationView {
-            VStack {
+            ZStack {
+                BackgroundView()
                 NavigationLink(destination: DayHistoryView(date: selectedDate), isActive: $showingDayHistory) {
                     EmptyView()
                 }
-                Text("Calendar")
-                BaseCalendarView(date: $date) { currentDate in
-                    selectedDate = currentDate
-                    self.showingDayHistory = true
-                } isDateHighlighted: { date in
-                    return viewModel.hasJournalEntry(for: date)
+                VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
+                    Text("Calendar")
+                        .titleStyle()
+                    BaseCalendarView(date: $date) { currentDate in
+                        selectedDate = currentDate
+                        self.showingDayHistory = true
+                    } isDateHighlighted: { date in
+                        return viewModel.hasJournalEntry(for: date)
+                    }
+                    Spacer()
                 }
-            }
-            .onChange(of: date) { _ in
-                Task {
+                .padding()
+                .onChange(of: date) { _ in
+                    Task {
+                        await viewModel.getHabitsForMonth(date: date)
+                    }
+                }
+                .task {
+                    if !userSession.isSignedIn {
+                        return
+                    }
                     await viewModel.getHabitsForMonth(date: date)
                 }
             }
-            .task {
-                if !userSession.isSignedIn {
-                    return
-                }
-                await viewModel.getHabitsForMonth(date: date)
-            }
+            .navigationBarHidden(true)
+            .navigationViewStyle(.stack)
         }
     }
 }

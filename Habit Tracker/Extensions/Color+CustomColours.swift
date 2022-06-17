@@ -19,4 +19,6 @@ extension Color {
     static let activityDeleteColour = Color("activityDeleteColour")
     static let textFieldBackgroundColour = Color("textFieldBackgroundColour")
     static let textFieldTextColour = Color("textFieldTextColour")
+    static let calendarBackgroundColour = Color("calendarBackgroundColour")
+    static let calendarTextColour = Color("calendarTextColour")
 }
