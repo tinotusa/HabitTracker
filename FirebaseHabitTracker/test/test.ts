@@ -37,6 +37,7 @@ const habit = {
 
 const journalEntry = {
     id: "journalEntry",
+    habitID: "habit",
     createdBy: "user",
     habitName: "habit name",
     entry: "some entry",

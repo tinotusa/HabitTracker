@@ -67,6 +67,7 @@ service cloud.firestore {
 
     function journalEntryFieldsAreValidTypes(docData) {
       return docData.id is string &&
+        docData.habitID is string &&
         docData.createdBy is string &&
         docData.habitName is string &&
         docData.entry is string &&
@@ -78,6 +79,7 @@ service cloud.firestore {
     function journalEntryUpdateFieldsAreValid(docData) {
       return docData.diff(resource.data).affectedKeys().hasOnly([
         "id",
+        "habitID",
         "createdBy",
         "habitName",
         "entry",

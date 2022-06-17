@@ -35,6 +35,7 @@ extension JournalEntryViewViewModel {
         let journalEntry = JournalEntry(
             id: journalRef.documentID,
             createdBy: user.uid,
+            habitID: habit.id,
             habitName: habit.name,
             entry: entry,
             activities: activities,

@@ -19,8 +19,10 @@ struct JournalEntry: Codable, Identifiable {
     }
     /// The id of the entry.
     var id: String
-    /// The id of creator..
+    /// The id of creator.
     var createdBy: String
+    /// The id of the habit the entry is associated with.
+    var habitID: String
     /// The name of the habit.
     var habitName: String
     /// The journal entry.
@@ -38,6 +40,7 @@ extension JournalEntry {
         JournalEntry(
             id: UUID().uuidString,
             createdBy: UUID().uuidString,
+            habitID: UUID().uuidString,
             habitName: "test habit",
             entry: "some test entryy",
             activities: [],
