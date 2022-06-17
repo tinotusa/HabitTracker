@@ -12,6 +12,7 @@ struct HabitCalendar: View {
     
     @EnvironmentObject var userSession: UserSession
     @State private var date = Date()
+    @State private var selectedDate = Date()
     @State private var showAddJournalEntryView = false
     @StateObject var viewModel = HabitCalendarViewModel()
     @State private var showEditingView = false
@@ -22,88 +23,134 @@ struct HabitCalendar: View {
     }
     
     var body: some View {
-        VStack {
-            Text("\(habit.name) calendar")
-            Button("Today") {
-                date = Date()
-            }
-            BaseCalendarView(date: $date) { currentDate in
-                Task {
-                    await viewModel.getJournalEntries(for: currentDate)
-                }
-            } isDateHighlighted: { currentDate in
-                viewModel.journalHasEntry(for: currentDate)
-            }
+        ZStack {
+            BackgroundView()
             
-            Button("Add journal entry") {
-                showAddJournalEntryView = true
-            }
-            
-            Text("Entries")
-            ScrollView(showsIndicators: false) {
-                ForEach(viewModel.entriesForSelectedDate) { entry in
-                    Text(entry.entry)
-                }
-            }
-        }
-        .toolbar {
-            ToolbarItemGroup {
-                HStack {
-                    Button(role: .destructive) {
-                        Task {
-                            viewModel.showingDeleteConfirmation = true
+            VStack(alignment: .leading) {
+                header
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: Constants.habitRowVstackSpacing) {
+                        HStack(alignment: .lastTextBaseline) {
+                            Text("\(habit.name) calendar")
+                                .title2Style()
+                                .lineLimit(1)
                         }
-                    } label: {
-                        Image(systemName: "trash")
+                        
+                        BaseCalendarView(date: $date) { currentDate in
+                            Task {
+                                await viewModel.getJournalEntries(for: currentDate)
+                                selectedDate = currentDate
+                            }
+                        } isDateHighlighted: { currentDate in
+                            viewModel.journalHasEntry(for: currentDate)
+                        }
+                        
+                        Text("Entries for \(selectedDate.formatted(date: .abbreviated, time: .omitted))")
+                            .title2Style()
+                        
+                        ForEach(viewModel.entriesForSelectedDate) { entry in
+                            HStack {
+                                Text(entry.entry)
+                                    .lineLimit(2)
+                                    .captionStyle()
+                                    .foregroundColor(.textColour)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    
+                                Spacer()
+                                
+                                Text(entry.dateCreated.formatted(date: .omitted, time: .shortened))
+                            }
+                            .highlightCard()
+                        }
                     }
-                    
-                    Button("Edit") {
-                        showEditingView = true
-                    }
+                    Spacer(minLength: 70) // TODO: Find better solution
                 }
             }
-        }
-        .onChange(of: date) { date in
-            Task {
-                await viewModel.getJournalEntries(inMonthOf: date)
-            }
-        }
-        .task {
-            if !userSession.isSignedIn {
-                return
-            }
-            viewModel.setUp(userSession: userSession, habit: habit)
-            await viewModel.getJournalEntries(inMonthOf: date)
-        }
-        .fullScreenCover(isPresented: $showAddJournalEntryView) {
-            Task {
-                await viewModel.getJournalEntries(inMonthOf: date)
-            }
-        } content: {
-            JournalEntryView(habit: habit)
-        }
-        .sheet(isPresented: $showEditingView) {
-            EditHabitView(habit: habit)
-                .onDisappear {
-                    Task {
-                        habit = await viewModel.getHabit(id: habit.id, userSession: userSession)
-                    }
-                }
-        }
-        .confirmationDialog(
-            "Delete habit",
-            isPresented: $viewModel.showingDeleteConfirmation
-        ) {
-            Button(role: .destructive) {
+            .padding()
+            .onChange(of: date) { date in
                 Task {
-                    await viewModel.delete(habit: habit, userSession: userSession)
-                    dismiss()
+                    await viewModel.getJournalEntries(inMonthOf: date)
                 }
-            } label: {
-                Text("Delete")
             }
-        } message: {
-            Text("Are you sure you want to delete this habit?")
+            .task {
+                if !userSession.isSignedIn {
+                    return
+                }
+                viewModel.setUp(userSession: userSession, habit: habit)
+                await viewModel.getJournalEntries(inMonthOf: date)
+                await viewModel.getJournalEntries(for: date)
+            }
+            .sheet(isPresented: $showAddJournalEntryView) {
+                Task {
+                    await viewModel.getJournalEntries(inMonthOf: date)
+                }
+            } content: {
+                JournalEntryView(habit: habit)
+            }
+            .sheet(isPresented: $showEditingView) {
+                EditHabitView(habit: habit)
+                    .onDisappear {
+                        Task {
+                            habit = await viewModel.getHabit(id: habit.id, userSession: userSession)
+                        }
+                    }
+            }
+            .confirmationDialog(
+                "Delete habit",
+                isPresented: $viewModel.showingDeleteConfirmation
+            ) {
+                Button(role: .destructive) {
+                    Task {
+                        await viewModel.delete(habit: habit, userSession: userSession)
+                        dismiss()
+                    }
+                } label: {
+                    Text("Delete")
+                }
+            } message: {
+                Text("Are you sure you want to delete this habit?")
+            }
+        }
+        .navigationBarHidden(true)
+        .navigationViewStyle(.stack)
+    }
+}
+
+private extension HabitCalendar {    
+    var header: some View {
+        HStack(spacing: 10) {
+            Button {
+                dismiss()
+            } label: {
+                HStack {
+                    Label("Back", systemImage: "chevron.left")
+                }
+                .title2Style()
+            }
+            
+            Spacer()
+            
+            Button {
+                viewModel.showingDeleteConfirmation = true
+            } label: {
+                Image(systemName: "trash")
+                    .foregroundColor(.red)
+                    .title2Style()
+            }
+            
+            Button {
+                showEditingView = true
+            } label: {
+                Text("Edit")
+                    .title2Style()
+            }
+            
+            Button {
+                showAddJournalEntryView = true
+            } label: {
+                Text("Add")
+                    .title2Style()
+            }
         }
     }
 }
