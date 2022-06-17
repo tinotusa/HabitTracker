@@ -114,18 +114,22 @@ struct AddView: View {
                                 TextEditor(text: $viewModel.reason)
                                     .frame(height: 100)
                                     .whiteBoxTextFieldStyle()
+                                    
                             }
                             .highlightCard()
-                            Button {
-                                Task {
-                                    await viewModel.addHabit(session: userSession)
+                            Group {
+                                Button {
+                                    Task {
+                                        await viewModel.addHabit(session: userSession)
+                                    }
+                                } label: {
+                                    Text("Create habit")
+                                        .longButtonStyle(proxy: proxy)
+                                        .frame(maxWidth: .infinity, alignment: .center)
                                 }
-                            } label: {
-                                Text("Create habit")
-                                    .longButtonStyle(proxy: proxy)
-                                    .frame(maxWidth: .infinity, alignment: .center)
+                                .disabled(!viewModel.allFieldsFilled)
+                                Spacer(minLength: 60) //TODO: Look for better solution (hardcoding seems wrong)
                             }
-                            .disabled(!viewModel.allFieldsFilled)
                         }
                     }
                     .title2Style()

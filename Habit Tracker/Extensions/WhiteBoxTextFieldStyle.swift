@@ -15,6 +15,9 @@ struct WhiteBoxTextFieldStyle: ViewModifier {
             .cornerRadius(Constants.cornerRadius)
             .foregroundColor(.textFieldTextColour)
             .basicShadow()
+            .onAppear {
+                UITextView.appearance().backgroundColor = UIColor(Color.textFieldBackgroundColour)
+            }
     }
 }
 

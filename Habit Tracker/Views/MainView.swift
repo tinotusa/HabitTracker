@@ -44,6 +44,7 @@ struct MainView: View {
         }
         .overlay(alignment: .bottom) {
             CustomTabBar(selectedTab: $selectedTab)
+                .ignoresSafeArea(.keyboard)
         }
     }
 }

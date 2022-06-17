@@ -34,7 +34,6 @@ struct CustomTabBar: View {
                 .foregroundColor(tab == selectedTab ? .highlightColour : .textColour)
             }
         }
-        
         .background(
             Color.primaryColour
         )

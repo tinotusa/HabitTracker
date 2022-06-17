@@ -35,6 +35,11 @@ extension Day {
         return String(fullName.capitalized[startIndex..<endIndex])
     }
     
+    // The first letter of the day's name.
+    var firstLetter: String {
+        String(self.fullName.first ?? "x")
+    }
+    
     /// Returns true if the day is a weekend.
     var isWeekend: Bool {
         self == .sunday || self == .saturday
@@ -43,6 +48,27 @@ extension Day {
     /// Returns true if the day is a week day.
     var isWeekday: Bool {
         self == .monday || self == .tuesday || self == .wednesday || self == .thursday || self == .friday
+    }
+    
+    /// Returns the weekend days.
+    static var weekends: Set<Day> {
+        var days = Set<Day>()
+        days.insert(.sunday)
+        days.insert(.saturday)
+        return days
+    }
+    
+    static var weekdays: Set<Day> {
+        var days: Set<Day> = []
+        
+        var allDays = Self.allCases
+        allDays.removeFirst()
+        allDays.removeLast()
+        allDays.forEach { day in
+            days.insert(day)
+        }
+        
+        return days
     }
 }
 

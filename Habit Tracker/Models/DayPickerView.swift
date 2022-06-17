@@ -10,75 +10,97 @@ import SwiftUI
 struct DayPickerView: View {
     @Binding var selection: Set<Day>
     @State private var selectedDays = Array(repeating: false, count: 7)
-    @State private var hours = 1
-    @State private var minutes = 0
-    @State private var showingPicker = false
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @State private var isSetEveryday = false
+    @State private var isSetEveryWeekend = false
+    @State private var isSetEveryWeekday = false
     
     var body: some View {
-        VStack {
-            HStack {
-                Text("Days:")
-                Text(namesOfDaysSelected)
-                Spacer()
-                Image(systemName: "chevron.down")
-                    .rotationEffect(.degrees(showingPicker ? 180 : 0))
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                withAnimation {
-                    showingPicker.toggle()
+        VStack(alignment: .leading) {
+            Toggle("Everyday", isOn: $isSetEveryday)
+                .onChange(of: isSetEveryday) { isSet in
+                    setEveryday(isSet: isSet)
                 }
-            }
-            if showingPicker {
-                VStack {
+            Toggle("Every weekend", isOn: $isSetEveryWeekend)
+                .onChange(of: isSetEveryWeekend) { isSet in
+                    setEveryWeekend(isSet: isSet)
+                }
+            Toggle("Every weekday", isOn: $isSetEveryWeekday)
+                .onChange(of: isSetEveryWeekday) { isSet in
+                    setEveryWeekday(isSet: isSet)
+                }
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
                     ForEach(Day.allCases) { day in
-                        HStack {
-                            Text(day.fullName)
-                            Spacer()
-                            if selectedDays[day.rawValue] {
-                                Image(systemName: "checkmark")
-                            }
-                        }
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            selectedDays[day.rawValue].toggle()
-                            if selectedDays[day.rawValue] {
-                                selection.insert(day)
-                            } else {
+                        Button {
+                            if selection.contains(day) {
                                 selection.remove(day)
+                            } else {
+                                selection.insert(day)
                             }
+                        } label : {
+                            Text("\(day.shortName)")
+                                .padding()
+                                .title2Style()
+                                .frame(width: 100, height: 60)
+                                .background(selection.contains(day) ? Color.primaryColour : Color.backgroundColour)
+                                .foregroundColor(.backgroundColour)
+                                .cornerRadius(Constants.cornerRadius)
                         }
                     }
                 }
             }
         }
-        
+    }
+}
+
+private extension DayPickerView {
+    func setEveryday(isSet: Bool) {
+        if isSet {
+            withAnimation {
+                isSetEveryWeekday = false
+                isSetEveryWeekend = false
+            }
+            selection = []
+            Day.allCases.forEach { day in
+                selection.insert(day)
+            }
+        }
     }
     
-    var namesOfDaysSelected: String {
-        if selection.isEmpty {
-            return "No days selected"
+    func setEveryWeekend(isSet: Bool) {
+        if isSet {
+            withAnimation {
+                isSetEveryday = false
+                isSetEveryWeekday = false
+            }
+            selection = []
+            Day.weekends.forEach { day in
+                selection.insert(day)
+            }
         }
-        if selection.count == 2 && selection.allSatisfy({ $0.isWeekend }) {
-            return "Every weekend"
-        }
-        if selection.count == 5 && selection.allSatisfy( { $0.isWeekday }) {
-            return "Every weekday"
-        }
-        if selection.count == 7 {
-            return "Everyday"
-        }
-        let names = selection.sorted().map {
-            $0.shortName
-        }
-        return ListFormatter.localizedString(byJoining: names)
     }
+    
+    func setEveryWeekday(isSet: Bool) {
+        if isSet {
+            withAnimation {
+                isSetEveryday = false
+                isSetEveryWeekend = false
+            }
+            selection = []
+            Day.weekdays.forEach { day in
+                selection.insert(day)
+            }
+        }
+    }
+    
 }
 
 struct DayPickerView_Previews: PreviewProvider {
     static var previews: some View {
         DayPickerView(
-            selection: .constant([.monday])
+            selection: .constant([.monday, .wednesday])
         )
     }
 }
