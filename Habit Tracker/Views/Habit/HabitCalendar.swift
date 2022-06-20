@@ -87,7 +87,7 @@ struct HabitCalendar: View {
             } content: {
                 JournalEntryView(habit: habit)
             }
-            .sheet(isPresented: $showEditingView) {
+            .fullScreenCover(isPresented: $showEditingView) {
                 EditHabitView(habit: habit)
                     .onDisappear {
                         Task {

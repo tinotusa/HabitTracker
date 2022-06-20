@@ -15,7 +15,7 @@ final class EditHabitViewViewModel: ObservableObject {
     @Published var didError = false
     
     /// The information about the error.
-    @Published var errorDetails: ErrorDetails? {
+    @Published private(set) var errorDetails: ErrorDetails? {
         didSet {
             if errorDetails != nil {
                 DispatchQueue.main.async {
@@ -26,12 +26,89 @@ final class EditHabitViewViewModel: ObservableObject {
     }
     
     /// A boolean value indicating whether the save operation was successful or not.
-    @Published var hasSavedSuccessfully = false
+    @Published private(set) var hasSavedSuccessfully = false
+    
+    /// The input for the activity being added.
+    @Published var activityInput = ""
+    
+    /// The habit being edited.
+    @Published var habit: Habit
+    /// The current user session.
+    var userSession: UserSession!
+    /// The prompt for the activity input text field.
+    let activityInputPrompt = "Name..."
+    
     private lazy var firestore = Firestore.firestore()
     
+    init(habit: Habit) {
+        self.habit = habit
+    }
+}
+
+// MARK: - Computed Properties
+extension EditHabitViewViewModel {
+    var name: String {
+        get {
+            habit.name
+        }
+        set(name) {
+            if name.isEmpty { return }
+            habit.name = name
+        }
+    }
+    
+    var isQuitting: Bool {
+        get { habit.isQuittingHabit }
+        set { habit.isQuittingHabit = newValue }
+    }
+    
+    var isStarting: Bool {
+        get { habit.isStartingHabit }
+        set { habit.isStartingHabit = newValue }
+    }
+    
+    var activities: [Activity] {
+        get { habit.activities }
+        set(activities) {
+            habit.activities = activities
+        }
+    }
+    
+    var occurrenceTime: Date {
+        get { habit.occurrenceTime }
+        set { habit.occurrenceTime = newValue }
+    }
+    
+    var occurrenceDays: Set<Day> {
+        get { habit.occurrenceDays }
+        set { habit.occurrenceDays = newValue }
+    }
+    
+    var durationHours: Int {
+        get { habit.durationHours }
+        set { habit.durationHours = newValue }
+    }
+    
+    var durationMinutes: Int {
+        get { habit.durationMinutes }
+        set { habit.durationMinutes = newValue }
+    }
+    
+    var reason: String {
+        get { habit.reason }
+        set { habit.reason = newValue }
+    }
+    
+    var reasonText: String {
+        isQuitting ? "Reason for quitting habit" : "Reason for starting habit"
+    }
+}
+
+// MARK: - Functions
+extension EditHabitViewViewModel {
     /// Saves the edited habit.
     @discardableResult
-    func saveHabit(_ habit: Habit, userSession: UserSession) async -> Bool {
+    func saveHabit() async -> Bool {
         guard let user = userSession.currentUser else {
             preconditionFailure("User is not logged in.")
         }
@@ -110,5 +187,23 @@ final class EditHabitViewViewModel: ObservableObject {
             return false
         }
         return true
+    }
+    
+    /// Adds the activity to the habits activity list.
+    func addActivity() {
+        if activityInput.isEmpty { return }
+        let activity = Activity(name: activityInput)
+        habit.activities.append(activity)
+        activityInput = ""
+        print(habit.activities)
+    }
+    
+    func removeActivity(_ activity: Activity) {
+        guard let index = habit.activities.firstIndex(where: { item in
+            item == activity
+        }) else {
+            preconditionFailure("No such activity: \(activity)")
+        }
+        habit.activities.remove(at: index)
     }
 }

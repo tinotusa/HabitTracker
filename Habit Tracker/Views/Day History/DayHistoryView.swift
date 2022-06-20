@@ -34,7 +34,7 @@ struct DayHistoryView: View {
                 if let selectedEntry = selectedEntry {
                     Text("On this day you wrote:")
                     TextEditor(text: .constant(selectedEntry.entry))
-                        .frame(maxHeight: 150)
+                        .frame(maxHeight: Constants.textEditorHeight)
                         .border(.black)
                     Text("You did this:")
                     ForEach(selectedEntry.activities) { activity in

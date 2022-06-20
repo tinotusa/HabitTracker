@@ -188,7 +188,7 @@ private extension AddView {
         VStack(alignment: .leading) {
             Text("Why do you want to do this?")
             TextEditor(text: $viewModel.reason)
-                .frame(height: 100)
+                .frame(height: Constants.textEditorHeight)
                 .whiteBoxTextFieldStyle()
                 
         }

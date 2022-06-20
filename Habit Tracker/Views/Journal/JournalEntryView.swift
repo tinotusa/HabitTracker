@@ -50,7 +50,7 @@ struct JournalEntryView: View {
                             Text("Journal entry for: \(habit.name)")
                             Text("How are you feeling?")
                             TextEditor(text: $viewModel.entry)
-                                .frame(minHeight: 160)
+                                .frame(minHeight: Constants.textEditorHeight)
                                 .whiteBoxTextFieldStyle()
                             
                             activitiesList
