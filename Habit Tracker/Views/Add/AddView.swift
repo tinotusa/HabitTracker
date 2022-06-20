@@ -18,6 +18,7 @@ struct AddView: View {
                 
                 VStack(alignment: .leading) {
                     header
+                        .padding()
                     
                     ScrollView(showsIndicators: false) {
                         VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
@@ -45,10 +46,10 @@ struct AddView: View {
                                 Spacer(minLength: 60) //TODO: Look for better solution (hardcoding seems wrong)
                             }
                         }
+                        .padding()
                     }
                     .title2Style()
                 }
-                .padding()
             }
             .alert(
                 "Please allow notifications",
