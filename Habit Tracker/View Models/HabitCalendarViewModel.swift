@@ -149,7 +149,7 @@ extension HabitCalendarViewModel {
             let _ = try await functions.httpsCallable("deleteHabit").call([
                 "userID": user.uid,
                 "habitPath": "habits/\(user.uid)/habits/\(habit.id)",
-                "journalPath": "journalEntries/\(user.uid)/\(habit.id)"
+                "habitID": habit.id
             ])
             NotificationManager.removePendingNotifications(withIdentifiers: [habit.localNotificationID, habit.localReminderNotificationID])
         } catch {

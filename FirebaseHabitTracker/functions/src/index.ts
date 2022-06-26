@@ -55,32 +55,62 @@ exports.deleteHabit = functions
 
       const userID = context.auth?.uid;
       const habitPath = data.habitPath;
-      const journalPath = data.journalPath;
+      const habitID = data.habitID;
+      const queryLimit = 50;
 
       functions.logger.log(
           `User ${userID} has requested to delete path ${habitPath}.`);
 
-      await firebaseTools.firestore
-          .delete(habitPath, {
-            project: process.env.GCLOUD_PROJECT,
-            recursive: true,
-            yes: true,
-            force: true,
-          });
+      deletePath(habitPath);
 
-      await firebaseTools.firestore
-          .delete(journalPath, {
-            project: process.env.GCLOUD_PROJECT,
-            recursive: true,
-            yes: true,
-            force: true,
-          });
+      const query = admin.firestore()
+          .collectionGroup("journalEntries")
+          .where("habitID", "==", habitID)
+          .limit(queryLimit);
+
+      const snapshot = query.get();
+      let docs = (await snapshot).docs;
+
+      docs.forEach(async (doc) => {
+        const path = `journalEntries/${userID}/journalEntries/${doc.id}`;
+        deletePath(path);
+      });
+
+      let lastDoc = docs[docs.length - 1];
+      while (lastDoc != undefined && lastDoc.exists) {
+        const nextQuery = admin.firestore()
+            .collectionGroup("journalEntries")
+            .where("habitID", "==", habitID)
+            .startAfter(lastDoc)
+            .limit(queryLimit);
+
+        const nextSnapshot = nextQuery.get();
+        docs = (await nextSnapshot).docs;
+        docs.forEach(async (doc) => {
+          const path = `journalEntries/${userID}/journalEntries/${doc.id}`;
+          deletePath(path);
+        });
+        lastDoc = docs[docs.length - 1];
+      }
 
       return {
         habitPath: habitPath,
-        journalPath: journalPath,
       };
     });
+
+/**
+ * Deletes the given path from firestore.
+ * @param {string} path The path to be deleted.
+ */
+async function deletePath(path: string) {
+  await firebaseTools.firestore
+      .delete(path, {
+        project: process.env.GCLOUD_PROJECT,
+        recursive: true,
+        yes: true,
+        force: true,
+      });
+}
 
 // Deletes the user from the database.
 exports.deleteUser = functions
