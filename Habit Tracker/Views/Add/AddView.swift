@@ -12,62 +12,62 @@ struct AddView: View {
     @EnvironmentObject var userSession: UserSession
     
     var body: some View {
-        GeometryReader { proxy in
-            ZStack {
-                BackgroundView()
+        
+        ZStack {
+            BackgroundView()
+            
+            VStack(alignment: .leading) {
+                header
+                    .padding()
                 
-                VStack(alignment: .leading) {
-                    header
-                        .padding()
-                    
-                    ScrollView(showsIndicators: false) {
-                        VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
-                            Group {
-                                Toggle("Quitting a habit", isOn: $viewModel.isQuittingHabit.animation())
-                                Toggle("Starting a habit", isOn: $viewModel.isStartingHabit.animation())
-                            }
-                            
-                            Divider()
-                            
-                            nameInput
-                            
-                            timeInput
-                            
-                            dayInput
-                            
-                            durationInput
-                            
-                            activityInput(proxy: proxy)
-                            
-                            reasonInput
-                            
-                            Group {
-                                createHabitButton(proxy: proxy)
-                                Spacer(minLength: 60) //TODO: Look for better solution (hardcoding seems wrong)
-                            }
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
+                        Group {
+                            Toggle("Quitting a habit", isOn: $viewModel.isQuittingHabit.animation())
+                            Toggle("Starting a habit", isOn: $viewModel.isStartingHabit.animation())
                         }
-                        .padding()
+                        
+                        Divider()
+                        
+                        nameInput
+                        
+                        timeInput
+                        
+                        dayInput
+                        
+                        durationInput
+                        
+                        activityInput
+                        
+                        reasonInput
+                        
+                        Group {
+                            createHabitButton
+                            Spacer(minLength: 60) //TODO: Look for better solution (hardcoding seems wrong)
+                        }
                     }
-                    .title2Style()
+                    .padding()
                 }
-            }
-            .alert(
-                "Please allow notifications",
-                isPresented: $viewModel.showSettingsForPermissions,
-                presenting: viewModel.permissionsDetails
-            ) { details in
-                Button(role: .cancel) {
-                    // Default close
-                } label: {
-                    Text("Deny")
-                }
-                Button("Accept") {
-                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-                }
-            } message: { details in
-                Text(details.message)
+                .title2Style()
             }
         }
+        .alert(
+            "Please allow notifications",
+            isPresented: $viewModel.showSettingsForPermissions,
+            presenting: viewModel.permissionsDetails
+        ) { details in
+            Button(role: .cancel) {
+                // Default close
+            } label: {
+                Text("Deny")
+            }
+            Button("Accept") {
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            }
+        } message: { details in
+            Text(details.message)
+        }
+        
     }
 }
 
@@ -148,7 +148,7 @@ private extension AddView {
     }
     
     @ViewBuilder
-    func activityInput(proxy: GeometryProxy) -> some View {
+    var activityInput: some View {
         if viewModel.isQuittingHabit {
             VStack(alignment: .leading, spacing: Constants.habitRowVstackSpacing) {
                 Text("What do you want to do instead?")
@@ -172,12 +172,8 @@ private extension AddView {
                         }
                     }
                 }
-                Button {
+                LongButton(text: "Add") {
                     viewModel.addActivity()
-                } label: {
-                    Text("Add")
-                        .longButtonStyle(proxy: proxy)
-                        .frame(maxWidth: .infinity, alignment: .center)
                 }
             }
             .highlightCard()
@@ -190,20 +186,16 @@ private extension AddView {
             TextEditor(text: $viewModel.reason)
                 .frame(height: Constants.textEditorHeight)
                 .whiteBoxTextFieldStyle()
-                
+            
         }
         .highlightCard()
     }
     
-    func createHabitButton(proxy: GeometryProxy) -> some View {
-        Button {
+    var createHabitButton: some View {
+        LongButton(text: "Create habit") {
             Task {
                 await viewModel.addHabit(session: userSession)
             }
-        } label: {
-            Text("Create habit")
-                .longButtonStyle(proxy: proxy)
-                .frame(maxWidth: .infinity, alignment: .center)
         }
         .disabled(!viewModel.allFieldsFilled)
     }

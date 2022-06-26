@@ -39,9 +39,9 @@ struct LoginView: View {
                             
                             rememberMeButton
                             
-                            loginButton(proxy: proxy)
+                            loginButton
                             
-                            signUpButton(proxy: proxy)
+                            signUpButton
                             
                             horizontalDivider
                             
@@ -123,28 +123,20 @@ private extension LoginView {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
-    func loginButton(proxy: GeometryProxy) -> some View {
-        Button {
+    var loginButton: some View {
+        LongButton(text: "Login") {
             if rememberMe {
                 viewModel.saveLoginDetails()
             }
             userSession.signIn(withEmail: viewModel.email, password: viewModel.password)
-        } label: {
-            Text("Login")
-                .longButtonStyle(proxy: proxy)
         }
-        
         .disabled(!viewModel.allFieldsFilled)
     }
     
-    func signUpButton(proxy: GeometryProxy) -> some View {
-        Button {
+    var signUpButton: some View {
+        LongButton(text: "Sign up") {
             viewModel.showSignUpView = true
-        } label: {
-            Text("Sign up")
-                .longButtonStyle(proxy: proxy)
         }
-        
     }
     
     var horizontalDivider: some View {

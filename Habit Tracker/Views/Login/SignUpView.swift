@@ -41,7 +41,7 @@ struct SignUpView: View {
                         
                         birthdayInput
                         
-                        signUpButton(proxy: proxy)
+                        signUpButton
                             
                     }
                     .frame(minHeight: proxy.size.height)
@@ -139,13 +139,9 @@ private extension SignUpView {
         .disabled(!viewModel.allFieldsFilled)
     }
     
-    @ViewBuilder
-    func signUpButton(proxy: GeometryProxy) -> some View {
-        Button {
+    var signUpButton: some View {
+        LongButton(text: "Sign up") {
             createAccount()
-        } label: {
-            Text("Sign up")
-                .longButtonStyle(proxy: proxy)
         }
         .disabled(!viewModel.allFieldsFilled)
     }

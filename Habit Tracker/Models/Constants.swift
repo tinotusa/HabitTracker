@@ -9,6 +9,7 @@ import Foundation
 
 struct Constants {
     static let cornerRadius =  20.0
+    static let buttonCornerRadius = 30.0
     static let shadowOpacity = 0.8
     static let shadowRadius = 5.0
     static let vstackSpacing = 30.0

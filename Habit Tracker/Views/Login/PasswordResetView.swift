@@ -12,26 +12,27 @@ struct PasswordResetView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        GeometryReader { proxy in
-            ZStack(alignment: .topLeading) {
-                BackgroundView()
+        ZStack(alignment: .topLeading) {
+            BackgroundView()
+            
+            closeButton
+            
+            VStack(spacing: Constants.vstackSpacing) {
+                Spacer()
                 
-                closeButton
+                Text("Reset password")
+                    .title2Style()
                 
-                VStack(spacing: Constants.vstackSpacing) {
-                    Text("Reset password")
-                        .title2Style()
-                    
-                    TextField("Email", text: $viewModel.email, prompt: Text(viewModel.emailPlaceholder))
-                        .inputField(imageName: "envelope.fill", contentType: .emailAddress)
-                    
-                    sendResetButton(proxy: proxy)
-                }
-                .padding()
-                .frame(width: proxy.size.width)
-                .frame(minHeight: proxy.size.height)
+                TextField("Email", text: $viewModel.email, prompt: Text(viewModel.emailPlaceholder))
+                    .inputField(imageName: "envelope.fill", contentType: .emailAddress)
+                
+                sendResetButton
+                
+                Spacer()
             }
+            .padding()
         }
+        
         .alert(
             viewModel.errorDetails?.name ?? "Error",
             isPresented: $viewModel.didError,
@@ -59,12 +60,9 @@ extension PasswordResetView {
         .zIndex(1)
     }
     
-    func sendResetButton(proxy: GeometryProxy) -> some View {
-        Button {
+    var sendResetButton: some View {
+        LongButton(text: "Send reset email") {
             viewModel.sendResetEmail()
-        } label: {
-            Text("Send reset email")
-                .longButtonStyle(proxy: proxy)
         }
         .disabled(!viewModel.allFieldsFilled)
     }
