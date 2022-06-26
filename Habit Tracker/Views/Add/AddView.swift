@@ -12,45 +12,41 @@ struct AddView: View {
     @EnvironmentObject var userSession: UserSession
     
     var body: some View {
-        
-        ZStack {
-            BackgroundView()
+        VStack(alignment: .leading) {
+            header
+                .padding()
             
-            VStack(alignment: .leading) {
-                header
-                    .padding()
-                
-                ScrollView(showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
-                        Group {
-                            Toggle("Quitting a habit", isOn: $viewModel.isQuittingHabit.animation())
-                            Toggle("Starting a habit", isOn: $viewModel.isStartingHabit.animation())
-                        }
-                        
-                        Divider()
-                        
-                        nameInput
-                        
-                        timeInput
-                        
-                        dayInput
-                        
-                        durationInput
-                        
-                        activityInput
-                        
-                        reasonInput
-                        
-                        Group {
-                            createHabitButton
-                            Spacer(minLength: 60) //TODO: Look for better solution (hardcoding seems wrong)
-                        }
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
+                    Group {
+                        Toggle("Quitting a habit", isOn: $viewModel.isQuittingHabit.animation())
+                        Toggle("Starting a habit", isOn: $viewModel.isStartingHabit.animation())
                     }
-                    .padding()
+                    
+                    Divider()
+                    
+                    nameInput
+                    
+                    timeInput
+                    
+                    dayInput
+                    
+                    durationInput
+                    
+                    activityInput
+                    
+                    reasonInput
+                    
+                    Group {
+                        createHabitButton
+                        Spacer(minLength: 60) //TODO: Look for better solution (hardcoding seems wrong)
+                    }
                 }
-                .title2Style()
+                .padding()
             }
+            .title2Style()
         }
+        .backgroundView()
         .alert(
             "Please allow notifications",
             isPresented: $viewModel.showSettingsForPermissions,

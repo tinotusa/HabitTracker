@@ -11,52 +11,48 @@ import GoogleSignIn
 
 struct LoginView: View {
     @EnvironmentObject var userSession: UserSession
-    @StateObject var viewModel = LoginViewModel()
+    @StateObject private var viewModel = LoginViewModel()
     @Environment(\.colorScheme) var colorScheme
-    @FocusState var field: LoginViewModel.InputField?
+    @FocusState private var field: LoginViewModel.InputField?
     @AppStorage("rememberMe") var rememberMe = false
     
     var body: some View {
         NavigationView {
             GeometryReader { proxy in
-                ZStack {
-                    BackgroundView()
-                    
-                    NavigationLink(isActive: $viewModel.showSignUpView) {
-                        SignUpView()
-                    } label: {
-                        EmptyView()
-                    }
-                    
-                    ScrollView(showsIndicators: false) {
-                        VStack(spacing: Constants.vstackSpacing) {
-                            Text("Habit tracker")
-                                .titleStyle()
-                            
-                            emailInputField
-                            
-                            passwordInputField
-                            
-                            rememberMeButton
-                            
-                            loginButton
-                            
-                            signUpButton
-                            
-                            horizontalDivider
-                            
-                            signInWithAppleButton
-                            
-                            signInWithGoogleButton
-                            
-                            forgotLoginDetailsButton
-                        }
-                        .padding()
-                        .disabled(userSession.isLoading)
-                        .frame(width: proxy.size.width)
-                        .frame(minHeight: proxy.size.height)
-                    }
+                NavigationLink(isActive: $viewModel.showSignUpView) {
+                    SignUpView()
+                } label: {
+                    EmptyView()
                 }
+                
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: Constants.vstackSpacing) {
+                        Text("Habit tracker")
+                            .titleStyle()
+                        
+                        emailInputField
+                        
+                        passwordInputField
+                        
+                        rememberMeButton
+                        
+                        loginButton
+                        
+                        signUpButton
+                        
+                        horizontalDivider
+                        
+                        signInWithAppleButton
+                        
+                        signInWithGoogleButton
+                        
+                        forgotLoginDetailsButton
+                    }
+                    .padding()
+                    .disabled(userSession.isLoading)
+                    .frame(minHeight: proxy.size.height)
+                }
+                .backgroundView()
             }
             .navigationViewStyle(.stack)
             .navigationBarHidden(true)

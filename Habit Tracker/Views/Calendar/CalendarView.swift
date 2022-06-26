@@ -16,34 +16,32 @@ struct CalendarView: View {
 
     var body: some View {
         NavigationView {
-            ZStack {
-                BackgroundView()
+            VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
                 NavigationLink(destination: DayHistoryView(date: selectedDate), isActive: $showingDayHistory) {
                     EmptyView()
                 }
-                VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
-                    Text("Calendar")
-                        .titleStyle()
-                    BaseCalendarView(date: $date) { currentDate in
-                        selectedDate = currentDate
-                        self.showingDayHistory = true
-                    } isDateHighlighted: { date in
-                        return viewModel.hasJournalEntry(for: date)
-                    }
-                    Spacer()
+                Text("Calendar")
+                    .titleStyle()
+                BaseCalendarView(date: $date) { currentDate in
+                    selectedDate = currentDate
+                    self.showingDayHistory = true
+                } isDateHighlighted: { date in
+                    return viewModel.hasJournalEntry(for: date)
                 }
-                .padding()
-                .onChange(of: date) { _ in
-                    Task {
-                        await viewModel.getHabitsForMonth(date: date)
-                    }
-                }
-                .task {
-                    if !userSession.isSignedIn {
-                        return
-                    }
+                Spacer()
+            }
+            .padding()
+            .backgroundView()
+            .onChange(of: date) { _ in
+                Task {
                     await viewModel.getHabitsForMonth(date: date)
                 }
+            }
+            .task {
+                if !userSession.isSignedIn {
+                    return
+                }
+                await viewModel.getHabitsForMonth(date: date)
             }
             .navigationBarHidden(true)
             .navigationViewStyle(.stack)

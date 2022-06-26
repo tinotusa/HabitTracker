@@ -15,6 +15,7 @@
 		2138AF2C28533D7E0055072E /* PasswordResetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138AF2B28533D7E0055072E /* PasswordResetViewModel.swift */; };
 		2138AF2E28537DC20055072E /* HabitRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138AF2D28537DC20055072E /* HabitRowView.swift */; };
 		213C5CC42833A56700ACB95F /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213C5CC32833A56700ACB95F /* SignUpViewModel.swift */; };
+		214E32A52868788B00A47452 /* View+Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E32A42868788B00A47452 /* View+Background.swift */; };
 		214F41C328212BDE00A9D696 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 214F41C228212BDE00A9D696 /* GoogleSignIn */; };
 		214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */; };
 		214F41CB2821417A00A9D696 /* PasswordResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F41CA2821417A00A9D696 /* PasswordResetView.swift */; };
@@ -70,7 +71,6 @@
 		21EE866C28520A620028F726 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EE866B28520A620028F726 /* InputField.swift */; };
 		21EE866E2852162E0028F726 /* TextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EE866D2852162E0028F726 /* TextStyles.swift */; };
 		21F2F8D42854864A00F517F0 /* Color+CustomColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F2F8D32854864A00F517F0 /* Color+CustomColours.swift */; };
-		21F2F8D62854893000F517F0 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F2F8D52854893000F517F0 /* BackgroundView.swift */; };
 		21F2F8D828548E4700F517F0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F2F8D728548E4700F517F0 /* Constants.swift */; };
 		21F2F8DA2854A91000F517F0 /* RowLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F2F8D92854A91000F517F0 /* RowLoadingView.swift */; };
 /* End PBXBuildFile section */
@@ -101,6 +101,7 @@
 		2138AF2B28533D7E0055072E /* PasswordResetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetViewModel.swift; sourceTree = "<group>"; };
 		2138AF2D28537DC20055072E /* HabitRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitRowView.swift; sourceTree = "<group>"; };
 		213C5CC32833A56700ACB95F /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		214E32A42868788B00A47452 /* View+Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Background.swift"; sourceTree = "<group>"; };
 		214F41C6282131EA00A9D696 /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoogleSignInButton.swift; path = "Habit Tracker/Views/Login/GoogleSignInButton.swift"; sourceTree = SOURCE_ROOT; };
 		214F41CA2821417A00A9D696 /* PasswordResetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasswordResetView.swift; path = "Habit Tracker/Views/Login/PasswordResetView.swift"; sourceTree = SOURCE_ROOT; };
 		215249612844F53F00FDA66E /* JournalEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalEntryView.swift; sourceTree = "<group>"; };
@@ -157,7 +158,6 @@
 		21EE866B28520A620028F726 /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
 		21EE866D2852162E0028F726 /* TextStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyles.swift; sourceTree = "<group>"; };
 		21F2F8D32854864A00F517F0 /* Color+CustomColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+CustomColours.swift"; sourceTree = "<group>"; };
-		21F2F8D52854893000F517F0 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		21F2F8D728548E4700F517F0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		21F2F8D92854A91000F517F0 /* RowLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowLoadingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -227,6 +227,7 @@
 				21EE77CC2859F46D007DB59D /* HighlightCard.swift */,
 				21EE77CE2859F4A2007DB59D /* BasicShadow.swift */,
 				21EE77D42859FCFA007DB59D /* WhiteBoxTextFieldStyle.swift */,
+				214E32A42868788B00A47452 /* View+Background.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -349,7 +350,6 @@
 				21DDF03A2831224A00FE8DAC /* LoadingView.swift */,
 				21DA7F7C283B942200E43E4C /* CustomTabBar.swift */,
 				215249632845021900FDA66E /* RatingView.swift */,
-				21F2F8D52854893000F517F0 /* BackgroundView.swift */,
 				2166708928686FD700EE7F4D /* LongButton.swift */,
 			);
 			path = Views;
@@ -570,7 +570,6 @@
 			files = (
 				215249682845029600FDA66E /* JournalEntryViewViewModel.swift in Sources */,
 				21DA7F7B283B92EF00E43E4C /* AddView.swift in Sources */,
-				21F2F8D62854893000F517F0 /* BackgroundView.swift in Sources */,
 				21E61908283D0287007F42DC /* AddViewViewModel.swift in Sources */,
 				21BD7CAF284B50D100A9A8B2 /* EditHabitView.swift in Sources */,
 				211040742845ED7B00DC1D17 /* HomeViewViewModel.swift in Sources */,
@@ -607,6 +606,7 @@
 				2128011E2845C80C00D24C35 /* CalendarViewViewModel.swift in Sources */,
 				21F2F8D828548E4700F517F0 /* Constants.swift in Sources */,
 				21E6190A283D089B007F42DC /* Day.swift in Sources */,
+				214E32A52868788B00A47452 /* View+Background.swift in Sources */,
 				21B6289E280AE09A00E3FC49 /* FirebaseUser.swift in Sources */,
 				21DA7F7F283B94AD00E43E4C /* Tab.swift in Sources */,
 				214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */,

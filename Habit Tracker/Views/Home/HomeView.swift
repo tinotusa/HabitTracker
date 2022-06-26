@@ -14,46 +14,44 @@ struct HomeView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                BackgroundView()
-                
-                VStack(alignment: .leading) {
-                    HStack(alignment: .lastTextBaseline) {
-                        Text("Habits")
-                            .titleStyle()
-                        Spacer()
-                        // TODO: Maybe put the edit button here (can edit user info)
-                        Button("Logout") {
-                            userSession.signOut()
-                            print("logged out")
-                        }
-                        .captionStyle()
-                        .foregroundColor(.textColour)
-                    }
-                    .padding(.horizontal)
-                    
-                    ScrollView(showsIndicators: false) {
-                        VStack(spacing: Constants.habitRowVstackSpacing) {
-                            ForEach(viewModel.habits) { habit in
-                                NavigationLink(destination: HabitCalendar(habit: habit)) {
-                                    HabitRowView(habit: habit)
-                                }
-                            }
-                            if viewModel.hasNextPage {
-                                RowLoadingView()
-                                    .onAppear {
-                                        Task {
-                                            await viewModel.getNextHabits(userSession: userSession)
-                                        }
-                                    }
-                            }
-                        }
-                        .padding()
-                    }
+            
+            VStack(alignment: .leading) {
+                HStack(alignment: .lastTextBaseline) {
+                    Text("Habits")
+                        .titleStyle()
                     Spacer()
+                    // TODO: Maybe put the edit button here (can edit user info)
+                    Button("Logout") {
+                        userSession.signOut()
+                        print("logged out")
+                    }
+                    .captionStyle()
+                    .foregroundColor(.textColour)
                 }
+                .padding(.horizontal)
                 
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: Constants.habitRowVstackSpacing) {
+                        ForEach(viewModel.habits) { habit in
+                            NavigationLink(destination: HabitCalendar(habit: habit)) {
+                                HabitRowView(habit: habit)
+                            }
+                        }
+                        if viewModel.hasNextPage {
+                            RowLoadingView()
+                                .onAppear {
+                                    Task {
+                                        await viewModel.getNextHabits(userSession: userSession)
+                                    }
+                                }
+                        }
+                    }
+                    .padding()
+                }
+                Spacer()
             }
+            
+            .backgroundView()
             .task {
                 if userSession.isSignedIn {
                     await viewModel.getHabits(userSession: userSession)
@@ -75,10 +73,8 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            HomeView()
-                .environmentObject(UserSession())
-                .environmentObject(NotificationManager())
-        }
+        HomeView()
+            .environmentObject(UserSession())
+            .environmentObject(NotificationManager())
     }
 }

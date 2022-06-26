@@ -49,108 +49,105 @@ struct EditHabitView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                BackgroundView()
+            VStack(alignment: .leading) {
+                header
+                    .padding()
                 
-                VStack(alignment: .leading) {
-                    header
-                        .padding()
-                    
-                    ScrollView(showsIndicators: false) {
-                        VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
-                            VStack(alignment: .leading) {
-                                Text("Habit name:")
-                                TextField("Habit name", text: $viewModel.name, prompt: Text("Habit name"))
-                                    .whiteBoxTextFieldStyle()
-                            }
-                            .highlightCard()
-                            
-                            VStack {
-                                Toggle("Quitting", isOn: $viewModel.isQuitting.animation())
-                                    .onChange(of: viewModel.isQuitting) { isQuitting in
-                                        if isQuitting {
-                                            withAnimation {
-                                                viewModel.isStarting = false
-                                            }
-                                        }
-                                    }
-                                Toggle("Starting", isOn: $viewModel.isStarting.animation())
-                                    .onChange(of: viewModel.isStarting) { isStarting in
-                                        if isStarting {
-                                            withAnimation {
-                                                viewModel.isQuitting = false
-                                            }
-                                        }
-                                    }
-                            }
-                            .highlightCard()
-                            
-                            VStack(alignment: .leading) {
-                                Text("At what time do you want to do this?")
-                                DatePicker("", selection: $viewModel.occurrenceTime, displayedComponents: [.hourAndMinute])
-                                    .labelsHidden()
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .highlightCard()
-                            
-                            VStack(alignment: .leading) {
-                                Text("On what days do you do this?")
-                                DayPickerView(selection: $viewModel.occurrenceDays)
-                            }
-                            .highlightCard()
-                            
-                            VStack(alignment: .leading) {
-                                Text("How long does it take?")
-                                Stepper("Hours: \(viewModel.durationHours)", value: $viewModel.durationHours, in: 0 ... 24)
-                                Stepper("Minutes: \(viewModel.durationMinutes)", value: $viewModel.durationMinutes, in: 0 ... 60)
-                            }
-                            .highlightCard()
-                            if viewModel.isQuitting {
-                                VStack(alignment: .leading, spacing: Constants.habitRowVstackSpacing) {
-                                    Text("Activities")
-                                    TextField("Activity", text: $viewModel.activityInput, prompt: Text(viewModel.activityInputPrompt))
-                                        .whiteBoxTextFieldStyle()
-                                    
-                                    ForEach($viewModel.activities) { $activity in
-                                        HStack {
-                                            TextField("Activity", text: $activity.name, prompt: Text("Activity placeholder"))
-                                                .lineLimit(1)
-                                                .whiteBoxTextFieldStyle()
-                                            Spacer()
-                                            ActivityDeleteButton() {
-                                                withAnimation {
-                                                    viewModel.removeActivity(activity)
-                                                }
-                                            }
-                                        }
-                                    }
-                                    LongButton(text: "Add activity") {
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
+                        VStack(alignment: .leading) {
+                            Text("Habit name:")
+                            TextField("Habit name", text: $viewModel.name, prompt: Text("Habit name"))
+                                .whiteBoxTextFieldStyle()
+                        }
+                        .highlightCard()
+                        
+                        VStack {
+                            Toggle("Quitting", isOn: $viewModel.isQuitting.animation())
+                                .onChange(of: viewModel.isQuitting) { isQuitting in
+                                    if isQuitting {
                                         withAnimation {
-                                            viewModel.addActivity()
+                                            viewModel.isStarting = false
                                         }
                                     }
                                 }
-                                .highlightCard()
-                            }
-                            
-                            
-                            VStack(alignment: .leading) {
-                                Text(viewModel.reasonText)
-                                TextEditor(text: $viewModel.reason)
-                                    .frame(minHeight: Constants.textEditorHeight)
+                            Toggle("Starting", isOn: $viewModel.isStarting.animation())
+                                .onChange(of: viewModel.isStarting) { isStarting in
+                                    if isStarting {
+                                        withAnimation {
+                                            viewModel.isQuitting = false
+                                        }
+                                    }
+                                }
+                        }
+                        .highlightCard()
+                        
+                        VStack(alignment: .leading) {
+                            Text("At what time do you want to do this?")
+                            DatePicker("", selection: $viewModel.occurrenceTime, displayedComponents: [.hourAndMinute])
+                                .labelsHidden()
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .highlightCard()
+                        
+                        VStack(alignment: .leading) {
+                            Text("On what days do you do this?")
+                            DayPickerView(selection: $viewModel.occurrenceDays)
+                        }
+                        .highlightCard()
+                        
+                        VStack(alignment: .leading) {
+                            Text("How long does it take?")
+                            Stepper("Hours: \(viewModel.durationHours)", value: $viewModel.durationHours, in: 0 ... 24)
+                            Stepper("Minutes: \(viewModel.durationMinutes)", value: $viewModel.durationMinutes, in: 0 ... 60)
+                        }
+                        .highlightCard()
+                        if viewModel.isQuitting {
+                            VStack(alignment: .leading, spacing: Constants.habitRowVstackSpacing) {
+                                Text("Activities")
+                                TextField("Activity", text: $viewModel.activityInput, prompt: Text(viewModel.activityInputPrompt))
                                     .whiteBoxTextFieldStyle()
+                                
+                                ForEach($viewModel.activities) { $activity in
+                                    HStack {
+                                        TextField("Activity", text: $activity.name, prompt: Text("Activity placeholder"))
+                                            .lineLimit(1)
+                                            .whiteBoxTextFieldStyle()
+                                        Spacer()
+                                        ActivityDeleteButton() {
+                                            withAnimation {
+                                                viewModel.removeActivity(activity)
+                                            }
+                                        }
+                                    }
+                                }
+                                LongButton(text: "Add activity") {
+                                    withAnimation {
+                                        viewModel.addActivity()
+                                    }
+                                }
                             }
                             .highlightCard()
-                            
-                            LongButton(text: "Save changes") {
-                                saveChanges()
-                            }
                         }
-                        .padding()
+                        
+                        
+                        VStack(alignment: .leading) {
+                            Text(viewModel.reasonText)
+                            TextEditor(text: $viewModel.reason)
+                                .frame(minHeight: Constants.textEditorHeight)
+                                .whiteBoxTextFieldStyle()
+                        }
+                        .highlightCard()
+                        
+                        LongButton(text: "Save changes") {
+                            saveChanges()
+                        }
                     }
+                    .padding()
                 }
-                .title2Style()
             }
+            .title2Style()
+            .backgroundView()
             .navigationBarHidden(true)
             .confirmationDialog("Save", isPresented: $userHasMadeChanges) {
                 Button(role: .destructive) {

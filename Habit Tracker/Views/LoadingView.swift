@@ -14,20 +14,20 @@ struct LoadingView: View {
     var body: some View {
         if isLoading {
             ZStack {
-                Color(.white)
+                Color.highlightColour
                     .opacity(0.75)
                     .ignoresSafeArea()
                 VStack {
                     Text(placeholder)
-                        .font(.title2)
-                        .foregroundColor(.black)
+                        
+                        .multilineTextAlignment(.center)
                     ProgressView()
                         .tint(.black)
                         .scaleEffect(1.5, anchor: .center)
                 }
+                .titleStyle()
+                .foregroundColor(.textColour)
             }
-        } else {
-            EmptyView()
         }
     }
 }
@@ -35,6 +35,6 @@ struct LoadingView: View {
 
 struct LoadingView_Previews: PreviewProvider {
     static var previews: some View {
-        LoadingView(placeholder: "test", isLoading: .constant(true))
+        LoadingView(placeholder: "Loading", isLoading: .constant(true))
     }
 }

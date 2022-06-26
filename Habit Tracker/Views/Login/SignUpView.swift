@@ -9,17 +9,14 @@ import SwiftUI
 
 struct SignUpView: View {
     @EnvironmentObject var userSession: UserSession
-    @Environment(\.dismiss) var dismiss
-    @StateObject var viewModel = SignUpViewModel()
+    @Environment(\.dismiss) private var dismiss
+    @StateObject private var viewModel = SignUpViewModel()
     @FocusState private var inputField: SignUpViewModel.InputField?
     
     var body: some View {
         GeometryReader { proxy in
-            ZStack(alignment: .topLeading) {
-                BackgroundView()
-                
+            VStack(alignment: .leading) {
                 backButton
-                    
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: Constants.vstackSpacing) {
                         Text("Register")
@@ -31,7 +28,7 @@ struct SignUpView: View {
                             lastNameInput
                             
                             emailInput
-                           
+                            
                             emailConfirmationInput
                             
                             passwordInput
@@ -42,17 +39,17 @@ struct SignUpView: View {
                         birthdayInput
                         
                         signUpButton
-                            
                     }
                     .frame(minHeight: proxy.size.height)
-                    .padding()
                 }
             }
+            .padding()
+            .backgroundView()
             .disabled(viewModel.isLoading)
             .navigationBarHidden(true)
             .overlay {
                 LoadingView(placeholder: "Creating account", isLoading: $viewModel.isLoading)
-                    .frame(height: proxy.size.height)
+                    .frame(maxHeight: .infinity)
             }
         }
         .toolbar {
@@ -194,7 +191,7 @@ private extension SignUpView {
     func previousField() {
         inputField = inputField?.previousField()
     }
-
+    
     func createAccount() {
         viewModel.createAccount(session: userSession)
     }

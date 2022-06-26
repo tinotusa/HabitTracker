@@ -8,31 +8,27 @@
 import SwiftUI
 
 struct PasswordResetView: View {
-    @StateObject var viewModel = PasswordResetViewModel()
+    @StateObject private var viewModel = PasswordResetViewModel()
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            BackgroundView()
-            
+        VStack(spacing: Constants.vstackSpacing) {
             closeButton
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Spacer()
             
-            VStack(spacing: Constants.vstackSpacing) {
-                Spacer()
-                
-                Text("Reset password")
-                    .title2Style()
-                
-                TextField("Email", text: $viewModel.email, prompt: Text(viewModel.emailPlaceholder))
-                    .inputField(imageName: "envelope.fill", contentType: .emailAddress)
-                
-                sendResetButton
-                
-                Spacer()
-            }
-            .padding()
+            Text("Reset password")
+                .title2Style()
+            
+            TextField("Email", text: $viewModel.email, prompt: Text(viewModel.emailPlaceholder))
+                .inputField(imageName: "envelope.fill", contentType: .emailAddress)
+            
+            sendResetButton
+            
+            Spacer()
         }
-        
+        .padding()
+        .backgroundView()
         .alert(
             viewModel.errorDetails?.name ?? "Error",
             isPresented: $viewModel.didError,
@@ -45,7 +41,7 @@ struct PasswordResetView: View {
     }
 }
 
-extension PasswordResetView {
+private extension PasswordResetView {
     var closeButton: some View {
         Button {
             dismiss()

@@ -14,33 +14,30 @@ struct JournalEntryView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        ZStack {
-            BackgroundView()
-            VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
-                header
-                
-                ScrollView(showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
-                        Text("Journal entry for: \(habit.name)")
-                        Text("How are you feeling?")
-                        TextEditor(text: $viewModel.entry)
-                            .frame(minHeight: Constants.textEditorHeight)
-                            .whiteBoxTextFieldStyle()
-                        
-                        activitiesList
-                        
-                        VStack(spacing: Constants.vstackSpacing) {
-                            Text("Rate how you feel")
-                            RatingView(rating: $viewModel.rating)
-                            LongButton(text: "Add entry") {
-                                viewModel.addEntry(userSession: userSession, habit: habit)
-                            }
+        VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
+            header
+            
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
+                    Text("Journal entry for: \(habit.name)")
+                    Text("How are you feeling?")
+                    TextEditor(text: $viewModel.entry)
+                        .frame(minHeight: Constants.textEditorHeight)
+                        .whiteBoxTextFieldStyle()
+                    
+                    activitiesList
+                    
+                    VStack(spacing: Constants.vstackSpacing) {
+                        Text("Rate how you feel")
+                        RatingView(rating: $viewModel.rating)
+                        LongButton(text: "Add entry") {
+                            viewModel.addEntry(userSession: userSession, habit: habit)
                         }
                     }
                 }
             }
-            .padding()
         }
+        .padding()
         .title2Style()
         .foregroundColor(.textColour)
         .onAppear {
@@ -48,6 +45,7 @@ struct JournalEntryView: View {
                 JournalEntry.Activity(name: activity.name, isCompleted: false)
             }
         }
+        .backgroundView()
     }
 }
 

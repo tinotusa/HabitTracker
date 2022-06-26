@@ -9,22 +9,18 @@ import SwiftUI
 
 struct TextStyles: View {
     var body: some View {
-        ZStack {
-            BackgroundView()
-            
-            VStack {
-                Text("Styles:")
-                    .foregroundColor(.textColour)
-                Text("Title style")
-                    .titleStyle()
-                Text("Title 2 style")
-                    .title2Style()
-                Text("Caption style")
-                    .captionStyle()
-            }
+        VStack {
+            Text("Styles:")
+                .foregroundColor(.textColour)
+            Text("Title style")
+                .titleStyle()
+            Text("Title 2 style")
+                .title2Style()
+            Text("Caption style")
+                .captionStyle()
+                .foregroundColor(.textColour)
         }
-        
-        
+        .backgroundView()
     }
 }
 
