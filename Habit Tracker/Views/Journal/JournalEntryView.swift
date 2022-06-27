@@ -20,19 +20,25 @@ struct JournalEntryView: View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
                     Text("Journal entry for: \(habit.name)")
-                    Text("How are you feeling?")
-                    TextEditor(text: $viewModel.entry)
-                        .frame(minHeight: Constants.textEditorHeight)
-                        .whiteBoxTextFieldStyle()
+                    VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
+                        Text("How are you feeling?")
+                        TextEditor(text: $viewModel.entry)
+                            .frame(minHeight: Constants.textEditorHeight)
+                            .whiteBoxTextFieldStyle()
+                    }
+                    .highlightCard()
                     
                     activitiesList
                     
                     VStack(spacing: Constants.vstackSpacing) {
                         Text("Rate how you feel")
                         RatingView(rating: $viewModel.rating)
-                        LongButton(text: "Add entry") {
-                            viewModel.addEntry(userSession: userSession, habit: habit)
-                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .highlightCard()
+                    
+                    LongButton(text: "Add entry") {
+                        viewModel.addEntry(userSession: userSession, habit: habit)
                     }
                 }
             }
