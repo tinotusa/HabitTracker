@@ -115,29 +115,18 @@ private extension AddView {
     
     var durationInput: some View {
         VStack(alignment: .leading) {
-            Text("What time do you usually this?")
+            Text("How long does this usually last?")
             HStack {
-                Text("Hrs:")
-                Picker("Hours", selection: $viewModel.durationHours) {
-                    ForEach(0 ..< 25) { hour in
-                        if hour == 0 || hour > 1 {
-                            Text("\(hour) hours")
-                        } else {
-                            Text("\(hour) hour")
-                        }
-                    }
-                }
-                Text("Mins:")
-                Picker("Minutes", selection: $viewModel.durationMinutes) {
-                    ForEach(0 ..< 61) { minute in
-                        if minute == 0 || minute > 1 {
-                            Text("\(minute) minutes")
-                        } else {
-                            Text("\(minute) minute")
-                        }
-                    }
-                }
+                Text("Hours:")
+                Spacer()
+                CustomStepper(value: $viewModel.durationHours, minValue: 0, maxValue: 24)
             }
+            HStack {
+                Text("Minutes:")
+                Spacer()
+                CustomStepper(value: $viewModel.durationMinutes, minValue: 0, maxValue: 60)
+            }
+            
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .highlightCard()
