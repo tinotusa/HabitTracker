@@ -29,6 +29,8 @@
 		2152496F28450EF200FDA66E /* Date+isEqual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152496E28450EF200FDA66E /* Date+isEqual.swift */; };
 		2166708A28686FD700EE7F4D /* LongButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2166708928686FD700EE7F4D /* LongButton.swift */; };
 		218B7458284206B000F55A21 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218B7457284206B000F55A21 /* Habit.swift */; };
+		21A91B8D286AE939006FA005 /* JournalDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A91B8C286AE939006FA005 /* JournalDetails.swift */; };
+		21A91B8F286B05D4006FA005 /* CustomDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A91B8E286B05D4006FA005 /* CustomDivider.swift */; };
 		21AC33D62821494800A79F7B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AC33D52821494800A79F7B /* LoginViewModel.swift */; };
 		21B6285F280AC4B900E3FC49 /* Habit_TrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6285E280AC4B900E3FC49 /* Habit_TrackerApp.swift */; };
 		21B62863280AC4BB00E3FC49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B62862280AC4BB00E3FC49 /* Assets.xcassets */; };
@@ -116,6 +118,8 @@
 		2166708928686FD700EE7F4D /* LongButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongButton.swift; sourceTree = "<group>"; };
 		2169E266282115EA00E46AF8 /* Habit Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Habit Tracker.entitlements"; sourceTree = "<group>"; };
 		218B7457284206B000F55A21 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
+		21A91B8C286AE939006FA005 /* JournalDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalDetails.swift; sourceTree = "<group>"; };
+		21A91B8E286B05D4006FA005 /* CustomDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDivider.swift; sourceTree = "<group>"; };
 		21AC33D52821494800A79F7B /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		21B6285B280AC4B800E3FC49 /* Habit Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B6285E280AC4B900E3FC49 /* Habit_TrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_TrackerApp.swift; sourceTree = "<group>"; };
@@ -354,6 +358,7 @@
 				215249632845021900FDA66E /* RatingView.swift */,
 				2166708928686FD700EE7F4D /* LongButton.swift */,
 				213CCE5D2869C25A0009B8D1 /* CustomStepper.swift */,
+				21A91B8E286B05D4006FA005 /* CustomDivider.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -362,6 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				21C16C022847731100502804 /* DayHistoryView.swift */,
+				21A91B8C286AE939006FA005 /* JournalDetails.swift */,
 			);
 			path = "Day History";
 			sourceTree = "<group>";
@@ -587,6 +593,7 @@
 				21B62898280AD1E300E3FC49 /* LoginView.swift in Sources */,
 				21DA7F78283B90B800E43E4C /* MainView.swift in Sources */,
 				21071C26284367BF007C7DC4 /* HabitCalendar.swift in Sources */,
+				21A91B8D286AE939006FA005 /* JournalDetails.swift in Sources */,
 				21C16C0528478F3400502804 /* DayHistoryViewViewModel.swift in Sources */,
 				2166708A28686FD700EE7F4D /* LongButton.swift in Sources */,
 				2128011C2845C69100D24C35 /* BaseCalendarView.swift in Sources */,
@@ -611,6 +618,7 @@
 				21F2F8D828548E4700F517F0 /* Constants.swift in Sources */,
 				21E6190A283D089B007F42DC /* Day.swift in Sources */,
 				214E32A52868788B00A47452 /* View+Background.swift in Sources */,
+				21A91B8F286B05D4006FA005 /* CustomDivider.swift in Sources */,
 				21B6289E280AE09A00E3FC49 /* FirebaseUser.swift in Sources */,
 				21DA7F7F283B94AD00E43E4C /* Tab.swift in Sources */,
 				214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */,

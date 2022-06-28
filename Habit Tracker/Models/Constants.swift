@@ -15,4 +15,5 @@ struct Constants {
     static let vstackSpacing = 30.0
     static let habitRowVstackSpacing = 15.0
     static let textEditorHeight = 160.0
+    static let entryDetailHeight = 600.0
 }

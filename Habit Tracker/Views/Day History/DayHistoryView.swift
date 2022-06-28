@@ -11,52 +11,76 @@ struct DayHistoryView: View {
     let date: Date
     @EnvironmentObject var userSession: UserSession
     @StateObject var viewModel = DayHistoryViewViewModel()
-    @State private var selectedEntry: JournalEntry?
+    @State private var selectedEntry: JournalEntry? = nil
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        VStack {
-            Text(date.longDate)
+        VStack(alignment: .leading) {
+            Button {
+                dismiss()
+            } label: {
+                Label("Back", systemImage: "chevron.left")
+            }
+            
             if viewModel.hasEntries {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(viewModel.journalEntries) { entry in
-                            VStack {
-                                Text(entry.habitName)
-                                RatingView(rating: .constant(entry.rating))
-                            }
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                selectedEntry = entry
-                            }
-                        }
-                    }
-                }
+                entryTabs
+                CustomDivider()
                 if let selectedEntry = selectedEntry {
-                    Text("On this day you wrote:")
-                    TextEditor(text: .constant(selectedEntry.entry))
-                        .frame(maxHeight: Constants.textEditorHeight)
-                        .border(.black)
-                    Text("You did this:")
-                    ForEach(selectedEntry.activities) { activity in
-                        if activity.isCompleted {
-                            Text(activity.name)
-                        }
-                    }
-                    Text("instead of:")
-                    Text(selectedEntry.habitName)
-                    Text("Rating of the day")
-                    RatingView(rating: .constant(selectedEntry.rating))
+                    JournalDetails(entry: selectedEntry)
+                        .id(UUID())
+                        .transition(.identity)
                 } else {
+                    Spacer()
                     Text("Select an entry to view")
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .multilineTextAlignment(.center)
+                    Spacer()
                 }
                 Spacer()
             } else {
-                Text("No entries for this day")
+                Spacer()
+                Text("No journal entries for this date.")
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .multilineTextAlignment(.center)
+                Spacer()
             }
-            
         }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .title2Style()
+        .foregroundColor(.textColour)
+        .backgroundView()
+        .navigationBarHidden(true)
         .task {
+            if !userSession.isSignedIn {
+                return
+            }
             await viewModel.getHabits(for: date, userSession: userSession)
+        }
+    }
+}
+
+private extension DayHistoryView {
+    @ViewBuilder
+    var entryTabs: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                ForEach(viewModel.journalEntries) { entry in
+                    VStack {
+                        Text(entry.habitName)
+                            .padding()
+                            .background(selectedEntry != nil && selectedEntry!.id == entry.id ? Color.primaryColour : Color.highlightColour)
+                            .cornerRadius(Constants.cornerRadius)
+                            .foregroundColor(.textColour)
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        withAnimation {
+                            selectedEntry = entry
+                        }
+                    }
+                }
+            }
         }
     }
 }

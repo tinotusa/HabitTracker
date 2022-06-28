@@ -15,7 +15,7 @@ struct JournalEntry: Codable, Identifiable {
         /// The name of the activity.
         var name: String
         /// A boolean value that represents whether the activity was completed.
-        var isCompleted: Bool
+        var isCompleted: Bool = false
     }
     /// The id of the entry.
     var id: String
@@ -43,7 +43,7 @@ extension JournalEntry {
             habitID: UUID().uuidString,
             habitName: "test habit",
             entry: "some test entryy",
-            activities: [],
+            activities: [.init(name: "something", isCompleted: true), .init(name: "another thing", isCompleted: true)],
             rating: 4
         )
     }
