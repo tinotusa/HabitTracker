@@ -9,6 +9,7 @@ import Firebase
 import GoogleSignIn
 import FirebaseFirestoreSwift
 import AuthenticationServices
+import SwiftUI
 
 class UserSession: ObservableObject {
     enum SignInState {
@@ -23,8 +24,8 @@ class UserSession: ObservableObject {
     @Published var errorDetails: ErrorDetails? {
         didSet {
             if errorDetails != nil {
-                DispatchQueue.main.async {
-                    self.didError = true
+                DispatchQueue.main.async { [weak self] in
+                    self?.didError = true
                 }
             }
         }
@@ -41,18 +42,18 @@ class UserSession: ObservableObject {
                     let userRef = firestore.collection("users").document(currentUser!.uid)
                     let snapshot = try await userRef.getDocument()
                     if !snapshot.exists {
-                        DispatchQueue.main.async {
-                            self.signInState = .signedOut
+                        DispatchQueue.main.async { [weak self] in
+                            self?.signInState = .signedOut
                         }
                         return
                     }
-                    DispatchQueue.main.async {
-                        self.signInState = .signedIn
+                    DispatchQueue.main.async { [weak self] in
+                        self?.signInState = .signedIn
                     }
                 } catch {
                     print(error)
-                    DispatchQueue.main.async {
-                        self.errorDetails = ErrorDetails(name: "Login error", message: error.localizedDescription)
+                    DispatchQueue.main.async { [weak self] in
+                        self?.errorDetails = ErrorDetails(name: "Login error", message: error.localizedDescription)
                     }
                 }
             }
@@ -65,9 +66,14 @@ class UserSession: ObservableObject {
     
     @MainActor
     func signIn(withEmail email: String, password: String) {
-        isLoading = true
+        withAnimation(.spring()) {
+            isLoading = true
+        }
+        
         defer {
-            isLoading = false
+            withAnimation {
+                isLoading = false
+            }
         }
         auth.signIn(withEmail: email, password: password) { [unowned self] authResult, error in
             if error != nil {

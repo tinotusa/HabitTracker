@@ -56,6 +56,7 @@ struct LoginView: View {
             }
             .navigationViewStyle(.stack)
             .navigationBarHidden(true)
+            .disabled(userSession.isLoading)
             .onAppear {
                 if rememberMe {
                     viewModel.getLoginDetails()
@@ -83,7 +84,7 @@ struct LoginView: View {
             .overlay {
                 if userSession.isLoading {
                     ActionNotificationBar(
-                        text: "Logging in",
+                        text: "Logging in.",
                         showProgressCircle: true,
                         canTapToHide: false,
                         willDisappearWhenFalse: $userSession.isLoading
@@ -99,6 +100,7 @@ struct LoginView: View {
 private extension LoginView {
     var emailInputField: some View {
         TextField("Email", text: $viewModel.email, prompt: Text(viewModel.emailPlaceholder))
+            .keyboardType(.emailAddress)
             .inputField(contentType: .emailAddress) {
                 field = .password
             }
@@ -116,15 +118,9 @@ private extension LoginView {
     }
     
     var rememberMeButton: some View {
-        HStack {
-            Text("Remember me")
-                .title2Style()
-            Spacer()
-            Toggle("Remember me", isOn: $rememberMe)
-                .labelsHidden()
-                .toggleStyle(.switch)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        Toggle("Remember me", isOn: $rememberMe)
+            .foregroundColor(.textColour)
+            .title2Style()
     }
     
     var loginButton: some View {
@@ -134,6 +130,7 @@ private extension LoginView {
             }
             userSession.signIn(withEmail: viewModel.email, password: viewModel.password)
         }
+        .opacity(viewModel.allFieldsFilled ? 1.0 : 0.5)
         .disabled(!viewModel.allFieldsFilled)
     }
     
