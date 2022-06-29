@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct AddView: View {
     @StateObject var viewModel = AddViewViewModel()
@@ -89,6 +90,9 @@ private extension AddView {
         VStack(alignment: .leading) {
             Text("Habit name")
             TextField("Name", text: $viewModel.habitName, prompt: Text(viewModel.habitNamePrompt))
+                .onChange(of: viewModel.habitName) { name in
+                    viewModel.checkNameLength(name: name)
+                }
                 .whiteBoxTextFieldStyle()
         }
         .highlightCard()
@@ -142,6 +146,9 @@ private extension AddView {
                     .onSubmit {
                         viewModel.addActivity()
                     }
+                    .onChange(of: viewModel.activityInput) { activityInput in
+                        viewModel.checkActivityInputLength(activity: activityInput)
+                    }
                     .whiteBoxTextFieldStyle()
                 ForEach(viewModel.activities) { activity in
                     HStack {
@@ -169,8 +176,14 @@ private extension AddView {
         VStack(alignment: .leading) {
             Text("Why do you want to do this?")
             TextEditor(text: $viewModel.reason)
-                .frame(height: Constants.textEditorHeight)
+                .frame(
+                    minHeight: Constants.minTextEditorHeight,
+                    maxHeight: Constants.maxTextEditorHeight
+                )
                 .whiteBoxTextFieldStyle()
+                .onChange(of: viewModel.reason) { reason in
+                    viewModel.checkReasonInputLength(reason: reason)
+                }
             
         }
         .highlightCard()

@@ -134,7 +134,7 @@ struct EditHabitView: View {
                         VStack(alignment: .leading) {
                             Text(viewModel.reasonText)
                             TextEditor(text: $viewModel.reason)
-                                .frame(minHeight: Constants.textEditorHeight)
+                                .frame(minHeight: Constants.minTextEditorHeight)
                                 .whiteBoxTextFieldStyle()
                         }
                         .highlightCard()

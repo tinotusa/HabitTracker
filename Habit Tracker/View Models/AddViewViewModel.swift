@@ -87,6 +87,10 @@ class AddViewViewModel: ObservableObject {
     let reasonPrompt = LocalizedStringKey("Reason")
     let activityInputPrompt = LocalizedStringKey("Activity")
     let habitNamePrompt = LocalizedStringKey("Name")
+    
+    let nameCharLimit = 40
+    let activityCharLimit = 40
+    let reasonCharLimit = 200
 }
 
 // MARK: Computed Properties
@@ -113,6 +117,43 @@ extension AddViewViewModel {
 
 // MARK: Functions
 extension AddViewViewModel {
+    /// Truncates the given input to some max length or returns it unchanged if
+    /// the string's length is less than the given max length.
+    ///
+    ///     limit(text: "Hello, world", to: 5) = "Hello"
+    ///     limit(text: "Hello, world", to: 100) = "Hello, world"
+    ///
+    /// - parameter text: The string to be truncated.
+    /// - parameter maxLength: The max length allowed for the string.
+    private func limit(text: String, to maxLength: Int) -> String {
+        if text.count > maxLength {
+            let startIndex = text.startIndex
+            let endIndex = text.index(startIndex, offsetBy: maxLength)
+            return String(text[startIndex ..< endIndex])
+        }
+        return text
+    }
+    
+    /// limits the length of the name
+    ///
+    /// - parameter name: The value of the textfield.
+    func checkNameLength(name: String) {
+        habitName = limit(text: name, to: nameCharLimit)
+    }
+    
+    /// Limits the length of the activity input.
+    ///
+    /// - parameter activity: The value of the textfield.
+    func checkActivityInputLength(activity: String) {
+        activityInput = limit(text: activity, to: activityCharLimit)
+    }
+    
+    /// Limits the length of the reason input.
+    ///
+    /// - parameter reason: The value of the texteditor.
+    func checkReasonInputLength(reason: String) {
+        self.reason = limit(text: reason, to: reasonCharLimit)
+    }
     /// Adds the current activity to the list of activities.
     func addActivity() {
         if activityInput.isEmpty { return }

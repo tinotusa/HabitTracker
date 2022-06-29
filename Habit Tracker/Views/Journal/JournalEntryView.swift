@@ -23,7 +23,7 @@ struct JournalEntryView: View {
                     VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
                         Text("How are you feeling?")
                         TextEditor(text: $viewModel.entry)
-                            .frame(minHeight: Constants.textEditorHeight)
+                            .frame(minHeight: Constants.minTextEditorHeight)
                             .whiteBoxTextFieldStyle()
                     }
                     .highlightCard()
