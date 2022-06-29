@@ -23,6 +23,65 @@ struct EditHabitView: View {
         _viewModel = StateObject(wrappedValue: EditHabitViewViewModel(habit: habit))
     }
     
+    var body: some View {
+        NavigationView {
+            VStack(alignment: .leading) {
+                header
+                
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
+                        nameInput
+                        
+                        habitStatus
+                        
+                        timeInput
+                        
+                        dayInput
+                        
+                        durationInput
+                        
+                        activitiesInput
+                        
+                        reasonInput
+                        
+                        LongButton(text: "Save changes") {
+                            saveChanges()
+                        }
+                    }
+                    .padding()
+                }
+            }
+            .title2Style()
+            .foregroundColor(.textColour)
+            .backgroundView()
+            .navigationBarHidden(true)
+            .confirmationDialog("Save", isPresented: $userHasMadeChanges) {
+                Button(role: .destructive) {
+                    dismiss()
+                } label: {
+                    Text("Discard changes")
+                }
+            } message: {
+                Text("There're changes that have not been saved.")
+            }
+            .alert(
+                viewModel.errorDetails?.name ?? "Error saving changes",
+                isPresented: $viewModel.didError,
+                presenting: viewModel.errorDetails
+            ) { _ in
+                // Default cancel button
+            } message: { details in
+                Text(details.message)
+            }
+        }
+        .onAppear {
+            if !userSession.isSignedIn { return }
+            viewModel.userSession = userSession
+        }
+    }
+}
+// MARK: - Subviews
+private extension EditHabitView {
     var header: some View {
         HStack {
             Button {
@@ -45,147 +104,112 @@ struct EditHabitView: View {
         }
         .title2Style()
         .foregroundColor(.textColour)
+        .padding()
     }
     
-    var body: some View {
-        NavigationView {
-            VStack(alignment: .leading) {
-                header
-                    .padding()
-                
-                ScrollView(showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
-                        VStack(alignment: .leading) {
-                            Text("Habit name:")
-                            TextField("Habit name", text: $viewModel.name, prompt: Text("Habit name"))
-                                .whiteBoxTextFieldStyle()
-                        }
-                        .highlightCard()
-                        
-                        VStack {
-                            Toggle("Quitting", isOn: $viewModel.isQuitting.animation())
-                                .onChange(of: viewModel.isQuitting) { isQuitting in
-                                    if isQuitting {
-                                        withAnimation {
-                                            viewModel.isStarting = false
-                                        }
-                                    }
-                                }
-                            Toggle("Starting", isOn: $viewModel.isStarting.animation())
-                                .onChange(of: viewModel.isStarting) { isStarting in
-                                    if isStarting {
-                                        withAnimation {
-                                            viewModel.isQuitting = false
-                                        }
-                                    }
-                                }
-                        }
-                        .highlightCard()
-                        
-                        VStack(alignment: .leading) {
-                            Text("At what time do you want to do this?")
-                            DatePicker("", selection: $viewModel.occurrenceTime, displayedComponents: [.hourAndMinute])
-                                .labelsHidden()
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .highlightCard()
-                        
-                        VStack(alignment: .leading) {
-                            Text("On what days do you do this?")
-                            DayPickerView(selection: $viewModel.occurrenceDays)
-                        }
-                        .highlightCard()
-                        
-                        VStack(alignment: .leading) {
-                            Text("How long does it take?")
-                            Stepper("Hours: \(viewModel.durationHours)", value: $viewModel.durationHours, in: 0 ... 24)
-                            Stepper("Minutes: \(viewModel.durationMinutes)", value: $viewModel.durationMinutes, in: 0 ... 60)
-                        }
-                        .highlightCard()
-                        if viewModel.isQuitting {
-                            VStack(alignment: .leading, spacing: Constants.habitRowVstackSpacing) {
-                                Text("Activities")
-                                TextField("Activity", text: $viewModel.activityInput, prompt: Text(viewModel.activityInputPrompt))
-                                    .whiteBoxTextFieldStyle()
-                                
-                                ForEach($viewModel.activities) { $activity in
-                                    HStack {
-                                        TextField("Activity", text: $activity.name, prompt: Text("Activity placeholder"))
-                                            .lineLimit(1)
-                                            .whiteBoxTextFieldStyle()
-                                        Spacer()
-                                        ActivityDeleteButton() {
-                                            withAnimation {
-                                                viewModel.removeActivity(activity)
-                                            }
-                                        }
-                                    }
-                                }
-                                LongButton(text: "Add activity") {
-                                    withAnimation {
-                                        viewModel.addActivity()
-                                    }
-                                }
-                            }
-                            .highlightCard()
-                        }
-                        
-                        
-                        VStack(alignment: .leading) {
-                            Text(viewModel.reasonText)
-                            TextEditor(text: $viewModel.reason)
-                                .frame(minHeight: Constants.minTextEditorHeight)
-                                .whiteBoxTextFieldStyle()
-                        }
-                        .highlightCard()
-                        
-                        LongButton(text: "Save changes") {
-                            saveChanges()
+    var nameInput: some View {
+        VStack(alignment: .leading) {
+            Text("Habit name:")
+            TextField("Habit name", text: $viewModel.name, prompt: Text("Habit name"))
+                .whiteBoxTextFieldStyle()
+        }
+        .highlightCard()
+    }
+    
+    var habitStatus: some View {
+        VStack {
+            Toggle("Quitting", isOn: $viewModel.isQuitting.animation())
+                .onChange(of: viewModel.isQuitting) { isQuitting in
+                    if isQuitting {
+                        withAnimation {
+                            viewModel.isStarting = false
                         }
                     }
-                    .padding()
                 }
-            }
-            .title2Style()
-            .backgroundView()
-            .navigationBarHidden(true)
-            .confirmationDialog("Save", isPresented: $userHasMadeChanges) {
-                Button(role: .destructive) {
-                    dismiss()
-                } label: {
-                    Text("Discard changes")
+            Toggle("Starting", isOn: $viewModel.isStarting.animation())
+                .onChange(of: viewModel.isStarting) { isStarting in
+                    if isStarting {
+                        withAnimation {
+                            viewModel.isQuitting = false
+                        }
+                    }
                 }
-                
-                Button(role: .cancel) {
-                    
-                } label: {
-                    Text("Cancel")
-                }
-            } message: {
-                Text("There're changes that have not been saved.")
-            }
-            .alert(
-                viewModel.errorDetails?.name ?? "Error saving changes",
-                isPresented: $viewModel.didError,
-                presenting: viewModel.errorDetails
-            ) { _ in
-                Button(role: .cancel) {
-                    // nothing
-                } label: {
-                    Text("Cancel")
-                }
-            } message: { details in
-                Text(details.message)
-            }
         }
-        .onAppear {
-            if !userSession.isSignedIn { return }
-            viewModel.userSession = userSession
+        .highlightCard()
+    }
+    
+    var timeInput: some View {
+        VStack(alignment: .leading) {
+            Text("At what time do you want to do this?")
+            DatePicker("", selection: $viewModel.occurrenceTime, displayedComponents: [.hourAndMinute])
+                .labelsHidden()
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .highlightCard()
+    }
+    
+    var dayInput: some View {
+        VStack(alignment: .leading) {
+            Text("On what days do you do this?")
+            DayPickerView(selection: $viewModel.occurrenceDays)
+        }
+        .highlightCard()
+    }
+    
+    var durationInput: some View {
+        VStack(alignment: .leading) {
+            Text("How long does it take?")
+            Stepper("Hours: \(viewModel.durationHours)", value: $viewModel.durationHours, in: 0 ... 24)
+            Stepper("Minutes: \(viewModel.durationMinutes)", value: $viewModel.durationMinutes, in: 0 ... 60)
+        }
+        .highlightCard()
+    }
+    
+    @ViewBuilder
+    var activitiesInput: some View {
+        if viewModel.isQuitting {
+            VStack(alignment: .leading, spacing: Constants.habitRowVstackSpacing) {
+                Text("Activities")
+                TextField("Activity", text: $viewModel.activityInput, prompt: Text(viewModel.activityInputPrompt))
+                    .whiteBoxTextFieldStyle()
+                
+                ForEach($viewModel.activities) { $activity in
+                    HStack {
+                        TextField("Activity", text: $activity.name, prompt: Text("Activity placeholder"))
+                            .lineLimit(1)
+                            .whiteBoxTextFieldStyle()
+                        Spacer()
+                        ActivityDeleteButton() {
+                            withAnimation {
+                                viewModel.removeActivity(activity)
+                            }
+                        }
+                    }
+                }
+                LongButton(text: "Add activity") {
+                    withAnimation {
+                        viewModel.addActivity()
+                    }
+                }
+            }
+            .highlightCard()
         }
     }
+    
+    var reasonInput: some View {
+        VStack(alignment: .leading) {
+            Text(viewModel.reasonText)
+            TextEditor(text: $viewModel.reason)
+                .frame(minHeight: Constants.minTextEditorHeight)
+                .whiteBoxTextFieldStyle()
+        }
+        .highlightCard()
+    }
+    
 }
 
-extension EditHabitView {
+// MARK: - Functions
+private extension EditHabitView {
     func saveChanges() {
         Task {
             await viewModel.saveHabit()
@@ -193,6 +217,7 @@ extension EditHabitView {
     }
 }
 
+// MARK: - Previews
 struct EditHabitView_Previews: PreviewProvider {
     static var previews: some View {
         EditHabitView(habit: Habit.example)
