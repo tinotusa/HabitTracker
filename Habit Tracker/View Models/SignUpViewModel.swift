@@ -7,6 +7,7 @@
 
 import FirebaseAuth
 import FirebaseFirestore
+import SwiftUI
 
 /// Sign up view model.
 class SignUpViewModel: ObservableObject {
@@ -34,12 +35,15 @@ class SignUpViewModel: ObservableObject {
             didError = true
         }
     }
-    let firstNamePrompt = "First name"
-    let lastNamePrompt = "Last name"
-    let emailPrompt = "Email"
-    let emailConfirmationPrompt = "Email confirmation"
-    let passwordPrompt = "Password"
-    let passwordConfirmationPrompt = "Password confirmation"
+    /// A boolean value indicating whether or not to show the action notification.
+    @Published var showActionNotification = false
+    
+    let firstNamePrompt: LocalizedStringKey = "First name"
+    let lastNamePrompt: LocalizedStringKey = "Last name"
+    let emailPrompt: LocalizedStringKey = "Email"
+    let emailConfirmationPrompt: LocalizedStringKey = "Email confirmation"
+    let passwordPrompt: LocalizedStringKey = "Password"
+    let passwordConfirmationPrompt: LocalizedStringKey = "Password confirmation"
     
     private let auth = Auth.auth()
     private var firestore = Firestore.firestore()
@@ -63,9 +67,13 @@ class SignUpViewModel: ObservableObject {
     /// Creates a new account with the given information(name, email, password, etc).
     func createAccount(session: UserSession) {
         assert(allFieldsFilled, "All input fields must be filled")
-        isLoading = true
+        withAnimation {
+            isLoading = true
+        }
         defer {
-            isLoading = false
+            withAnimation {
+                isLoading = false
+            }
         }
         
         if password != passwordConfirmation {
@@ -116,19 +124,31 @@ class SignUpViewModel: ObservableObject {
                 )
                 return
             }
-
-            session.currentUser = authResult.user
-            session.signInState = .signedIn
+            
+            withAnimation(.spring()) {
+                showActionNotification = true
+            }
+            clearFields()
         }
     }
-
+    /// Sets all the input fields to their default values (empty strings).
+    func clearFields() {
+        DispatchQueue.main.async { [weak self] in
+            self?.email = ""
+            self?.emailConfirmation = ""
+            self?.password = ""
+            self?.passwordConfirmation = ""
+            self?.birthday = Date()
+            self?.firstName = ""
+            self?.lastName = ""
+        }
+    }
 }
 
 // MARK: - InputField extesion
 extension SignUpViewModel {
     /// Represents the input fields for the sign up view.
     enum InputField: Hashable {
-        /// test
         case firstName, lastName, email, emailConfirmation, password, passwordConfirmation
         
         /// Returns the next field or returns nil if it is currently the last field.

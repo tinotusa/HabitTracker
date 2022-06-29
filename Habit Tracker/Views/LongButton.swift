@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct LongButton: View {
-    let text: String
+    let text: LocalizedStringKey
     let action: (() -> Void)?
     
-    init(text: String, action: (() -> Void)? = nil) {
+    init(text: LocalizedStringKey, action: (() -> Void)? = nil) {
         self.text = text
         self.action = action
     }
