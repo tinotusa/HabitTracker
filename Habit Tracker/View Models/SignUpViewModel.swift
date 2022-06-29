@@ -50,22 +50,41 @@ class SignUpViewModel: ObservableObject {
     
     /// A boolean value indicating whether the input fields have some text.
     var allFieldsFilled: Bool {
-        let email = email.trimmingCharacters(in: .whitespacesAndNewlines)
-        let emailConfirmation = emailConfirmation.trimmingCharacters(in: .whitespacesAndNewlines)
-        let password = password.trimmingCharacters(in: .whitespacesAndNewlines)
-        let passwordConfirmation = passwordConfirmation.trimmingCharacters(in: .whitespacesAndNewlines)
-        let firstName = firstName.trimmingCharacters(in: .whitespacesAndNewlines)
-        let lastName = lastName.trimmingCharacters(in: .whitespacesAndNewlines)
-        return !(
-            email.isEmpty || emailConfirmation.isEmpty ||
-            password.isEmpty || passwordConfirmation.isEmpty ||
-            firstName.isEmpty || lastName.isEmpty
-        )
+        // TESTING
+        return true
+        // TESTING over
+        
+//        let email = email.trimmingCharacters(in: .whitespacesAndNewlines)
+//        let emailConfirmation = emailConfirmation.trimmingCharacters(in: .whitespacesAndNewlines)
+//        let password = password.trimmingCharacters(in: .whitespacesAndNewlines)
+//        let passwordConfirmation = passwordConfirmation.trimmingCharacters(in: .whitespacesAndNewlines)
+//        let firstName = firstName.trimmingCharacters(in: .whitespacesAndNewlines)
+//        let lastName = lastName.trimmingCharacters(in: .whitespacesAndNewlines)
+//        return !(
+//            email.isEmpty || emailConfirmation.isEmpty ||
+//            password.isEmpty || passwordConfirmation.isEmpty ||
+//            firstName.isEmpty || lastName.isEmpty
+//        )
     }
     
     @MainActor
     /// Creates a new account with the given information(name, email, password, etc).
     func createAccount(session: UserSession) {
+        // TESTING
+        withAnimation(.spring()) {
+            isLoading = true
+        }
+        defer {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                withAnimation {
+                    self?.isLoading = false
+                }
+            }
+        }
+        return
+        let x = 0
+        print("This didn't happen")
+        // TESTING OVER
         assert(allFieldsFilled, "All input fields must be filled")
         withAnimation {
             isLoading = true

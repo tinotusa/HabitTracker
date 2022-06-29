@@ -81,7 +81,15 @@ struct LoginView: View {
                 Text(details.message)
             }
             .overlay {
-                LoadingView(placeholder: "Logging in", isLoading: $userSession.isLoading)
+                if userSession.isLoading {
+                    ActionNotificationBar(
+                        text: "Logging in",
+                        showProgressCircle: true,
+                        canTapToHide: false,
+                        willDisappearWhenFalse: $userSession.isLoading
+                    )
+                    .transition(.move(edge: .top))
+                }
             }
         }
     }

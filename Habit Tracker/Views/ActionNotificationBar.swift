@@ -9,8 +9,27 @@ import SwiftUI
 
 struct ActionNotificationBar: View {
     let text: LocalizedStringKey
-    var icon: String? = nil
+    let icon: String?
     @Binding var showingNotification: Bool
+    let showProgressCircle: Bool
+    let canTapToHide: Bool
+    @Binding var willDisappearWhenFalse: Bool
+    
+    init(
+        text: LocalizedStringKey,
+        icon: String? = nil,
+        showingNotification: Binding<Bool> = .constant(false),
+        showProgressCircle: Bool = false,
+        canTapToHide: Bool = false,
+        willDisappearWhenFalse: Binding<Bool> = .constant(false)
+    ) {
+        self.text = text
+        self.icon = icon
+        _showingNotification = showingNotification
+        self.showProgressCircle = showProgressCircle
+        self.canTapToHide = canTapToHide
+        _willDisappearWhenFalse = willDisappearWhenFalse
+    }
     
     var body: some View {
         VStack {
@@ -21,6 +40,12 @@ struct ActionNotificationBar: View {
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
                 Spacer()
+                if showProgressCircle {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .tint(.textColour)
+                        .scaleEffect(1.2)
+                }
                 if let icon = icon {
                     Image(systemName: icon)
                         .foregroundColor(.primaryColour)
@@ -34,10 +59,16 @@ struct ActionNotificationBar: View {
             .cornerRadius(Constants.cornerRadius)
             .basicShadow()
             .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    withAnimation {
-                        showingNotification = false
+                if willDisappearWhenFalse {
+                    // No need to time the removal
+                    // when the binding is false the notification will be removed.
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        withAnimation {
+                            showingNotification = false
+                        }
                     }
+                    print("here2")
                 }
             }
             Spacer()
@@ -45,8 +76,10 @@ struct ActionNotificationBar: View {
         .padding()
         .contentShape(Rectangle())
         .onTapGesture {
-            withAnimation {
-                showingNotification = false
+            if canTapToHide {
+                withAnimation {
+                    showingNotification = false
+                }
             }
         }
     }

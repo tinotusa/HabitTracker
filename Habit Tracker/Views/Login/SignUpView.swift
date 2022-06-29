@@ -49,8 +49,15 @@ struct SignUpView: View {
             .disabled(viewModel.showActionNotification)
             .navigationBarHidden(true)
             .overlay {
-                LoadingView(placeholder: "Creating account", isLoading: $viewModel.isLoading)
-                    .frame(maxHeight: .infinity)
+                if viewModel.isLoading {
+                    ActionNotificationBar(
+                        text: "Creating account...",
+                        showProgressCircle: true,
+                        canTapToHide: false,
+                        willDisappearWhenFalse: $viewModel.isLoading
+                    )
+                    .transition(.move(edge: .top))
+                }
             }
             .overlay {
                 if viewModel.showActionNotification {
