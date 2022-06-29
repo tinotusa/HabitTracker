@@ -21,6 +21,7 @@ struct Constants {
     static private let nameCharLimit = 40
     static private let activityCharLimit = 40
     static private let reasonCharLimit = 200
+    static private let journalEntryCharLimit = 200
     
     /// Truncates the given input to some max length or returns it unchanged if
     /// the string's length is less than the given max length.
@@ -66,5 +67,14 @@ struct Constants {
     /// - returns: The reason truncated to a certain limit or the reason unchanged.
     static func checkReasonInputLength(reason: String) -> String {
         return Self.limit(text: reason, to: Self.reasonCharLimit)
+    }
+    
+    /// Limits the length of the journal entry input.
+    ///
+    /// - parameter reason: The value of the texteditor.
+    ///
+    /// - returns: The journal entry truncated to a certain limit or the journal entry unchanged.
+    static func checkEntryLength(entry: String) -> String {
+        return Self.limit(text: entry, to: Self.journalEntryCharLimit)
     }
 }

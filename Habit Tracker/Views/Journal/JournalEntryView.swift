@@ -25,6 +25,9 @@ struct JournalEntryView: View {
                         TextEditor(text: $viewModel.entry)
                             .frame(minHeight: Constants.minTextEditorHeight)
                             .whiteBoxTextFieldStyle()
+                            .onChange(of: viewModel.entry) { entry in
+                                viewModel.checkEntryLength(entry: entry)
+                            }
                     }
                     .highlightCard()
                     

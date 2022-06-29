@@ -47,4 +47,9 @@ extension JournalEntryViewViewModel {
             print("Error in \(#function)\n\(error)")
         }
     }
+    
+    /// Checks the length of the journal entry
+    func checkEntryLength(entry: String) {
+        self.entry = Constants.checkEntryLength(entry: entry)
+    }
 }
