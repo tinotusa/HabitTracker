@@ -94,15 +94,13 @@ private extension AddView {
     
     @ViewBuilder
     var timeInput: some View {
-        if viewModel.isQuittingHabit {
-            VStack(alignment: .leading) {
-                Text("When do you usually do this?")
-                DatePicker("Time", selection: $viewModel.occurrenceTime, displayedComponents: [.hourAndMinute])
-                    .labelsHidden()
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .highlightCard()
+        VStack(alignment: .leading) {
+            Text("When do you usually do this?")
+            DatePicker("Time", selection: $viewModel.occurrenceTime, displayedComponents: [.hourAndMinute])
+                .labelsHidden()
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .highlightCard()
     }
     
     var dayInput: some View {
