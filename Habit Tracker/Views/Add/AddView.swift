@@ -74,7 +74,9 @@ private extension AddView {
                 .titleStyle()
             Spacer()
             Button {
-                
+                Task {
+                    await viewModel.addHabit(session: userSession)
+                }
             } label: {
                 Image(systemName: "plus")
                     .title2Style()
