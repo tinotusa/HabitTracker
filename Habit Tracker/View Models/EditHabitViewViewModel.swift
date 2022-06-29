@@ -198,7 +198,6 @@ extension EditHabitViewViewModel {
         let activity = Activity(name: activityInput)
         habit.activities.append(activity)
         activityInput = ""
-        print(habit.activities)
     }
     
     /// Removes an activity from the activities array.

@@ -60,6 +60,7 @@
 		21DDF03B2831224A00FE8DAC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03A2831224A00FE8DAC /* LoadingView.swift */; };
 		21DDF03D283122AD00FE8DAC /* ErrorDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */; };
 		21E516AF286C0D3C003832C3 /* InputFieldChecks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E516AE286C0D3B003832C3 /* InputFieldChecks.swift */; };
+		21E516B1286C15A1003832C3 /* NavigationArrowIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E516B0286C15A1003832C3 /* NavigationArrowIndicator.swift */; };
 		21E61908283D0287007F42DC /* AddViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E61907283D0287007F42DC /* AddViewViewModel.swift */; };
 		21E6190A283D089B007F42DC /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E61909283D089B007F42DC /* Day.swift */; };
 		21E6190C283D0A8D007F42DC /* DayPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6190B283D0A8D007F42DC /* DayPickerView.swift */; };
@@ -151,6 +152,7 @@
 		21DDF03A2831224A00FE8DAC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDetails.swift; sourceTree = "<group>"; };
 		21E516AE286C0D3B003832C3 /* InputFieldChecks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldChecks.swift; sourceTree = "<group>"; };
+		21E516B0286C15A1003832C3 /* NavigationArrowIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationArrowIndicator.swift; sourceTree = "<group>"; };
 		21E61907283D0287007F42DC /* AddViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewViewModel.swift; sourceTree = "<group>"; };
 		21E61909283D089B007F42DC /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		21E6190B283D0A8D007F42DC /* DayPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayPickerView.swift; path = "Habit Tracker/Models/DayPickerView.swift"; sourceTree = SOURCE_ROOT; };
@@ -389,6 +391,7 @@
 				21DA7F75283B592700E43E4C /* HomeView.swift */,
 				2138AF2D28537DC20055072E /* HabitRowView.swift */,
 				21F2F8D92854A91000F517F0 /* RowLoadingView.swift */,
+				21E516B0286C15A1003832C3 /* NavigationArrowIndicator.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -611,6 +614,7 @@
 				2152496F28450EF200FDA66E /* Date+isEqual.swift in Sources */,
 				21F2F8DA2854A91000F517F0 /* RowLoadingView.swift in Sources */,
 				21BD7CB1284B630300A9A8B2 /* EditHabitViewViewModel.swift in Sources */,
+				21E516B1286C15A1003832C3 /* NavigationArrowIndicator.swift in Sources */,
 				214F41CB2821417A00A9D696 /* PasswordResetView.swift in Sources */,
 				2152496A2845042200FDA66E /* HabitCalendarViewModel.swift in Sources */,
 				21E6190C283D0A8D007F42DC /* DayPickerView.swift in Sources */,

@@ -7,21 +7,13 @@
 
 import SwiftUI
 
-struct RightArrow: View {
-    var body: some View {
-        Image(systemName: "chevron.right")
-            .title2Style()
-            .padding(.horizontal)
-    }
-}
-
 struct HabitRowView: View {
     let habit: Habit
     
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Group {
+                HStack {
                     if habit.isQuittingHabit {
                         Text("Quitting")
                             .foregroundColor(.quittingColour)
@@ -29,21 +21,23 @@ struct HabitRowView: View {
                         Text("Forming")
                             .foregroundColor(.startingColour)
                     }
+                    Spacer()
+                    // TODO: Change to last updated
+                    Text("Created: \(habit.createdAt.formatted(date: .abbreviated, time: .omitted))")
+                        .font(.caption2)
+                        .fontWeight(.light)
+                        .foregroundColor(.textColour)
                 }
                 .captionStyle()
                 
-                HStack(alignment: .lastTextBaseline) {
-                    Text(habit.name)
-                        .title2Style()
-                        .foregroundColor(.primaryColour)
-                    Spacer()
-//                    Text("Created: \(habit.createdAt.formatted(date: .abbreviated, time: .omitted))")
-//                        .font(.subheadline)
-//                        .foregroundColor(.textColour)
-                }
+                Text(habit.name)
+                    .title2Style()
+                    .foregroundColor(.primaryColour)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(2)
             }
             Spacer()
-            RightArrow()
+            NavigationArrowIndicator()
         }
         .padding()
         .background(Color.highlightColour)

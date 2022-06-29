@@ -19,7 +19,7 @@ struct RowLoadingView: View {
                     .redacted(reason: .placeholder)
             }
             Spacer()
-            RightArrow()
+            NavigationArrowIndicator()
                 .opacity(0.4)
         }
         .padding()
