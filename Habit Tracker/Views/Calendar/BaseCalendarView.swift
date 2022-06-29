@@ -114,9 +114,7 @@ private extension BaseCalendarView {
     }
     
     func moveMonth(by amount: Int) {
-        withAnimation {
-            date = Calendar.current.date(byAdding: .month, value: amount, to: date) ?? Date()
-        }
+        date = Calendar.current.date(byAdding: .month, value: amount, to: date) ?? Date()
     }
     
     var monthDates: [DateValue] {

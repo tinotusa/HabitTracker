@@ -13,20 +13,33 @@ struct LoadingView: View {
     
     var body: some View {
         if isLoading {
-            ZStack {
-                Color.highlightColour
-                    .opacity(0.75)
-                    .ignoresSafeArea()
-                VStack {
-                    Text(placeholder)
-                        
-                        .multilineTextAlignment(.center)
-                    ProgressView()
-                        .tint(.black)
-                        .scaleEffect(1.5, anchor: .center)
+            GeometryReader { proxy in
+                let size = min(proxy.size.width, proxy.size.height)
+                
+                ZStack {
+                    Color.clear
+                        .ignoresSafeArea()
+                        .background(.ultraThinMaterial)
+                    
+                    Color.highlightColour
+                        .frame(
+                            width: size * 0.8,
+                            height: size * 0.8
+                        )
+                        .cornerRadius(Constants.cornerRadius)
+                 
+                    VStack {
+                        Text(placeholder)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(2)
+                        ProgressView()
+                            .tint(.textColour)
+                            .scaleEffect(1.5, anchor: .center)
+                    }
+                    .titleStyle()
+                    .foregroundColor(.textColour)
                 }
-                .titleStyle()
-                .foregroundColor(.textColour)
+                .basicShadow()
             }
         }
     }
