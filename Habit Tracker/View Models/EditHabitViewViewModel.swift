@@ -7,6 +7,7 @@
 
 import FirebaseFirestore
 import FirebaseFunctions
+import SwiftUI
 
 /// ViewModel for EditHabitView
 @MainActor
@@ -99,7 +100,7 @@ extension EditHabitViewViewModel {
         set { habit.reason = newValue }
     }
     
-    var reasonText: String {
+    var reasonTextPrompt: LocalizedStringKey {
         isQuitting ? "Reason for quitting habit" : "Reason for starting habit"
     }
 }
@@ -107,6 +108,8 @@ extension EditHabitViewViewModel {
 // MARK: - Functions
 extension EditHabitViewViewModel {
     /// Saves the edited habit.
+    ///
+    /// - returns: `True` if the save was successful, `False` if something went wrong.
     @discardableResult
     func saveHabit() async -> Bool {
         guard let user = userSession.currentUser else {
@@ -198,6 +201,9 @@ extension EditHabitViewViewModel {
         print(habit.activities)
     }
     
+    /// Removes an activity from the activities array.
+    ///
+    /// - parameter activity: The activity to be removed.
     func removeActivity(_ activity: Activity) {
         guard let index = habit.activities.firstIndex(where: { item in
             item == activity
@@ -205,5 +211,20 @@ extension EditHabitViewViewModel {
             preconditionFailure("No such activity: \(activity)")
         }
         habit.activities.remove(at: index)
+    }
+}
+
+// MARK: - InputFieldChecks conformance.
+extension EditHabitViewViewModel: InputFieldChecks {
+    func checkNameLength(name: String) {
+        self.name = Constants.checkNameLength(name: name)
+    }
+    
+    func checkActivityInputLength(activity: String) {
+        activityInput = Constants.checkActivityInputLength(activity: activity)
+    }
+    
+    func checkReasonInputLength(reason: String) {
+        self.reason = Constants.checkReasonInputLength(reason: reason)
     }
 }

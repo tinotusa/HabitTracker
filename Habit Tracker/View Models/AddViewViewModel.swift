@@ -113,23 +113,14 @@ extension AddViewViewModel {
 
 // MARK: - InputFieldChecks conformance
 extension AddViewViewModel: InputFieldChecks {
-    /// limits the length of the name
-    ///
-    /// - parameter name: The value of the textfield.
     func checkNameLength(name: String) {
         habitName = Constants.checkNameLength(name: name)
     }
     
-    /// Limits the length of the activity input.
-    ///
-    /// - parameter activity: The value of the textfield.
     func checkActivityInputLength(activity: String) {
         activityInput = Constants.checkActivityInputLength(activity: activity)
     }
     
-    /// Limits the length of the reason input.
-    ///
-    /// - parameter reason: The value of the texteditor.
     func checkReasonInputLength(reason: String) {
         self.reason = Constants.checkReasonInputLength(reason: reason)
     }

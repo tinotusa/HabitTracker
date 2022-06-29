@@ -112,6 +112,9 @@ private extension EditHabitView {
             Text("Habit name:")
             TextField("Habit name", text: $viewModel.name, prompt: Text("Habit name"))
                 .whiteBoxTextFieldStyle()
+                .onChange(of: viewModel.name) { name in
+                    viewModel.checkNameLength(name: name)
+                }
         }
         .highlightCard()
     }
@@ -172,6 +175,9 @@ private extension EditHabitView {
                 Text("Activities")
                 TextField("Activity", text: $viewModel.activityInput, prompt: Text(viewModel.activityInputPrompt))
                     .whiteBoxTextFieldStyle()
+                    .onChange(of: viewModel.activityInput) { activity in
+                        viewModel.checkActivityInputLength(activity: activity)
+                    }
                 
                 ForEach($viewModel.activities) { $activity in
                     HStack {
@@ -198,10 +204,13 @@ private extension EditHabitView {
     
     var reasonInput: some View {
         VStack(alignment: .leading) {
-            Text(viewModel.reasonText)
+            Text(viewModel.reasonTextPrompt)
             TextEditor(text: $viewModel.reason)
                 .frame(minHeight: Constants.minTextEditorHeight)
                 .whiteBoxTextFieldStyle()
+                .onChange(of: viewModel.reason) { reason in
+                    viewModel.checkReasonInputLength(reason: reason)
+                }
         }
         .highlightCard()
     }
