@@ -30,6 +30,8 @@ struct Constants {
     ///
     /// - parameter text: The string to be truncated.
     /// - parameter maxLength: The max length allowed for the string.
+    ///
+    /// - returns: The truncated text or the text unchanged if it's length was less than the maxLength.
     private static func limit(text: String, to maxLength: Int) -> String {
         if text.count > maxLength {
             let startIndex = text.startIndex
@@ -42,6 +44,8 @@ struct Constants {
     /// limits the length of the name
     ///
     /// - parameter name: The value of the textfield.
+    ///
+    /// - returns: The name truncated to a certain limit or the name unchanged.
     static func checkNameLength(name: String) -> String {
         return Self.limit(text: name, to: Self.nameCharLimit)
     }
@@ -49,6 +53,8 @@ struct Constants {
     /// Limits the length of the activity input.
     ///
     /// - parameter activity: The value of the textfield.
+    ///
+    /// - returns: The activity truncated to a certain limit or the activity unchanged.
     static func checkActivityInputLength(activity: String) -> String {
         return Self.limit(text: activity, to: Self.activityCharLimit)
     }
@@ -56,6 +62,8 @@ struct Constants {
     /// Limits the length of the reason input.
     ///
     /// - parameter reason: The value of the texteditor.
+    ///
+    /// - returns: The reason truncated to a certain limit or the reason unchanged.
     static func checkReasonInputLength(reason: String) -> String {
         return Self.limit(text: reason, to: Self.reasonCharLimit)
     }

@@ -111,8 +111,8 @@ extension AddViewViewModel {
     }
 }
 
-// MARK: Functions
-extension AddViewViewModel {
+// MARK: - InputFieldChecks conformance
+extension AddViewViewModel: InputFieldChecks {
     /// limits the length of the name
     ///
     /// - parameter name: The value of the textfield.
@@ -133,6 +133,10 @@ extension AddViewViewModel {
     func checkReasonInputLength(reason: String) {
         self.reason = Constants.checkReasonInputLength(reason: reason)
     }
+}
+
+// MARK: Functions
+extension AddViewViewModel {
     /// Adds the current activity to the list of activities.
     func addActivity() {
         if activityInput.isEmpty { return }

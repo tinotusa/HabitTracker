@@ -59,6 +59,7 @@
 		21DA7F7F283B94AD00E43E4C /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F7E283B94AD00E43E4C /* Tab.swift */; };
 		21DDF03B2831224A00FE8DAC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03A2831224A00FE8DAC /* LoadingView.swift */; };
 		21DDF03D283122AD00FE8DAC /* ErrorDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */; };
+		21E516AF286C0D3C003832C3 /* InputFieldChecks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E516AE286C0D3B003832C3 /* InputFieldChecks.swift */; };
 		21E61908283D0287007F42DC /* AddViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E61907283D0287007F42DC /* AddViewViewModel.swift */; };
 		21E6190A283D089B007F42DC /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E61909283D089B007F42DC /* Day.swift */; };
 		21E6190C283D0A8D007F42DC /* DayPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6190B283D0A8D007F42DC /* DayPickerView.swift */; };
@@ -149,6 +150,7 @@
 		21DA7F7E283B94AD00E43E4C /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		21DDF03A2831224A00FE8DAC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDetails.swift; sourceTree = "<group>"; };
+		21E516AE286C0D3B003832C3 /* InputFieldChecks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldChecks.swift; sourceTree = "<group>"; };
 		21E61907283D0287007F42DC /* AddViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewViewModel.swift; sourceTree = "<group>"; };
 		21E61909283D089B007F42DC /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		21E6190B283D0A8D007F42DC /* DayPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayPickerView.swift; path = "Habit Tracker/Models/DayPickerView.swift"; sourceTree = SOURCE_ROOT; };
@@ -267,6 +269,7 @@
 				215249652845027800FDA66E /* JournalEntry.swift */,
 				2152496B2845049A00FDA66E /* DateValue.swift */,
 				21F2F8D728548E4700F517F0 /* Constants.swift */,
+				21E516AE286C0D3B003832C3 /* InputFieldChecks.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -619,6 +622,7 @@
 				21E6190A283D089B007F42DC /* Day.swift in Sources */,
 				214E32A52868788B00A47452 /* View+Background.swift in Sources */,
 				21A91B8F286B05D4006FA005 /* CustomDivider.swift in Sources */,
+				21E516AF286C0D3C003832C3 /* InputFieldChecks.swift in Sources */,
 				21B6289E280AE09A00E3FC49 /* FirebaseUser.swift in Sources */,
 				21DA7F7F283B94AD00E43E4C /* Tab.swift in Sources */,
 				214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */,
