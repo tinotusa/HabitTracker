@@ -15,30 +15,33 @@ struct CustomTabBar: View {
     }
     
     var body: some View {
-        HStack {
-            ForEach(Tab.allCases, id: \.self) { tab in
-                VStack {
-                    Image(systemName: tab.imageName)
-                        .font(.title)
-                        .aspectRatio(contentMode: .fit)
-                        .onTapGesture {
-                            withAnimation {
-                                selectedTab = tab
+        VStack {
+            Spacer()
+            HStack {
+                ForEach(Tab.allCases, id: \.self) { tab in
+                    VStack {
+                        Image(systemName: tab.imageName)
+                            .font(.title)
+                            .aspectRatio(contentMode: .fit)
+                            .onTapGesture {
+                                withAnimation {
+                                    selectedTab = tab
+                                }
                             }
-                        }
-                        .frame(maxWidth: .infinity)
-                    Text(tab.tabName)
+                            .frame(maxWidth: .infinity)
+                        Text(tab.tabName)
+                    }
+                    .padding(.vertical)
+                    .contentShape(Rectangle())
+                    .foregroundColor(tab == selectedTab ? .highlightColour : .textColour)
                 }
-                .padding(.vertical)
-                .contentShape(Rectangle())
-                .foregroundColor(tab == selectedTab ? .highlightColour : .textColour)
             }
-        }
-        .background(
-            Color.primaryColour
-        )
-        .cornerRadius(Constants.cornerRadius)
+            .background(
+                Color.primaryColour
+            )
+            .cornerRadius(Constants.cornerRadius)
         .padding(.horizontal)
+        }
     }
 }
 

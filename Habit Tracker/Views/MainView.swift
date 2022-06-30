@@ -42,7 +42,7 @@ struct MainView: View {
                     Label(Tab.calendar.tabName, systemImage: Tab.calendar.imageName)
                 }
         }
-        .overlay(alignment: .bottom) {
+        .overlay {
             CustomTabBar(selectedTab: $selectedTab)
         }
         .ignoresSafeArea(.keyboard)

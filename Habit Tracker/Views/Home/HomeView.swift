@@ -14,7 +14,6 @@ struct HomeView: View {
     
     var body: some View {
         NavigationView {
-            
             VStack(alignment: .leading) {
                 HStack(alignment: .lastTextBaseline) {
                     Text("Habits")
@@ -48,9 +47,8 @@ struct HomeView: View {
                     }
                     .padding()
                 }
-                Spacer()
+                Spacer(minLength: 90) // TODO: Fix me
             }
-            
             .backgroundView()
             .task {
                 if userSession.isSignedIn {
