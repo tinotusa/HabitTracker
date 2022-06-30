@@ -7,6 +7,19 @@
 
 import Foundation
 
+struct InputFieldCharLimit {
+    // habit inputs
+    static let habitNameCharLimit = 40
+    static let activityCharLimit = 40
+    static let reasonCharLimit = 200
+    static let journalEntryCharLimit = 200
+    
+    // sign up inputs
+    static let name = 100 // first and last
+    static let email = 100
+    static let password = 100
+}
+
 struct Constants {
     static let cornerRadius =  20.0
     static let buttonCornerRadius = 30.0
@@ -18,11 +31,6 @@ struct Constants {
     static let maxTextEditorHeight = 300.0
     static let entryDetailHeight = 600.0
     
-    static private let nameCharLimit = 40
-    static private let activityCharLimit = 40
-    static private let reasonCharLimit = 200
-    static private let journalEntryCharLimit = 200
-    
     /// Truncates the given input to some max length or returns it unchanged if
     /// the string's length is less than the given max length.
     ///
@@ -33,7 +41,7 @@ struct Constants {
     /// - parameter maxLength: The max length allowed for the string.
     ///
     /// - returns: The truncated text or the text unchanged if it's length was less than the maxLength.
-    private static func limit(text: String, to maxLength: Int) -> String {
+    static func limit(text: String, to maxLength: Int) -> String {
         if text.count > maxLength {
             let startIndex = text.startIndex
             let endIndex = text.index(startIndex, offsetBy: maxLength)
@@ -48,7 +56,7 @@ struct Constants {
     ///
     /// - returns: The name truncated to a certain limit or the name unchanged.
     static func checkNameLength(name: String) -> String {
-        return Self.limit(text: name, to: Self.nameCharLimit)
+        return Self.limit(text: name, to: InputFieldCharLimit.habitNameCharLimit)
     }
     
     /// Limits the length of the activity input.
@@ -57,7 +65,7 @@ struct Constants {
     ///
     /// - returns: The activity truncated to a certain limit or the activity unchanged.
     static func checkActivityInputLength(activity: String) -> String {
-        return Self.limit(text: activity, to: Self.activityCharLimit)
+        return Self.limit(text: activity, to: InputFieldCharLimit.activityCharLimit)
     }
     
     /// Limits the length of the reason input.
@@ -66,7 +74,7 @@ struct Constants {
     ///
     /// - returns: The reason truncated to a certain limit or the reason unchanged.
     static func checkReasonInputLength(reason: String) -> String {
-        return Self.limit(text: reason, to: Self.reasonCharLimit)
+        return Self.limit(text: reason, to: InputFieldCharLimit.reasonCharLimit)
     }
     
     /// Limits the length of the journal entry input.
@@ -75,6 +83,6 @@ struct Constants {
     ///
     /// - returns: The journal entry truncated to a certain limit or the journal entry unchanged.
     static func checkEntryLength(entry: String) -> String {
-        return Self.limit(text: entry, to: Self.journalEntryCharLimit)
+        return Self.limit(text: entry, to: InputFieldCharLimit.journalEntryCharLimit)
     }
 }

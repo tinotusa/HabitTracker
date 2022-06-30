@@ -98,6 +98,9 @@ private extension SignUpView {
     var firstNameInput: some View {
         TextField("First name", text: $viewModel.firstName, prompt: Text(viewModel.firstNamePrompt))
             .focused($inputField, equals: .firstName)
+            .onChange(of: viewModel.firstName) { name in
+                viewModel.checkFirstNameCharLimit(name: name)
+            }
             .inputField(contentType: .givenName) {
                 nextField()
             }
@@ -106,6 +109,9 @@ private extension SignUpView {
     var lastNameInput: some View {
         TextField("Last name", text: $viewModel.lastName, prompt: Text(viewModel.lastNamePrompt))
             .focused($inputField, equals: .lastName)
+            .onChange(of: viewModel.lastName) { name in
+                viewModel.checkLastNameCharLimit(name: name)
+            }
             .inputField(contentType: .familyName) {
                 nextField()
             }
@@ -113,16 +119,22 @@ private extension SignUpView {
     
     var emailInput: some View {
         TextField("Email", text: $viewModel.email, prompt: Text(viewModel.emailPrompt))
+            .focused($inputField, equals: .email)
+            .onChange(of: viewModel.email) { email in
+                viewModel.checkEmailCharLimit(email: email)
+            }
             .inputField(imageName: "envelope.fill", contentType: .emailAddress) {
                 nextField()
             }
-            .focused($inputField, equals: .email)
     }
     
     var emailConfirmationInput: some View {
         TextField("Email Confirmation", text: $viewModel.emailConfirmation, prompt: Text(viewModel.emailConfirmationPrompt))
             .focused($inputField, equals: .emailConfirmation)
             .inputField(imageName: "envelope.fill", contentType: .emailAddress)
+            .onChange(of: viewModel.emailConfirmation) { email in
+                viewModel.checkEmailConfirmationCharLimit(email: email)
+            }
     }
     
     var passwordInput: some View {
@@ -131,6 +143,9 @@ private extension SignUpView {
                 nextField()
             }
             .focused($inputField, equals: .password)
+            .onChange(of: viewModel.password) { password in
+                viewModel.checkPasswordCharLimit(password: password)
+            }
     }
     
     var passwordConfirmationInput: some View {
@@ -139,6 +154,9 @@ private extension SignUpView {
                 nextField()
             }
             .focused($inputField, equals: .passwordConfirmation)
+            .onChange(of: viewModel.passwordConfirmation) { password in
+                viewModel.checkPasswordConfirmationCharLimit(password: password)
+            }
     }
     
     var birthdayInput: some View {

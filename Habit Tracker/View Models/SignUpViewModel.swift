@@ -145,7 +145,35 @@ class SignUpViewModel: ObservableObject {
     }
 }
 
-// MARK: - InputField extesion
+// MARK: - Input Field char limits
+extension SignUpViewModel {
+    func checkFirstNameCharLimit(name: String) {
+        firstName = Constants.limit(text: name, to: InputFieldCharLimit.name)
+    }
+    
+    func checkLastNameCharLimit(name: String) {
+        lastName = Constants.limit(text: name, to: InputFieldCharLimit.name)
+    }
+    
+    func checkEmailCharLimit(email: String) {
+        self.email = Constants.limit(text: email, to: InputFieldCharLimit.email)
+    
+    }
+    
+    func checkEmailConfirmationCharLimit(email: String) {
+        self.emailConfirmation = Constants.limit(text: email, to: InputFieldCharLimit.email)
+    
+    }
+    
+    func checkPasswordCharLimit(password: String) {
+        self.password = Constants.limit(text: password, to: InputFieldCharLimit.password)
+    }
+    
+    func checkPasswordConfirmationCharLimit(password: String) {
+        self.passwordConfirmation = Constants.limit(text: password, to: InputFieldCharLimit.password)
+    }
+}
+
 extension SignUpViewModel {
     /// Represents the input fields for the sign up view.
     enum InputField: Hashable {
