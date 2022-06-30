@@ -83,6 +83,10 @@ class AddViewViewModel: ObservableObject {
             }
         }
     }
+    /// A boolean value indicating the views loading state
+    @Published var isLoading = false
+    /// A boolean value indicating whether or not to show an action notification.
+    @Published var showActionNotification = false
     
     let reasonPrompt = LocalizedStringKey("Reason")
     let activityInputPrompt = LocalizedStringKey("Activity")
@@ -136,7 +140,16 @@ extension AddViewViewModel {
     }
     
     /// Adds the habit to the firestore database.
+    @MainActor
     func addHabit(session: UserSession) async {
+        withAnimation(.spring()) {
+            isLoading = true
+        }
+        defer {
+            withAnimation {
+                isLoading = false
+            }
+        }
         precondition(session.currentUser != nil, "User is not logged in")
         assert(allFieldsFilled, "All fields not filled in")
         guard let user = session.currentUser else {
@@ -226,6 +239,10 @@ extension AddViewViewModel {
                     errorDetails = ErrorDetails(name: "Notification error", message: "Failed to add notifications for this habit.")
                 }
             }
+            withAnimation(.spring()) {
+                showActionNotification = true
+            }
+            clearInputFields()
         } catch {
             print("Error in \(#function): \(error)")
         }
@@ -237,5 +254,17 @@ extension AddViewViewModel {
             preconditionFailure("Activity: \(activity) isn't in the array of activities.")
         }
         activities.remove(at: index)
+    }
+    
+    /// Clears all of the string inputs for the add view.
+    private func clearInputFields() {
+        habitName = ""
+        occurrenceTime = Date()
+        occurrenceDays = []
+        durationHours = 0
+        durationMinutes = 0
+        activityInput = ""
+        activities = []
+        reason = ""
     }
 }

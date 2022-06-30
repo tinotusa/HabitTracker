@@ -48,6 +48,30 @@ struct AddView: View {
             .title2Style()
         }
         .backgroundView()
+        .disabled(viewModel.isLoading)
+        .disabled(viewModel.showActionNotification)
+        .overlay {
+            if viewModel.isLoading {
+                ActionNotificationBar(
+                    text: "Adding habit",
+                    showProgressCircle: true,
+                    canTapToHide: false,
+                    willDisappearWhenFalse: $viewModel.isLoading
+                )
+                .transition(.move(edge: .top))
+            }
+        }
+        .overlay {
+            if viewModel.showActionNotification {
+                ActionNotificationBar(
+                    text: "Added new habit.",
+                    icon: "checkmark.circle.fill",
+                    showingNotification: $viewModel.showActionNotification,
+                    canTapToHide: true
+                )
+                .transition(.move(edge: .top))
+            }
+        }
         .alert(
             "Please allow notifications",
             isPresented: $viewModel.showSettingsForPermissions,
@@ -68,6 +92,7 @@ struct AddView: View {
     }
 }
 
+// MARK: - Subviews
 private extension AddView {
     var header: some View {
         HStack {
@@ -167,6 +192,8 @@ private extension AddView {
                 LongButton(text: "Add") {
                     viewModel.addActivity()
                 }
+                .disabled(viewModel.activityInput.isEmpty)
+                .opacity(viewModel.activityInput.isEmpty ? Constants.disabledButtonOpacity : 1.0)
             }
             .highlightCard()
         }
@@ -196,6 +223,7 @@ private extension AddView {
             }
         }
         .disabled(!viewModel.allFieldsFilled)
+        .opacity(viewModel.allFieldsFilled ? 1.0 : Constants.disabledButtonOpacity)
     }
     
 }
