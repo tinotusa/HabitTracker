@@ -64,8 +64,32 @@ struct HabitCalendar: View {
                 Spacer(minLength: 70) // TODO: Find better solution
             }
         }
+        .disabled(viewModel.isLoading)
+        .disabled(viewModel.showingActionNotification)
         .padding()
         .backgroundView()
+        .overlay {
+            if viewModel.isLoading {
+                ActionNotificationBar(
+                    text: "Deleting habit",
+                    showProgressCircle: true,
+                    canTapToHide: false,
+                    willDisappearWhenFalse: $viewModel.isLoading
+                )
+                .transition(.move(edge: .top))
+            }
+        }
+        .overlay {
+            if viewModel.isLoading {
+                ActionNotificationBar(
+                    text: "Deleted habit",
+                    icon: "checkmark.circle.fill",
+                    showingNotification: $viewModel.showingActionNotification,
+                    canTapToHide: true
+                )
+                .transition(.move(edge: .top))
+            }
+        }
         .onChange(of: date) { date in
             Task {
                 await viewModel.getJournalEntries(inMonthOf: date)
