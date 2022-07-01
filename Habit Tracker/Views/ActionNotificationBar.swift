@@ -17,11 +17,11 @@ struct ActionNotificationBar: View {
     
     init(
         text: LocalizedStringKey,
-        icon: String? = nil,
-        showingNotification: Binding<Bool> = .constant(false),
-        showProgressCircle: Bool = false,
-        canTapToHide: Bool = false,
-        willDisappearWhenFalse: Binding<Bool> = .constant(false)
+        icon: String?,
+        showingNotification: Binding<Bool>,
+        showProgressCircle: Bool,
+        canTapToHide: Bool,
+        willDisappearWhenFalse: Binding<Bool>
     ) {
         self.text = text
         self.icon = icon
@@ -90,7 +90,10 @@ struct ActionNotificationBar_Previews: PreviewProvider {
         ActionNotificationBar(
             text: "Hello world",
             icon: "checkmark.circle.fill",
-            showingNotification: .constant(false)
+            showingNotification: .constant(false),
+            showProgressCircle: false,
+            canTapToHide: false,
+            willDisappearWhenFalse: .constant(false)
         )
     }
 }

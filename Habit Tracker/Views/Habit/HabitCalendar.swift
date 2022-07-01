@@ -65,31 +65,20 @@ struct HabitCalendar: View {
             }
         }
         .disabled(viewModel.isLoading)
-        .disabled(viewModel.showingActionNotification)
         .padding()
         .backgroundView()
-        .overlay {
-            if viewModel.isLoading {
-                ActionNotificationBar(
-                    text: "Deleting habit",
-                    showProgressCircle: true,
-                    canTapToHide: false,
-                    willDisappearWhenFalse: $viewModel.isLoading
-                )
-                .transition(.move(edge: .top))
-            }
-        }
-        .overlay {
-            if viewModel.isLoading {
-                ActionNotificationBar(
-                    text: "Deleted habit",
-                    icon: "checkmark.circle.fill",
-                    showingNotification: $viewModel.showingActionNotification,
-                    canTapToHide: true
-                )
-                .transition(.move(edge: .top))
-            }
-        }
+        .actionNotification(
+            text: "Deleing habit",
+            showingNotifiction: $viewModel.showingActionNotification,
+            canTapToHide: false,
+            willDisappearWhenFalse: $viewModel.isLoading
+        )
+        .actionNotification(
+            text: "Deleted habit.",
+            icon: "checkmark.circle.fill",
+            showingNotifiction: $viewModel.showingActionNotification,
+            canTapToHide: false
+        )
         .onChange(of: date) { date in
             Task {
                 await viewModel.getJournalEntries(inMonthOf: date)

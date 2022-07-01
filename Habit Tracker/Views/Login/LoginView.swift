@@ -81,17 +81,13 @@ struct LoginView: View {
             } message: { details in
                 Text(details.message)
             }
-            .overlay {
-                if userSession.isLoading {
-                    ActionNotificationBar(
-                        text: "Logging in.",
-                        showProgressCircle: true,
-                        canTapToHide: false,
-                        willDisappearWhenFalse: $userSession.isLoading
-                    )
-                    .transition(.move(edge: .top))
-                }
-            }
+            .actionNotification(
+                text: "Logging in.",
+                showingNotifiction: $userSession.showActionNotification,
+                showProgressCircle: true,
+                canTapToHide: false,
+                willDisappearWhenFalse: $userSession.isLoading
+            )
         }
     }
 }
@@ -128,7 +124,9 @@ private extension LoginView {
             if rememberMe {
                 viewModel.saveLoginDetails()
             }
-            userSession.signIn(withEmail: viewModel.email, password: viewModel.password)
+            Task {
+                await userSession.signIn(withEmail: viewModel.email, password: viewModel.password)
+            }
         }
         .opacity(viewModel.allFieldsFilled ? 1.0 : 0.5)
         .disabled(!viewModel.allFieldsFilled)
@@ -220,7 +218,9 @@ private extension LoginView {
 // MARK: Functions
 private extension LoginView {
     func signIn() {
-        userSession.signIn(withEmail: viewModel.email, password: viewModel.password)
+        Task {
+            await userSession.signIn(withEmail: viewModel.email, password: viewModel.password)
+        }
     }
 }
 

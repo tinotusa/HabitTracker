@@ -49,29 +49,19 @@ struct AddView: View {
         }
         .backgroundView()
         .disabled(viewModel.isLoading)
-        .disabled(viewModel.showActionNotification)
-        .overlay {
-            if viewModel.isLoading {
-                ActionNotificationBar(
-                    text: "Adding habit",
-                    showProgressCircle: true,
-                    canTapToHide: false,
-                    willDisappearWhenFalse: $viewModel.isLoading
-                )
-                .transition(.move(edge: .top))
-            }
-        }
-        .overlay {
-            if viewModel.showActionNotification {
-                ActionNotificationBar(
-                    text: "Added new habit.",
-                    icon: "checkmark.circle.fill",
-                    showingNotification: $viewModel.showActionNotification,
-                    canTapToHide: true
-                )
-                .transition(.move(edge: .top))
-            }
-        }
+        .actionNotification(
+            text: "Adding habit.",
+            showingNotifiction: $viewModel.showActionNotification,
+            showProgressCircle: true,
+            canTapToHide: false,
+            willDisappearWhenFalse: $viewModel.isLoading
+        )
+        .actionNotification(
+            text: "Added new habit.",
+            icon: "checkmark.circle.fill",
+            showingNotifiction: $viewModel.showActionNotification,
+            canTapToHide: true
+        )
         .alert(
             "Please allow notifications",
             isPresented: $viewModel.showSettingsForPermissions,

@@ -51,6 +51,7 @@
 		21BD7CB1284B630300A9A8B2 /* EditHabitViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BD7CB0284B630300A9A8B2 /* EditHabitViewViewModel.swift */; };
 		21C16C032847731100502804 /* DayHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C16C022847731100502804 /* DayHistoryView.swift */; };
 		21C16C0528478F3400502804 /* DayHistoryViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C16C0428478F3400502804 /* DayHistoryViewViewModel.swift */; };
+		21CCA1C9286F17AD0052D260 /* View+ActionNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CCA1C8286F17AD0052D260 /* View+ActionNotification.swift */; };
 		21DA7F73283B526900E43E4C /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21DA7F72283B526900E43E4C /* AuthenticationServices.framework */; };
 		21DA7F76283B592700E43E4C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F75283B592700E43E4C /* HomeView.swift */; };
 		21DA7F78283B90B800E43E4C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F77283B90B800E43E4C /* MainView.swift */; };
@@ -142,6 +143,7 @@
 		21BD7CB0284B630300A9A8B2 /* EditHabitViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHabitViewViewModel.swift; sourceTree = "<group>"; };
 		21C16C022847731100502804 /* DayHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayHistoryView.swift; sourceTree = "<group>"; };
 		21C16C0428478F3400502804 /* DayHistoryViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayHistoryViewViewModel.swift; sourceTree = "<group>"; };
+		21CCA1C8286F17AD0052D260 /* View+ActionNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ActionNotification.swift"; sourceTree = "<group>"; };
 		21CDC546284B1CAE00710020 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		21DA7F72283B526900E43E4C /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		21DA7F75283B592700E43E4C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -437,6 +439,7 @@
 			children = (
 				21EE866B28520A620028F726 /* InputField.swift */,
 				21EE866D2852162E0028F726 /* TextStyles.swift */,
+				21CCA1C8286F17AD0052D260 /* View+ActionNotification.swift */,
 			);
 			path = "View Modifiers";
 			sourceTree = "<group>";
@@ -602,6 +605,7 @@
 				21A91B8D286AE939006FA005 /* JournalDetails.swift in Sources */,
 				21C16C0528478F3400502804 /* DayHistoryViewViewModel.swift in Sources */,
 				2166708A28686FD700EE7F4D /* LongButton.swift in Sources */,
+				21CCA1C9286F17AD0052D260 /* View+ActionNotification.swift in Sources */,
 				2128011C2845C69100D24C35 /* BaseCalendarView.swift in Sources */,
 				21B6289C280ADD9400E3FC49 /* SignUpView.swift in Sources */,
 				218B7458284206B000F55A21 /* Habit.swift in Sources */,

@@ -30,6 +30,7 @@ class UserSession: ObservableObject {
             }
         }
     }
+    @Published var showActionNotification = false
     
     private lazy var auth = Auth.auth()
     private lazy var firestore = Firestore.firestore()
@@ -64,30 +65,46 @@ class UserSession: ObservableObject {
         return currentUser != nil && signInState == .signedIn
     }
     
+    /// A custom async version of the firebase auth signin method.
+    private func signIn(withEmail email: String, password: String) async -> AuthDataResult? {
+        do {
+                return try await withCheckedThrowingContinuation { continuation in
+                auth.signIn(withEmail: email, password: password) { result, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                    } else {
+                        continuation.resume(returning: result!)
+                    }
+                    
+                }
+            }
+        } catch {
+            print("Error in \(#function)\n\(error)")
+        }
+        return nil
+    }
+    
     @MainActor
-    func signIn(withEmail email: String, password: String) {
+    func signIn(withEmail email: String, password: String) async {
         withAnimation(.spring()) {
             isLoading = true
         }
-        
         defer {
             withAnimation {
                 isLoading = false
             }
         }
-        auth.signIn(withEmail: email, password: password) { [unowned self] authResult, error in
-            if error != nil {
-                print("Error signing in with email: \(email)\n\(error?.localizedDescription ?? "")")
-                errorDetails = ErrorDetails(name: "Login error", message: "\(error?.localizedDescription ?? "")")
-                return
-            }
-            guard let authResult = authResult else {
-                print("Error failed to get auth result with email: \(email)")
-                errorDetails = ErrorDetails(name: "Authentication Error", message: "Failed to get authentication results from email: \(email)")
-                return
-            }
-            self.currentUser = authResult.user
-            self.signInState = .signedIn
+        
+        guard let authResult = await signIn(withEmail: email, password: password) else {
+            errorDetails = ErrorDetails(name: "Login error", message: "Failed to get user from database")
+            return
+        }
+        
+        self.currentUser = authResult.user
+        self.signInState = .signedIn
+        
+        withAnimation(.spring()) {
+            showActionNotification = true
         }
     }
     
