@@ -65,24 +65,24 @@ class UserSession: ObservableObject {
         return currentUser != nil && signInState == .signedIn
     }
     
-    /// A custom async version of the firebase auth signin method.
-    private func signIn(withEmail email: String, password: String) async -> AuthDataResult? {
-        do {
-                return try await withCheckedThrowingContinuation { continuation in
-                auth.signIn(withEmail: email, password: password) { result, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                    } else {
-                        continuation.resume(returning: result!)
-                    }
-                    
-                }
-            }
-        } catch {
-            print("Error in \(#function)\n\(error)")
-        }
-        return nil
-    }
+//    /// A custom async version of the firebase auth signin method.
+//    private func signIn(withEmail email: String, password: String) async -> AuthDataResult? {
+//        do {
+//                return try await withCheckedThrowingContinuation { continuation in
+//                auth.signIn(withEmail: email, password: password) { result, error in
+//                    if let error = error {
+//                        continuation.resume(throwing: error)
+//                    } else {
+//                        continuation.resume(returning: result!)
+//                    }
+//
+//                }
+//            }
+//        } catch {
+//            print("Error in \(#function)\n\(error)")
+//        }
+//        return nil
+//    }
     
     @MainActor
     func signIn(withEmail email: String, password: String) async {
@@ -94,17 +94,17 @@ class UserSession: ObservableObject {
                 isLoading = false
             }
         }
-        
-        guard let authResult = await signIn(withEmail: email, password: password) else {
-            errorDetails = ErrorDetails(name: "Login error", message: "Failed to get user from database")
-            return
-        }
-        
-        self.currentUser = authResult.user
-        self.signInState = .signedIn
-        
-        withAnimation(.spring()) {
-            showActionNotification = true
+        do {
+            let authResult = try await auth.signIn(withEmail: email, password: password)
+            
+            self.currentUser = authResult.user
+            self.signInState = .signedIn
+            
+            withAnimation(.spring()) {
+                showActionNotification = true
+            }
+        } catch {
+            errorDetails = ErrorDetails(name: "Login error", message: error.localizedDescription)
         }
     }
     

@@ -65,9 +65,9 @@ class SignUpViewModel: ObservableObject {
     
     @MainActor
     /// Creates a new account with the given information(name, email, password, etc).
-    func createAccount(session: UserSession) {
+    func createAccount(session: UserSession) async {
         assert(allFieldsFilled, "All input fields must be filled")
-        withAnimation {
+        withAnimation(.spring()) {
             isLoading = true
         }
         defer {
@@ -91,20 +91,9 @@ class SignUpViewModel: ObservableObject {
             return
         }
         
-        auth.createUser(withEmail: email, password: password) { [unowned self] authResult, error in
-            if let error = error {
-                print("Error failed to create user with email: \(email)\n\(error.localizedDescription)")
-                errorDetails = ErrorDetails(
-                    name: "Account error",
-                    message: error.localizedDescription
-                )
-                return
-            }
-            guard let authResult = authResult else {
-                print("Error in \(#function): failed to get auth data result from create user")
-                return
-            }
-
+        do {
+            let authResult = try await auth.createUser(withEmail: email, password: password)
+            
             let firebaseUser = FirebaseUser(
                 id: authResult.user.uid,
                 firstName: firstName,
@@ -128,9 +117,19 @@ class SignUpViewModel: ObservableObject {
             withAnimation(.spring()) {
                 showActionNotification = true
             }
+            
             clearFields()
+            
+        } catch {
+            print("Error failed to create user with email: \(email)\n\(error.localizedDescription)")
+            errorDetails = ErrorDetails(
+                name: "Account error",
+                message: error.localizedDescription
+            )
+            return
         }
     }
+    
     /// Sets all the input fields to their default values (empty strings).
     func clearFields() {
         DispatchQueue.main.async { [weak self] in

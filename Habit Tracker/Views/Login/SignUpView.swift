@@ -218,7 +218,9 @@ private extension SignUpView {
     }
     
     func createAccount() {
-        viewModel.createAccount(session: userSession)
+        Task {
+            await viewModel.createAccount(session: userSession)
+        }
     }
 }
 
