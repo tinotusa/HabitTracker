@@ -104,14 +104,15 @@ extension AddViewViewModel {
     var allFieldsFilled: Bool {
         let habitName = habitName.trimmingCharacters(in: .whitespacesAndNewlines)
         let reason = reason.trimmingCharacters(in: .whitespacesAndNewlines)
-        return !(
-            !(isQuittingHabit || isStartingHabit) ||
-            habitName.isEmpty ||
-            occurrenceDays.isEmpty ||
-            !(durationHours == 0 || durationMinutes == 0) ||
-            (isQuittingHabit && activities.isEmpty) ||
-            reason.isEmpty
-        )
+        
+        if !(isQuittingHabit ||  isStartingHabit) { return false }
+        if habitName.isEmpty { return false }
+        if occurrenceDays.isEmpty { return false }
+        if (durationHours == 0 && durationMinutes == 0) { return false }
+        if isQuittingHabit && activities.isEmpty { return false }
+        if reason.isEmpty { return false }
+        
+        return true
     }
 }
 
