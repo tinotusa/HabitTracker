@@ -92,7 +92,7 @@ struct HabitCalendar: View {
             await viewModel.getJournalEntries(inMonthOf: date)
             await viewModel.getJournalEntries(for: date)
         }
-        .sheet(isPresented: $showAddJournalEntryView) {
+        .fullScreenCover(isPresented: $showAddJournalEntryView) {
             Task {
                 await viewModel.getJournalEntries(inMonthOf: date)
             }

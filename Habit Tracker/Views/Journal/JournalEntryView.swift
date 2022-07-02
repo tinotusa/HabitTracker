@@ -55,6 +55,12 @@ struct JournalEntryView: View {
             }
         }
         .backgroundView()
+        .actionNotification(
+            text: "Added new journal entry.",
+            icon: "checkmark.circle.fill",
+            showingNotifiction: $viewModel.showActionNotification,
+            canTapToHide: true
+        )
     }
 }
 

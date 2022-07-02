@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import SwiftUI
 
 /// JournalEntryView ViewModel.
 @MainActor
@@ -17,13 +18,16 @@ final class JournalEntryViewViewModel: ObservableObject {
     @Published var rating = 0
     /// The list of activities the user wrote.
     @Published var activities = [JournalEntry.Activity]()
-    
+    /// A boolean value that indicates whether or not to show an action notification.
+    @Published var showActionNotification = false
+    /// A computed `Bool` that returns `true` if every input field in the view has some input, `false` otherwise.
     var allFieldsFilled: Bool {
         let entry = entry.trimmingCharacters(in: .whitespacesAndNewlines)
         if entry.isEmpty { return false }
         if rating == 0 { return false }
         return  true
     }
+    
     private var firestore = Firestore.firestore()
 }
 
@@ -49,6 +53,10 @@ extension JournalEntryViewViewModel {
         )
         do {
             try journalRef.setData(from: journalEntry)
+            withAnimation(.spring()) {
+                showActionNotification = true
+            }
+            clearInputFields()
         } catch {
             print("Error in \(#function)\n\(error)")
         }
@@ -57,5 +65,14 @@ extension JournalEntryViewViewModel {
     /// Checks the length of the journal entry
     func checkEntryLength(entry: String) {
         self.entry = Constants.checkEntryLength(entry: entry)
+    }
+    
+    /// Clears every input field in the view.
+    private func clearInputFields() {
+        entry = ""
+        rating = 0
+        for i in 0 ..< activities.count {
+            activities[i].isCompleted = false
+        }
     }
 }
