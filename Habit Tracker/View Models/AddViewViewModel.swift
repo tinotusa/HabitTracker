@@ -12,8 +12,8 @@ import UserNotifications
 import SwiftUI
 
 struct PermissionDetails {
-    let title: String
-    let message: String
+    let title: LocalizedStringKey
+    let message: LocalizedStringKey
 }
 
 /// Add view view model.
@@ -185,8 +185,7 @@ extension AddViewViewModel {
             if await !notificationManager.hasPermissions() {
                 permissionsDetails = PermissionDetails(
                     title: "Allow reminders for habits",
-                    message: "Please allow the notifications for this app," +
-                        " so that it can remind you when you need to complete a certain habit"
+                    message: "Please allow the notifications for this app, so that it can remind you when you need to complete a certain habit"
                 )
             }
             

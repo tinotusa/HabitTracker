@@ -109,7 +109,7 @@ class SignUpViewModel: ObservableObject {
                 print("Error in \(#function)\n\(error)")
                 errorDetails = ErrorDetails(
                     name: "Account error",
-                    message: error.localizedDescription
+                    message: "\(error.localizedDescription)"
                 )
                 return
             }
@@ -124,7 +124,7 @@ class SignUpViewModel: ObservableObject {
             print("Error failed to create user with email: \(email)\n\(error.localizedDescription)")
             errorDetails = ErrorDetails(
                 name: "Account error",
-                message: error.localizedDescription
+                message: "\(error.localizedDescription)"
             )
             return
         }

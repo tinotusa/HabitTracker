@@ -54,7 +54,7 @@ class UserSession: ObservableObject {
                 } catch {
                     print(error)
                     DispatchQueue.main.async { [weak self] in
-                        self?.errorDetails = ErrorDetails(name: "Login error", message: error.localizedDescription)
+                        self?.errorDetails = ErrorDetails(name: "Login error", message: "\(error.localizedDescription)")
                     }
                 }
             }
@@ -104,7 +104,7 @@ class UserSession: ObservableObject {
                 showActionNotification = true
             }
         } catch {
-            errorDetails = ErrorDetails(name: "Login error", message: error.localizedDescription)
+            errorDetails = ErrorDetails(name: "Login error", message: "\(error.localizedDescription)")
         }
     }
     

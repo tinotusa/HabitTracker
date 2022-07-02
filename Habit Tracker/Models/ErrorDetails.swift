@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct ErrorDetails: Identifiable {
     let id = UUID().uuidString
-    var name: String
-    var message: String
+    var name: LocalizedStringKey
+    var message: LocalizedStringKey
 }
