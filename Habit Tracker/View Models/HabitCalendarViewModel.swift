@@ -80,9 +80,20 @@ extension HabitCalendarViewModel {
         guard let user = userSession.currentUser else { return }
 
         let calendar = Calendar.current
-        let monthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: month))!
-        let monthDates: [Date] = calendar.range(of: .day, in: .month, for: monthStart)!.compactMap { day -> Date in
-            calendar.date(byAdding: .day, value: day, to: monthStart)!
+        let dateComps = calendar.dateComponents([.month, .year], from: month)
+        guard let monthStart = calendar.date(from: dateComps) else {
+            print("Error in \(#function). Failed create date from date components")
+            return
+        }
+        guard let range = calendar.range(of: .day, in: .month, for: month) else {
+            print("Error in \(#function). Failed range from date month")
+            return
+        }
+        var arr = [Int](range)
+        arr.insert(0, at: 0)
+    
+        let monthDates = arr.compactMap { day in
+            calendar.date(byAdding: .day, value: day, to: monthStart)
         }
         
         let query = firestore
