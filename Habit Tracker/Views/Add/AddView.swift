@@ -179,11 +179,9 @@ private extension AddView {
                         }
                     }
                 }
-                LongButton(text: "Add") {
+                LongButton(text: "Add", isDisabled: viewModel.activityInput.isEmpty) {
                     viewModel.addActivity()
                 }
-                .disabled(viewModel.activityInput.isEmpty)
-                .opacity(viewModel.activityInput.isEmpty ? Constants.disabledButtonOpacity : 1.0)
             }
             .highlightCard()
         }
@@ -207,13 +205,11 @@ private extension AddView {
     }
     
     var createHabitButton: some View {
-        LongButton(text: "Create habit") {
+        LongButton(text: "Create habit", isDisabled: !viewModel.allFieldsFilled) {
             Task {
                 await viewModel.addHabit(session: userSession)
             }
         }
-        .disabled(!viewModel.allFieldsFilled)
-        .opacity(viewModel.allFieldsFilled ? 1.0 : Constants.disabledButtonOpacity)
     }
     
 }

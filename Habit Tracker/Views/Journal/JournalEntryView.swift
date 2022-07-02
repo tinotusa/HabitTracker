@@ -40,7 +40,7 @@ struct JournalEntryView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                     .highlightCard()
                     
-                    LongButton(text: "Add entry") {
+                    LongButton(text: "Add entry", isDisabled: !viewModel.allFieldsFilled) {
                         viewModel.addEntry(userSession: userSession, habit: habit)
                     }
                 }

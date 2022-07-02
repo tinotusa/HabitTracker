@@ -192,7 +192,7 @@ private extension EditHabitView {
                         }
                     }
                 }
-                LongButton(text: "Add activity") {
+                LongButton(text: "Add activity", isDisabled: viewModel.activityInput.isEmpty) {
                     withAnimation {
                         viewModel.addActivity()
                     }

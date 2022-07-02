@@ -21,7 +21,7 @@ struct RatingView: View {
     
     var body: some View {
         HStack {
-            ForEach(0 ..< 5) { rating in
+            ForEach(1 ..< 6) { rating in
                 getStar(for: rating)
                     .onTapGesture {
                         self.rating = rating
@@ -45,6 +45,10 @@ struct RatingView: View {
 
 struct RatingView_Previews: PreviewProvider {
     static var previews: some View {
-        RatingView(rating: .constant(3))
+        VStack {
+            ForEach(0 ..< 5) { index in
+                RatingView(rating: .constant(index + 1))
+            }
+        }
     }
 }

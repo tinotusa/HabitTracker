@@ -18,6 +18,12 @@ final class JournalEntryViewViewModel: ObservableObject {
     /// The list of activities the user wrote.
     @Published var activities = [JournalEntry.Activity]()
     
+    var allFieldsFilled: Bool {
+        let entry = entry.trimmingCharacters(in: .whitespacesAndNewlines)
+        if entry.isEmpty { return false }
+        if rating == 0 { return false }
+        return  true
+    }
     private var firestore = Firestore.firestore()
 }
 

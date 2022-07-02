@@ -120,7 +120,7 @@ private extension LoginView {
     }
     
     var loginButton: some View {
-        LongButton(text: "Login") {
+        LongButton(text: "Login", isDisabled: !viewModel.allFieldsFilled) {
             if rememberMe {
                 viewModel.saveLoginDetails()
             }
@@ -128,8 +128,6 @@ private extension LoginView {
                 await userSession.signIn(withEmail: viewModel.email, password: viewModel.password)
             }
         }
-        .opacity(viewModel.allFieldsFilled ? 1.0 : 0.5)
-        .disabled(!viewModel.allFieldsFilled)
     }
     
     var signUpButton: some View {

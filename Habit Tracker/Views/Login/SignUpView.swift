@@ -162,10 +162,9 @@ private extension SignUpView {
     }
     
     var signUpButton: some View {
-        LongButton(text: "Sign up") {
+        LongButton(text: "Sign up", isDisabled: !viewModel.allFieldsFilled) {
             createAccount()
         }
-        .disabled(!viewModel.allFieldsFilled)
     }
     
     var backButton: some View {

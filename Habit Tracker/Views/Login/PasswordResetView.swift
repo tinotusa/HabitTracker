@@ -57,10 +57,9 @@ private extension PasswordResetView {
     }
     
     var sendResetButton: some View {
-        LongButton(text: "Send reset email") {
+        LongButton(text: "Send reset email", isDisabled: !viewModel.allFieldsFilled) {
             viewModel.sendResetEmail()
         }
-        .disabled(!viewModel.allFieldsFilled)
     }
     
 }
