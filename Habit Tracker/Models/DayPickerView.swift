@@ -51,6 +51,31 @@ struct DayPickerView: View {
                     }
                 }
             }
+            .onChange(of: selection) { selection in
+                if selection.count == Day.allCases.count {
+                    withAnimation {
+                        isSetEveryday = true
+                    }
+                } else if selection.count == 5 && selection.allSatisfy({ day in
+                    day.isWeekday
+                }) {
+                    withAnimation {
+                        isSetEveryWeekday = true
+                    }
+                } else if selection.count == 2 && selection.allSatisfy({ day in
+                    day.isWeekend
+                }) {
+                    withAnimation {
+                        isSetEveryWeekend = true
+                    }
+                } else {
+                    withAnimation {
+                        isSetEveryWeekday = false
+                        isSetEveryWeekend = false
+                        isSetEveryday = false
+                    }
+                }
+            }
         }
     }
 }
