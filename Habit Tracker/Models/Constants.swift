@@ -31,6 +31,8 @@ struct Constants {
     static let maxTextEditorHeight = 300.0
     static let entryDetailHeight = 600.0
     static let disabledButtonOpacity = 0.5
+    static let maxActivitiesPerHabit = 10
+    static let maxIDLength = 128
     
     /// Truncates the given input to some max length or returns it unchanged if
     /// the string's length is less than the given max length.

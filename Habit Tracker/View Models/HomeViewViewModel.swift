@@ -67,8 +67,12 @@ extension HomeViewViewModel {
             previousDocument = nil
             var tempHabits = [Habit]()
             for document in snapshot.documents {
-                let habit = try document.data(as: Habit.self)
-                tempHabits.append(habit)
+                do {
+                    let habit = try document.data(as: Habit.self)
+                    tempHabits.append(habit)
+                } catch {
+                    print("Error in \(#function): \(error)")
+                }
             }
             habits = tempHabits
         } catch {
