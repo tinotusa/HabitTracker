@@ -24,7 +24,9 @@ struct RatingView: View {
             ForEach(1 ..< 6) { rating in
                 getStar(for: rating)
                     .onTapGesture {
-                        self.rating = rating
+                        withAnimation {
+                            self.rating = rating
+                        }
                     }
             }
         }
