@@ -8,6 +8,8 @@
 import Foundation
 
 struct InputFieldCharLimit {
+    // activity inputs
+    static let activityNameCharLimit = 100
     // habit inputs
     static let habitNameCharLimit = 40
     static let activityCharLimit = 40

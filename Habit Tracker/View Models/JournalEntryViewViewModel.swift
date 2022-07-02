@@ -17,7 +17,7 @@ final class JournalEntryViewViewModel: ObservableObject {
     /// The rating of the day.
     @Published var rating = 0
     /// The list of activities the user wrote.
-    @Published var activities = [JournalEntry.Activity]()
+    @Published var activities = [Activity]()
     /// A boolean value that indicates whether or not to show an action notification.
     @Published var showActionNotification = false
     /// A computed `Bool` that returns `true` if every input field in the view has some input, `false` otherwise.

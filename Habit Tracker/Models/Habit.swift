@@ -7,11 +7,6 @@
 
 import Foundation
 
-struct Activity: Identifiable, Codable, Equatable {
-    var id = UUID().uuidString
-    var name: String
-}
-
 /// A struct representing a habit.
 struct Habit: Codable, Identifiable, Equatable {
     /// The id of the habit.

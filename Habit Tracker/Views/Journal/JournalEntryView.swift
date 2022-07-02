@@ -51,7 +51,7 @@ struct JournalEntryView: View {
         .foregroundColor(.textColour)
         .onAppear {
             viewModel.activities = habit.activities.map { activity in
-                JournalEntry.Activity(name: activity.name, isCompleted: false)
+                Activity(name: activity.name, isCompleted: false)
             }
         }
         .backgroundView()

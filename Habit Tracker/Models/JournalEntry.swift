@@ -9,14 +9,6 @@ import Foundation
 
 /// Represents a journal entry.
 struct JournalEntry: Codable, Identifiable {
-    /// A struct to represent the users activity.
-    struct Activity: Codable, Identifiable {
-        var id = UUID().uuidString
-        /// The name of the activity.
-        var name: String
-        /// A boolean value that represents whether the activity was completed.
-        var isCompleted: Bool = false
-    }
     /// The id of the entry.
     var id: String
     /// The id of creator.
