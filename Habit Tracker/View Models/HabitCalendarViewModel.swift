@@ -63,8 +63,12 @@ extension HabitCalendarViewModel {
             let snapshot = try await query.getDocuments()
             var temp = [JournalEntry]()
             for document in snapshot.documents {
-                let journalEntry = try document.data(as: JournalEntry.self)
-                temp.append(journalEntry)
+                do {
+                    let journalEntry = try document.data(as: JournalEntry.self)
+                    temp.append(journalEntry)
+                } catch {
+                    print("Error in \(#function)\n\(error)")
+                }
             }
             entriesForSelectedDate = temp
         } catch {
@@ -110,8 +114,12 @@ extension HabitCalendarViewModel {
             let snapshot = try await query.getDocuments()
             var temp = [JournalEntry]()
             for document in snapshot.documents {
-                let journalEntry = try document.data(as: JournalEntry.self)
-                temp.append(journalEntry)
+                do {
+                    let journalEntry = try document.data(as: JournalEntry.self)
+                    temp.append(journalEntry)
+                } catch {
+                    print("Error in \(#function)\n\(error)")
+                }
             }
             clearSelectedEntries() // entries are cleared so that the view doesn't display old entries for a different month
             journalEntries = temp
@@ -156,7 +164,7 @@ extension HabitCalendarViewModel {
         } catch {
             print("\(error)")
         }
-        fatalError("No habit found")
+        fatalError("No habit found") // TODO: is this a good idea? under what circumstance can this happen?
     }
     
     /// Deletes a habit from the database.

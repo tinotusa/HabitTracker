@@ -168,22 +168,6 @@ extension Habit {
         localReminderNotificationID = UUID().uuidString
     }
     
-    //    init(copy habit: Habit) {
-    //        self.id = habit.id
-    //        createdAt = habit.createdAt
-    //        self.isQuittingHabit = habit.isQuittingHabit
-    //        self.isStartingHabit = habit.isStartingHabit
-    //        self.name = habit.name
-    //        self.occurrenceTime = habit.occurrenceTime
-    //        self.occurrenceDays = habit.occurrenceDays
-    //        self.durationHours = habit.durationHours
-    //        self.durationMinutes = habit.durationMinutes
-    //        self.activities = habit.activities
-    //        self.reason = habit.reason
-    //        localNotificationID = habit.localNotificationID
-    //        localReminderNotificationID = habit.localReminderNotificationID
-    //    }
-    
     static var example: Habit {
         Habit(
             id: UUID().uuidString,

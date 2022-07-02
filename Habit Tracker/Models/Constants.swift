@@ -33,6 +33,8 @@ struct Constants {
     static let disabledButtonOpacity = 0.5
     static let maxActivitiesPerHabit = 10
     static let maxIDLength = 128
+    static let minRating = 1
+    static let maxRating = 5
     
     /// Truncates the given input to some max length or returns it unchanged if
     /// the string's length is less than the given max length.
