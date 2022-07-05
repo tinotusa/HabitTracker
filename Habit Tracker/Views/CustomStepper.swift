@@ -47,6 +47,9 @@ struct CustomStepper: View {
                 .onReceive(Just(textValue)) { newValue in
                     filterTextValue(newValue)
                 }
+                .onChange(of: textValue) { _ in
+                    updateValue()
+                }
             
             StepperButton(systemName: "minus") {
                 value = max(value - 1, minValue)
