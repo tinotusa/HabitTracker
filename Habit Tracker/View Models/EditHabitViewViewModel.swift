@@ -37,7 +37,10 @@ final class EditHabitViewViewModel: ObservableObject {
     /// The current user session.
     var userSession: UserSession!
     /// The prompt for the activity input text field.
-    let activityInputPrompt = "Name..."
+    let activityInputPrompt: LocalizedStringKey = "Name ..."
+    
+    @Published var isLoading = false
+    @Published var showActionNotification = false
     
     private lazy var firestore = Firestore.firestore()
     
@@ -112,6 +115,14 @@ extension EditHabitViewViewModel {
     /// - returns: `True` if the save was successful, `False` if something went wrong.
     @discardableResult
     func saveHabit() async -> Bool {
+        withAnimation(.spring()) {
+            isLoading = true
+        }
+        defer {
+            withAnimation {
+                isLoading = false
+            }
+        }
         guard let user = userSession.currentUser else {
             preconditionFailure("User is not logged in.")
         }
@@ -178,6 +189,9 @@ extension EditHabitViewViewModel {
                     errorDetails = ErrorDetails(name: "Notification Errror.", message: "Failed to set the notification for this habit.")
                 }
                 hasSavedSuccessfully = true
+                withAnimation(.spring()) {
+                    showActionNotification = true
+                }
             }
         } catch {
             DispatchQueue.main.async {

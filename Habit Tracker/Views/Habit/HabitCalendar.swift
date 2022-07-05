@@ -29,7 +29,7 @@ struct HabitCalendar: View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: Constants.habitRowVstackSpacing) {
                     HStack(alignment: .lastTextBaseline) {
-                        Text("\(habit.name) calendar")
+                        Text("\(habit.name)")
                             .title2Style()
                             .lineLimit(1)
                     }

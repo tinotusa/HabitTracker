@@ -78,6 +78,18 @@ struct EditHabitView: View {
             if !userSession.isSignedIn { return }
             viewModel.userSession = userSession
         }
+        .actionNotification(
+            text: "Saving changes.",
+            showingNotifiction: $viewModel.showActionNotification,
+            showProgressCircle: true,
+            canTapToHide: false,
+            willDisappearWhenFalse: $viewModel.isLoading
+        )
+        .actionNotification(
+            text: "Saved changes.",
+            icon: "checkmark.circle.fill",
+            showingNotifiction: $viewModel.showActionNotification
+        )
     }
 }
 // MARK: - Subviews
