@@ -162,8 +162,16 @@ private extension EditHabitView {
     var durationInput: some View {
         VStack(alignment: .leading) {
             Text("How long does it take?")
-            Stepper("Hours: \(viewModel.durationHours)", value: $viewModel.durationHours, in: 0 ... 24)
-            Stepper("Minutes: \(viewModel.durationMinutes)", value: $viewModel.durationMinutes, in: 0 ... 60)
+            HStack {
+                Text("Hours")
+                Spacer()
+                CustomStepper(value: $viewModel.durationHours, minValue: 0, maxValue: 24)
+            }
+            HStack {
+                Text("Minutes")
+                Spacer()
+                CustomStepper(value: $viewModel.durationMinutes, minValue: 0, maxValue: 60)
+            }
         }
         .highlightCard()
     }
