@@ -136,7 +136,9 @@ extension AddViewViewModel {
     /// Adds the current activity to the list of activities.
     func addActivity() {
         if activityInput.isEmpty { return }
-        activities.append(Activity(name: activityInput))
+        if activities.count < Constants.maxActivitiesPerHabit {
+            activities.append(Activity(name: activityInput))
+        }
         activityInput = ""
     }
     

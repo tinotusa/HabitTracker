@@ -194,7 +194,7 @@ extension EditHabitViewViewModel {
     
     /// Adds the activity to the habits activity list.
     func addActivity() {
-        if activityInput.isEmpty { return }
+        if activityInput.isEmpty || activities.count >= Constants.maxActivitiesPerHabit { return }
         let activity = Activity(name: activityInput)
         habit.activities.append(activity)
         activityInput = ""

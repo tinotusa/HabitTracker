@@ -63,12 +63,11 @@ struct ActionNotificationBar: View {
                     // No need to time the removal
                     // when the binding is false the notification will be removed.
                 } else {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         withAnimation {
                             showingNotification = false
                         }
                     }
-                    print("here2")
                 }
             }
             Spacer()

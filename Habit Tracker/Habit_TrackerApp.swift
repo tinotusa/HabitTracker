@@ -129,6 +129,7 @@ class NotificationCenterDelegate: NSObject, UIApplicationDelegate, UNUserNotific
         [.banner, .sound, .list]
     }
     
+    @MainActor
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         let userInfo = response.notification.request.content.userInfo
         guard let userID = userInfo["USER_ID"] as? String else {

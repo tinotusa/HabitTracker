@@ -33,7 +33,7 @@ struct Constants {
     static let maxTextEditorHeight = 300.0
     static let entryDetailHeight = 600.0
     static let disabledButtonOpacity = 0.5
-    static let maxActivitiesPerHabit = 10
+    static let maxActivitiesPerHabit = 5
     static let maxIDLength = 128
     static let minRating = 1
     static let maxRating = 5
