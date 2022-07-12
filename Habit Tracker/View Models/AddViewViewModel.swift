@@ -88,8 +88,21 @@ class AddViewViewModel: ObservableObject {
     /// A boolean value indicating whether or not to show an action notification.
     @Published var showActionNotification = false
     
+    /// The text to be displayed when the question mark button is pressed.
+    enum HelpText: LocalizedStringKey {
+        case name = "The name of the habit"
+        case occurrenceTime = "The time you usually do this habit."
+        case ooccurrenceDays = "The days when you usually do this habit."
+        case duration = "The length of time it takes to do this habit."
+        case activities = "Things you want to replace this habit with."
+        case reason = "What is your reason for quitting this habit?"
+    }
+    
+    /// The prompt for the reason `TextField`.
     let reasonPrompt = LocalizedStringKey("Reason")
+    /// The prompt for the activity input `TextField`.
     let activityInputPrompt = LocalizedStringKey("Activity")
+    /// The prompt for the habit name `TextField`.
     let habitNamePrompt = LocalizedStringKey("Name")
 }
 

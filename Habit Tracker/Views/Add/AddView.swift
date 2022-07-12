@@ -102,39 +102,32 @@ private extension AddView {
     }
     
     var nameInput: some View {
-        VStack(alignment: .leading) {
-            Text("Habit name")
-            TextField("Name", text: $viewModel.habitName, prompt: Text(viewModel.habitNamePrompt))
-                .onChange(of: viewModel.habitName) { name in
-                    viewModel.checkNameLength(name: name)
-                }
-                .whiteBoxTextFieldStyle()
-        }
-        .highlightCard()
+        TextField("Name", text: $viewModel.habitName, prompt: Text(viewModel.habitNamePrompt))
+            .onChange(of: viewModel.habitName) { name in
+                viewModel.checkNameLength(name: name)
+            }
+            .whiteBoxTextFieldStyle()
+            .inputFieldHeader(title: "Habit name", helpText: .name)
+            .highlightCard()
     }
     
     @ViewBuilder
     var timeInput: some View {
-        VStack(alignment: .leading) {
-            Text("When do you usually do this?")
-            DatePicker("Time", selection: $viewModel.occurrenceTime, displayedComponents: [.hourAndMinute])
-                .labelsHidden()
-        }
+        DatePicker("Time", selection: $viewModel.occurrenceTime, displayedComponents: [.hourAndMinute])
+            .labelsHidden()
         .frame(maxWidth: .infinity, alignment: .leading)
+        .inputFieldHeader(title: "When do you usually do this?", helpText: .occurrenceTime)
         .highlightCard()
     }
     
     var dayInput: some View {
-        VStack(alignment: .leading) {
-            Text("What days do you usually this?")
-            DayPickerView(selection: $viewModel.occurrenceDays)
-        }
+        DayPickerView(selection: $viewModel.occurrenceDays)
+        .inputFieldHeader(title: "What days do you usually this?", helpText: .ooccurrenceDays)
         .highlightCard()
     }
     
     var durationInput: some View {
-        VStack(alignment: .leading) {
-            Text("How long does this usually last?")
+        Group {
             HStack {
                 Text("Hours:")
                 Spacer()
@@ -145,9 +138,8 @@ private extension AddView {
                 Spacer()
                 CustomStepper(value: $viewModel.durationMinutes, minValue: 0, maxValue: 60)
             }
-            
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .inputFieldHeader(title: "How long does this usually last?", helpText: .duration)
         .highlightCard()
     }
     
@@ -155,7 +147,6 @@ private extension AddView {
     var activityInput: some View {
         if viewModel.isQuittingHabit {
             VStack(alignment: .leading, spacing: Constants.habitRowVstackSpacing) {
-                Text("What do you want to do instead?")
                 TextField("Activity", text: $viewModel.activityInput, prompt: Text(viewModel.activityInputPrompt))
                     .submitLabel(.return)
                     .onSubmit {
@@ -183,25 +174,23 @@ private extension AddView {
                     viewModel.addActivity()
                 }
             }
+            .inputFieldHeader(title: "What do you want to do instead?", helpText: .activities)
             .highlightCard()
         }
     }
     
     var reasonInput: some View {
-        VStack(alignment: .leading) {
-            Text("Why do you want to do this?")
-            TextEditor(text: $viewModel.reason)
-                .frame(
-                    minHeight: Constants.minTextEditorHeight,
-                    maxHeight: Constants.maxTextEditorHeight
-                )
-                .whiteBoxTextFieldStyle()
-                .onChange(of: viewModel.reason) { reason in
-                    viewModel.checkReasonInputLength(reason: reason)
-                }
-            
-        }
-        .highlightCard()
+        TextEditor(text: $viewModel.reason)
+            .frame(
+                minHeight: Constants.minTextEditorHeight,
+                maxHeight: Constants.maxTextEditorHeight
+            )
+            .whiteBoxTextFieldStyle()
+            .onChange(of: viewModel.reason) { reason in
+                viewModel.checkReasonInputLength(reason: reason)
+            }
+            .inputFieldHeader(title: "Why do you want to do this?", helpText: .reason)
+            .highlightCard()
     }
     
     var createHabitButton: some View {

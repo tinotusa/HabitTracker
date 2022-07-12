@@ -71,6 +71,7 @@
 		21E9377B2850B40000D041F8 /* FirebaseUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9377A2850B40000D041F8 /* FirebaseUserTests.swift */; };
 		21E9377D2850B60600D041F8 /* DayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9377C2850B60600D041F8 /* DayTests.swift */; };
 		21E9377F2850BA1D00D041F8 /* HabitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9377E2850BA1D00D041F8 /* HabitTests.swift */; };
+		21EB0CAE287D0F8D009CDDC6 /* View+InputFieldHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB0CAD287D0F8C009CDDC6 /* View+InputFieldHeader.swift */; };
 		21EE77CD2859F46D007DB59D /* HighlightCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EE77CC2859F46D007DB59D /* HighlightCard.swift */; };
 		21EE77CF2859F4A2007DB59D /* BasicShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EE77CE2859F4A2007DB59D /* BasicShadow.swift */; };
 		21EE77D32859FCD6007DB59D /* ActivityDeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EE77D22859FCD6007DB59D /* ActivityDeleteButton.swift */; };
@@ -165,6 +166,7 @@
 		21E9377A2850B40000D041F8 /* FirebaseUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserTests.swift; sourceTree = "<group>"; };
 		21E9377C2850B60600D041F8 /* DayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTests.swift; sourceTree = "<group>"; };
 		21E9377E2850BA1D00D041F8 /* HabitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTests.swift; sourceTree = "<group>"; };
+		21EB0CAD287D0F8C009CDDC6 /* View+InputFieldHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+InputFieldHeader.swift"; sourceTree = "<group>"; };
 		21EE77CC2859F46D007DB59D /* HighlightCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightCard.swift; sourceTree = "<group>"; };
 		21EE77CE2859F4A2007DB59D /* BasicShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicShadow.swift; sourceTree = "<group>"; };
 		21EE77D22859FCD6007DB59D /* ActivityDeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDeleteButton.swift; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 				21EE866B28520A620028F726 /* InputField.swift */,
 				21EE866D2852162E0028F726 /* TextStyles.swift */,
 				21CCA1C8286F17AD0052D260 /* View+ActionNotification.swift */,
+				21EB0CAD287D0F8C009CDDC6 /* View+InputFieldHeader.swift */,
 			);
 			path = "View Modifiers";
 			sourceTree = "<group>";
@@ -636,6 +639,7 @@
 				21A91B8F286B05D4006FA005 /* CustomDivider.swift in Sources */,
 				21E516AF286C0D3C003832C3 /* InputFieldChecks.swift in Sources */,
 				21B6289E280AE09A00E3FC49 /* FirebaseUser.swift in Sources */,
+				21EB0CAE287D0F8D009CDDC6 /* View+InputFieldHeader.swift in Sources */,
 				21DA7F7F283B94AD00E43E4C /* Tab.swift in Sources */,
 				214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */,
 				2138AF2C28533D7E0055072E /* PasswordResetViewModel.swift in Sources */,
