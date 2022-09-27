@@ -326,6 +326,44 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		21A182F328E31292001DE8F0 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				21A182EE28E3089A001DE8F0 /* FirebaseAuth.xcframework */,
+				21A182E128E30830001DE8F0 /* FBLPromises.xcframework */,
+				21A182D728E30829001DE8F0 /* FirebaseAnalytics.xcframework */,
+				21A182DC28E3082D001DE8F0 /* FirebaseAnalyticsSwift.xcframework */,
+				21A182DF28E3082F001DE8F0 /* FirebaseCore.xcframework */,
+				21A182D628E30829001DE8F0 /* FirebaseCoreDiagnostics.xcframework */,
+				21A182DE28E3082E001DE8F0 /* FirebaseCoreInternal.xcframework */,
+				21A182D828E3082A001DE8F0 /* FirebaseInstallations.xcframework */,
+				21A182D928E3082C001DE8F0 /* GoogleAppMeasurement.xcframework */,
+				21A182E028E3082F001DE8F0 /* GoogleAppMeasurementIdentitySupport.xcframework */,
+				21A182DA28E3082C001DE8F0 /* GoogleDataTransport.xcframework */,
+				21A182DB28E3082D001DE8F0 /* GoogleUtilities.xcframework */,
+				21A182DD28E3082E001DE8F0 /* nanopb.xcframework */,
+				21A182D428E306E1001DE8F0 /* gRPCCertificates-Cpp.bundle */,
+				21A182CB28E30693001DE8F0 /* abseil.xcframework */,
+				21A182C928E3068F001DE8F0 /* BoringSSL-GRPC.xcframework */,
+				21A182C428E30684001DE8F0 /* FirebaseFirestore.xcframework */,
+				21A182C828E3068D001DE8F0 /* FirebaseFirestoreSwift.xcframework */,
+				21A182C628E30686001DE8F0 /* gRPC-C++.xcframework */,
+				21A182C728E3068C001DE8F0 /* gRPC-Core.xcframework */,
+				21A182C528E30684001DE8F0 /* leveldb-library.xcframework */,
+				21A182CA28E30690001DE8F0 /* Libuv-gRPC.xcframework */,
+				21A182C328E305B7001DE8F0 /* module.modulemap */,
+				21A182C228E3058C001DE8F0 /* Firebase.h */,
+				21A182B828E304CF001DE8F0 /* FirebaseAppCheckInterop.xcframework */,
+				21A182B428E304CD001DE8F0 /* FirebaseAuthInterop.xcframework */,
+				21A182B528E304CE001DE8F0 /* FirebaseCoreExtension.xcframework */,
+				21A182BA28E304D0001DE8F0 /* FirebaseFunctions.xcframework */,
+				21A182B628E304CE001DE8F0 /* FirebaseMessagingInterop.xcframework */,
+				21A182B928E304CF001DE8F0 /* FirebaseSharedSwift.xcframework */,
+				21A182B728E304CE001DE8F0 /* GTMSessionFetcher.xcframework */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
 		21AC33D3282148DB00A79F7B /* View Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,6 +402,7 @@
 		21B62852280AC4B800E3FC49 = {
 			isa = PBXGroup;
 			children = (
+				21A182F328E31292001DE8F0 /* Firebase */,
 				21B6285D280AC4B800E3FC49 /* Habit Tracker */,
 				21B6286E280AC4BB00E3FC49 /* Habit TrackerTests */,
 				21B62878280AC4BB00E3FC49 /* Habit TrackerUITests */,
