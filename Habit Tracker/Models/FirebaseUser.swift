@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
 struct FirebaseUser: Codable {
     var id: String
@@ -13,7 +14,7 @@ struct FirebaseUser: Codable {
     var lastName: String
     var email: String
     var birthday: Date
-    var dateCreated = Date()
+    @ServerTimestamp var dateCreated = Date()
     
     static var ExampleUser: FirebaseUser {
         FirebaseUser(

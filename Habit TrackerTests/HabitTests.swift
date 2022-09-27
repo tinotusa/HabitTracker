@@ -14,7 +14,6 @@ class HabitTests: XCTestCase {
         for _ in 0 ..< 30 {
             let id = UUID().uuidString
             let createdBy = UUID().uuidString
-            let createdAt = Date()
             let isQuittingHabit = Bool.random()
             let isStartingHabit = !isQuittingHabit
             let name = randomString()
@@ -24,13 +23,10 @@ class HabitTests: XCTestCase {
             let durationMinutes = Int.random(in: 0 ..< 60)
             let activities = [Activity]()
             let reason = randomString()
-            let localNotificationID = UUID().uuidString
-            let localReminderNotificationID = UUID().uuidString
             
             let habit = Habit(
                 id: id,
                 createdBy: createdBy,
-                createdAt: createdAt,
                 isQuittingHabit: isQuittingHabit,
                 isStartingHabit: isStartingHabit,
                 name: name,
@@ -39,14 +35,11 @@ class HabitTests: XCTestCase {
                 durationHours: durationHours,
                 durationMinutes: durationMinutes,
                 activities: activities,
-                reason: reason,
-                localNotificationID: localNotificationID,
-                localReminderNotificationID: localReminderNotificationID
+                reason: reason
             )
             
             XCTAssertEqual(habit.id, id)
             XCTAssertEqual(habit.createdBy, createdBy)
-            XCTAssertEqual(habit.createdAt, createdAt)
             XCTAssertEqual(habit.isQuittingHabit, isQuittingHabit)
             XCTAssertEqual(habit.isStartingHabit, isStartingHabit)
             XCTAssertEqual(habit.name, name)
@@ -56,8 +49,6 @@ class HabitTests: XCTestCase {
             XCTAssertEqual(habit.durationMinutes, durationMinutes)
             XCTAssertEqual(habit.activities, activities)
             XCTAssertEqual(habit.reason, reason)
-            XCTAssertEqual(habit.localNotificationID, localNotificationID)
-            XCTAssertEqual(habit.localReminderNotificationID, localReminderNotificationID)
         }
     }
 

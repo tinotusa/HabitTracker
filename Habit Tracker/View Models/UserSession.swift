@@ -5,9 +5,9 @@
 //  Created by Tino on 16/4/2022.
 //
 
-import Firebase
-import GoogleSignIn
-import FirebaseFirestoreSwift
+import FirebaseAuth
+//import GoogleSignIn
+import FirebaseFirestore
 import AuthenticationServices
 import SwiftUI
 
@@ -18,7 +18,7 @@ class UserSession: ObservableObject {
     }
     
     @Published var signInState: SignInState = .signedOut
-    @Published var currentUser: Firebase.User? = nil
+    @Published var currentUser: FirebaseAuth.User? = nil
     @Published var isLoading = false
     @Published var didError = false
     @Published var errorDetails: ErrorDetails? {
@@ -108,53 +108,53 @@ class UserSession: ObservableObject {
         }
     }
     
-    @MainActor
-    func googleLogin() async {
-        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-        let config = GIDConfiguration(clientID: clientID)
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-        guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
-        GIDSignIn.sharedInstance.signIn(with: config, presenting: rootViewController) { [unowned self] user, error in
-            if let error = error {
-                print("Error: \(error)")
-                errorDetails = ErrorDetails(name: "Google login error", message: "\(error.localizedDescription)")
-                return
-            }
-            guard
-                let auth = user?.authentication,
-                let idToken = auth.idToken
-            else {
-                errorDetails = ErrorDetails(name: "Authentication error", message: "Failed to get user ID token.")
-                return
-            }
-            let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: auth.accessToken)
-            Task {
-                let authResult = try await self.auth.signIn(with: credential)
-                let userRef = self.firestore.collection("users").document(authResult.user.uid)
-                
-                do {
-                    let snapshot = try await userRef.getDocument()
-                    let user = GIDSignIn.sharedInstance.currentUser
-                    if !snapshot.exists {
-                        let user = FirebaseUser(
-                            id: authResult.user.uid,
-                            firstName: user?.profile?.givenName ?? "Not set",
-                            lastName: user?.profile?.familyName ?? "Not set",
-                            email: user?.profile?.email ?? "Not set",
-                            birthday: Date()
-                        )
-                        try userRef.setData(from: user)
-                    }
-                } catch {
-                    print(error)
-                    errorDetails = ErrorDetails(name: "Google login error", message: "\(error.localizedDescription)")
-                    
-                }
-                self.currentUser = authResult.user
-                self.signInState = .signedIn
-            }
-        }
-    }
+//    @MainActor
+//    func googleLogin() async {
+//        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+//        let config = GIDConfiguration(clientID: clientID)
+//        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+//        guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
+//        GIDSignIn.sharedInstance.signIn(with: config, presenting: rootViewController) { [unowned self] user, error in
+//            if let error = error {
+//                print("Error: \(error)")
+//                errorDetails = ErrorDetails(name: "Google login error", message: "\(error.localizedDescription)")
+//                return
+//            }
+//            guard
+//                let auth = user?.authentication,
+//                let idToken = auth.idToken
+//            else {
+//                errorDetails = ErrorDetails(name: "Authentication error", message: "Failed to get user ID token.")
+//                return
+//            }
+//            let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: auth.accessToken)
+//            Task {
+//                let authResult = try await self.auth.signIn(with: credential)
+//                let userRef = self.firestore.collection("users").document(authResult.user.uid)
+//                
+//                do {
+//                    let snapshot = try await userRef.getDocument()
+//                    let user = GIDSignIn.sharedInstance.currentUser
+//                    if !snapshot.exists {
+//                        let user = FirebaseUser(
+//                            id: authResult.user.uid,
+//                            firstName: user?.profile?.givenName ?? "Not set",
+//                            lastName: user?.profile?.familyName ?? "Not set",
+//                            email: user?.profile?.email ?? "Not set",
+//                            birthday: Date()
+//                        )
+//                        try userRef.setData(from: user)
+//                    }
+//                } catch {
+//                    print(error)
+//                    errorDetails = ErrorDetails(name: "Google login error", message: "\(error.localizedDescription)")
+//                    
+//                }
+//                self.currentUser = authResult.user
+//                self.signInState = .signedIn
+//            }
+//        }
+//    }
     
     @MainActor
     func appleLogin(with auth: ASAuthorization) async {
@@ -220,7 +220,7 @@ class UserSession: ObservableObject {
             self.signInState = .signedOut
         }
         do {
-            GIDSignIn.sharedInstance.signOut()
+//            GIDSignIn.sharedInstance.signOut()
             try auth.signOut()
         } catch {
             print("Error in \(#function)\n\(error.localizedDescription)")

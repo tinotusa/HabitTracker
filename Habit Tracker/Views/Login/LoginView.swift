@@ -7,7 +7,7 @@
 
 import SwiftUI
 import AuthenticationServices
-import GoogleSignIn
+//import GoogleSignIn
 
 struct LoginView: View {
     @EnvironmentObject var userSession: UserSession
@@ -44,7 +44,7 @@ struct LoginView: View {
                         
                         signInWithAppleButton
                         
-                        signInWithGoogleButton
+//                        signInWithGoogleButton
                         
                         forgotLoginDetailsButton
                     }
@@ -202,15 +202,15 @@ private extension LoginView {
         .frame(height: 60)
     }
     
-    var signInWithGoogleButton: some View {
-        GoogleSignInButton()
-            .onTapGesture {
-                Task {
-                    await userSession.googleLogin()
-                }
-            }
-            .frame(height: 60)
-    }
+//    var signInWithGoogleButton: some View {
+//        GoogleSignInButton()
+//            .onTapGesture {
+//                Task {
+//                    await userSession.googleLogin()
+//                }
+//            }
+//            .frame(height: 60)
+//    }
 }
 
 // MARK: Functions
