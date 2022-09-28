@@ -133,6 +133,11 @@ extension EditHabitViewViewModel {
             .limit(to: 1)
         
         do {
+            // remove old ids
+            notificationManager.removePendingNotifications(withIdentifiers: habit.allNotificationIDs)
+            habit.localNotificationIDs = []
+            habit.localReminderNotificationIDs = []
+            
             let title = habit.habitState == .quitting ? "Quitting habit \(habit.name)." : "Starting habit: \(habit.name)."
             let body = habit.habitState == .quitting ? "Around this time you would do habit: \(habit.name)." : "Time to start habit: \(habit.name)."
             let reminderTitle = "Write journal entry for habit: \(habit.name)."
@@ -164,7 +169,7 @@ extension EditHabitViewViewModel {
                 )
                 dateComponents.hour = hour + habit.durationHours
                 dateComponents.minute = minute + habit.durationMinutes
-                var reminderID = UUID().uuidString
+                let reminderID = UUID().uuidString
                 habit.localReminderNotificationIDs.append(reminderID)
                 let reminderRequest = notificationManager.request(
                     identifier: reminderID,
