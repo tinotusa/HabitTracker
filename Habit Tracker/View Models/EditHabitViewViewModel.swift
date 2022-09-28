@@ -8,9 +8,9 @@
 import FirebaseFirestore
 import FirebaseFunctions
 import SwiftUI
+import os
 
-/// ViewModel for EditHabitView
-@MainActor
+/// The  view model for EditHabitView.
 final class EditHabitViewViewModel: ObservableObject {
     /// A boolean value indicating whether the edit operation had an error.
     @Published var didError = false
@@ -43,6 +43,7 @@ final class EditHabitViewViewModel: ObservableObject {
     @Published var showActionNotification = false
     
     private lazy var firestore = Firestore.firestore()
+    private var logger = Logger(subsystem: "com.tinotusa.HabitTracker", category: "EditHabitViewViewModel")
     
     init(habit: Habit) {
         self.habit = habit
@@ -106,10 +107,12 @@ extension EditHabitViewViewModel {
 // MARK: - Functions
 extension EditHabitViewViewModel {
     /// Saves the edited habit.
-    ///
+    /// - parameter notificationManager: The manager for the apps notifications.
     /// - returns: `True` if the save was successful, `False` if something went wrong.
+    @MainActor
     @discardableResult
-    func saveHabit() async -> Bool {
+    func saveHabit(notificationManager: NotificationManager) async -> Bool {
+        logger.debug("Starting to save habit.")
         withAnimation(.spring()) {
             isLoading = true
         }
@@ -119,7 +122,8 @@ extension EditHabitViewViewModel {
             }
         }
         guard let user = userSession.currentUser else {
-            preconditionFailure("User is not logged in.")
+            logger.error("Error failed to save habit. User is not logged in.")
+            return false
         }
         
         let query = firestore
@@ -129,13 +133,6 @@ extension EditHabitViewViewModel {
             .limit(to: 1)
         
         do {
-            let snapshot = try await query.getDocuments()
-            if snapshot.documents.isEmpty {
-                preconditionFailure("No habit document with id: \(habit.id).")
-            }
-            let docRef = snapshot.documents.first!.reference
-            try docRef.setData(from: habit, merge: true)
-            
             let title = habit.habitState == .quitting ? "Quitting habit \(habit.name)." : "Starting habit: \(habit.name)."
             let body = habit.habitState == .quitting ? "Around this time you would do habit: \(habit.name)." : "Time to start habit: \(habit.name)."
             let reminderTitle = "Write journal entry for habit: \(habit.name)."
@@ -145,18 +142,21 @@ extension EditHabitViewViewModel {
                 var dateComponents = DateComponents()
                 let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: habit.occurrenceTime)
                 guard let hour = timeComponents.hour else {
-                    preconditionFailure("Failed to get time componenet from habit occurrenceTime.")
+                    logger.error("Error failed to get time componenet from habit occurrenceTime.")
+                    return false
                 }
                 guard let minute = timeComponents.minute else {
-                    preconditionFailure("Failed to get time componenet from habit occurrenceTime.")
+                    logger.error("Error failed to get time componenet from habit occurrenceTime.")
+                    return false
                 }
                 
                 dateComponents.weekday = day.rawValue + 1
                 dateComponents.hour = hour
                 dateComponents.minute = minute
-                
-                let request = NotificationManager.request(
-                    identifier: habit.localNotificationID,
+                let id = UUID().uuidString
+                habit.localNotificationIDs.append(id)
+                let request = notificationManager.request(
+                    identifier: id,
                     title: title,
                     body: body,
                     dateComponents: dateComponents,
@@ -164,26 +164,37 @@ extension EditHabitViewViewModel {
                 )
                 dateComponents.hour = hour + habit.durationHours
                 dateComponents.minute = minute + habit.durationMinutes
-                
-                let reminderRequest = NotificationManager.request(
-                    identifier: habit.localReminderNotificationID,
+                var reminderID = UUID().uuidString
+                habit.localReminderNotificationIDs.append(reminderID)
+                let reminderRequest = notificationManager.request(
+                    identifier: reminderID,
                     title: reminderTitle,
                     body: reminderBody,
                     dateComponents: dateComponents,
                     repeats: true,
-                    categoryIdentifier: "JOURNAL_ENTRY",
+                    categoryIdentifier: NotificationActionIdentifiers.journalEntry,
                     userInfo: [
                         "USER_ID": user.uid,
                         "HABIT_ID": habit.id
                     ]
                 )
                 
-                let mainNotification = await NotificationManager.add(request: request)
-                let reminderNotification = await NotificationManager.add(request: reminderRequest)
+                let mainNotification = await notificationManager.add(request: request)
+                let reminderNotification = await notificationManager.add(request: reminderRequest)
                 if !(mainNotification && reminderNotification) {
                     errorDetails = ErrorDetails(name: "Notification Errror.", message: "Failed to set the notification for this habit.")
                 }
+                
+                let snapshot = try await query.getDocuments()
+                if snapshot.documents.isEmpty {
+                    logger.error("Error. No habit document with id: \(self.habit.id).")
+                    return false
+                }
+                let docRef = snapshot.documents.first!.reference
+                try docRef.setData(from: habit, merge: true)
+                
                 hasSavedSuccessfully = true
+                logger.debug("Successfully saved habit with id: \(self.habit.id)")
                 withAnimation(.spring()) {
                     showActionNotification = true
                 }
@@ -195,7 +206,7 @@ extension EditHabitViewViewModel {
                     message: "Failed to save changes. Please try again."
                 )
             }
-            print("Error in \(#function)\n\(error)")
+            logger.error("Error failed to save habit. \(error)")
             return false
         }
         return true

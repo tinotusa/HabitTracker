@@ -42,11 +42,11 @@ struct Habit: Codable, Identifiable, Equatable {
     /// The reason for quitting or starting the habit being added.
     var reason: String
     
-    /// The local notification id.
-    var localNotificationID: String
+    /// The local notification ids.
+    var localNotificationIDs: [String]
     
-    /// The reminder local notification id.
-    var localReminderNotificationID: String
+    /// The reminder local notification ids.
+    var localReminderNotificationIDs: [String]
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -106,22 +106,9 @@ struct Habit: Codable, Identifiable, Equatable {
                 debugDescription: "Invalid reason length: Min(1) max:(\(InputFieldCharLimit.reasonCharLimit))"
             )
         }
-        localNotificationID = try container.decode(String.self, forKey: .localNotificationID)
-        guard !localNotificationID.isEmpty && localNotificationID.count <= Constants.maxIDLength else {
-            throw DecodingError.dataCorruptedError(
-                forKey: .localNotificationID,
-                in: container,
-                debugDescription: "No local notification id or invalid id."
-            )
-        }
-        localReminderNotificationID = try container.decode(String.self, forKey: .localReminderNotificationID)
-        guard !localNotificationID.isEmpty && localReminderNotificationID.count <= Constants.maxIDLength else {
-            throw DecodingError.dataCorruptedError(
-                forKey: .localReminderNotificationID,
-                in: container,
-                debugDescription: "No local reminder notificatoin id or invalid id."
-            )
-        }
+        localNotificationIDs = try container.decode([String].self, forKey: .localNotificationIDs)
+       
+        localReminderNotificationIDs = try container.decode([String].self, forKey: .localReminderNotificationIDs)
     }
 }
 
@@ -149,8 +136,14 @@ extension Habit {
         self.durationMinutes = durationMinutes
         self.activities = activities
         self.reason = reason
-        localNotificationID = UUID().uuidString
-        localReminderNotificationID = UUID().uuidString
+        localNotificationIDs = []
+        localReminderNotificationIDs = []
+    }
+    /// Both the notification and reminder notification ids.
+    var allNotificationIDs: [String] {
+        var ids = localNotificationIDs
+        ids.append(contentsOf: localReminderNotificationIDs)
+        return ids
     }
     
     static var example: Habit {

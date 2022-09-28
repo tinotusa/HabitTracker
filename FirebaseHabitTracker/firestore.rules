@@ -21,8 +21,8 @@ service cloud.firestore {
         docData.durationMinutes is int &&
         docData.activities is list &&
         docData.reason is string &&
-        docData.localNotificationID is string &&
-        docData.localReminderNotificationID is string
+        docData.localNotificationIDs is list &&
+        docData.localReminderNotificationIDs is list
     }
 
     // update checks
@@ -47,16 +47,15 @@ service cloud.firestore {
         "id",
         "name",
         "createdAt",
-        "isQuittingHabit",
-        "isStartingHabit",
+        "habitState",
         "occurrenceTime",
         "occurrenceDays",
         "durationHours",
         "durationMinutes",
         "activities",
         "reason",
-        "localNotificationID",
-        "localReminderNotificationID"
+        "localNotificationIDs",
+        "localReminderNotificationIDs"
       ])
     }
 

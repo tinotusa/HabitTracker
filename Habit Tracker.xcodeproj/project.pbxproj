@@ -105,6 +105,8 @@
 		21F2F8D42854864A00F517F0 /* Color+CustomColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F2F8D32854864A00F517F0 /* Color+CustomColours.swift */; };
 		21F2F8D828548E4700F517F0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F2F8D728548E4700F517F0 /* Constants.swift */; };
 		21F2F8DA2854A91000F517F0 /* RowLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F2F8D92854A91000F517F0 /* RowLoadingView.swift */; };
+		21F8BF7B28E4402800437679 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F8BF7A28E4402800437679 /* NotificationManager.swift */; };
+		21F8BF7D28E4406200437679 /* NotificationCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F8BF7C28E4406200437679 /* NotificationCenterDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -233,6 +235,8 @@
 		21F2F8D32854864A00F517F0 /* Color+CustomColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+CustomColours.swift"; sourceTree = "<group>"; };
 		21F2F8D728548E4700F517F0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		21F2F8D92854A91000F517F0 /* RowLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowLoadingView.swift; sourceTree = "<group>"; };
+		21F8BF7A28E4402800437679 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		21F8BF7C28E4406200437679 /* NotificationCenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -426,6 +430,7 @@
 		21B6285D280AC4B800E3FC49 /* Habit Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				21F8BF7928E4401A00437679 /* Managers */,
 				21EE866A28520A450028F726 /* View Modifiers */,
 				21E937722850AEB300D041F8 /* Services */,
 				2152496D28450EE500FDA66E /* Extensions */,
@@ -568,6 +573,15 @@
 				21EB0CAD287D0F8C009CDDC6 /* View+InputFieldHeader.swift */,
 			);
 			path = "View Modifiers";
+			sourceTree = "<group>";
+		};
+		21F8BF7928E4401A00437679 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				21F8BF7A28E4402800437679 /* NotificationManager.swift */,
+				21F8BF7C28E4406200437679 /* NotificationCenterDelegate.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -758,8 +772,10 @@
 				214F41C7282131EA00A9D696 /* GoogleSignInButton.swift in Sources */,
 				2138AF2C28533D7E0055072E /* PasswordResetViewModel.swift in Sources */,
 				21DDF03D283122AD00FE8DAC /* ErrorDetails.swift in Sources */,
+				21F8BF7D28E4406200437679 /* NotificationCenterDelegate.swift in Sources */,
 				21EE77CF2859F4A2007DB59D /* BasicShadow.swift in Sources */,
 				215249622844F53F00FDA66E /* JournalEntryView.swift in Sources */,
+				21F8BF7B28E4402800437679 /* NotificationManager.swift in Sources */,
 				21EE77D32859FCD6007DB59D /* ActivityDeleteButton.swift in Sources */,
 				21EE77D52859FCFA007DB59D /* WhiteBoxTextFieldStyle.swift in Sources */,
 				213C5CC42833A56700ACB95F /* SignUpViewModel.swift in Sources */,

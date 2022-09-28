@@ -11,6 +11,7 @@ struct HabitCalendar: View {
     @State private var habit: Habit
     
     @EnvironmentObject var userSession: UserSession
+    @EnvironmentObject private var notificationManager: NotificationManager
     @State private var date = Date()
     @State private var selectedDate = Date()
     @State private var showAddJournalEntryView = false
@@ -113,7 +114,7 @@ struct HabitCalendar: View {
         ) {
             Button(role: .destructive) {
                 Task {
-                    await viewModel.delete(habit: habit, userSession: userSession)
+                    await viewModel.delete(habit: habit, userSession: userSession, notificationManager: notificationManager)
                     dismiss()
                 }
             } label: {
@@ -171,6 +172,7 @@ struct HabitCalendar_Previews: PreviewProvider {
         NavigationView {
             HabitCalendar(habit: Habit.example)
                 .environmentObject(UserSession())
+                .environmentObject(NotificationManager())
         }
     }
 }

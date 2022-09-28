@@ -170,7 +170,7 @@ extension HabitCalendarViewModel {
     /// Deletes a habit from the database.
     /// - parameter habit: The habit to delete.
     /// - parameter userSession: The current user session.
-    func delete(habit: Habit, userSession: UserSession) async {
+    func delete(habit: Habit, userSession: UserSession, notificationManager: NotificationManager) async {
         withAnimation(.spring()) {
             isLoading = true
         }
@@ -189,7 +189,10 @@ extension HabitCalendarViewModel {
                 "habitPath": "habits/\(user.uid)/habits/\(habit.id)",
                 "habitID": habit.id
             ])
-            NotificationManager.removePendingNotifications(withIdentifiers: [habit.localNotificationID, habit.localReminderNotificationID])
+            var ids = habit.localNotificationIDs
+            ids.append(contentsOf: habit.localReminderNotificationIDs)
+            notificationManager.removePendingNotifications(withIdentifiers: ids)
+            
             withAnimation(.spring()) {
                 showingActionNotification = true
             }

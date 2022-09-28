@@ -170,7 +170,7 @@ extension HomeViewViewModel {
     
     /// Deletes the user from the database.
     /// - parameter userSession: The current user that is logged in.
-    func deleteUser(userSession: UserSession) async {
+    func deleteUser(userSession: UserSession, notificationManager: NotificationManager) async {
         guard let user = userSession.currentUser else {
             preconditionFailure("User is not logged in")
         }
@@ -193,7 +193,7 @@ extension HomeViewViewModel {
                     notificationIDS.append(id2)
                 }
             }
-            NotificationManager.removePendingNotifications(withIdentifiers: notificationIDS)
+            notificationManager.removePendingNotifications(withIdentifiers: notificationIDS)
             
             // Delete documents associated with the user and sign out.
             let _ = try await functions.httpsCallable("deleteUser").call(["userID": user.uid])

@@ -12,12 +12,13 @@ struct EditHabitView: View {
     
     @State private var userHasMadeChanges = false
     
-    @StateObject var viewModel: EditHabitViewViewModel
+    @StateObject private var viewModel: EditHabitViewViewModel
     
-    @EnvironmentObject var userSession: UserSession
-    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject private var userSession: UserSession
+    @EnvironmentObject private var notificationManager: NotificationManager
+    @Environment(\.dismiss) private var dismiss
     
-    
+    // TODO: remove this
     init(habit: Habit) {
         originalHabit = habit
         _viewModel = StateObject(wrappedValue: EditHabitViewViewModel(habit: habit))
@@ -92,6 +93,7 @@ struct EditHabitView: View {
         )
     }
 }
+
 // MARK: - Subviews
 private extension EditHabitView {
     var header: some View {
@@ -230,7 +232,7 @@ private extension EditHabitView {
 private extension EditHabitView {
     func saveChanges() {
         Task {
-            await viewModel.saveHabit()
+            await viewModel.saveHabit(notificationManager: notificationManager)
         }
     }
 }
@@ -240,5 +242,6 @@ struct EditHabitView_Previews: PreviewProvider {
     static var previews: some View {
         EditHabitView(habit: Habit.example)
             .environmentObject(UserSession())
+            .environmentObject(NotificationManager())
     }
 }

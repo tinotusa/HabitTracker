@@ -83,7 +83,6 @@ struct AddHabitView: View {
         } message: { details in
             Text(details.message)
         }
-        
     }
 }
 
@@ -170,7 +169,7 @@ private extension AddHabitView {
                         Spacer()
                         ActivityDeleteButton {
                             withAnimation {
-                                viewModel.removeActivity(activity: activity)
+                                viewModel.removeActivity(activity)
                             }
                         }
                     }

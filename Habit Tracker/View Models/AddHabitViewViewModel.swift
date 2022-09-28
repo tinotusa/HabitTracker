@@ -9,6 +9,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import UserNotifications
 import SwiftUI
+import os
 
 struct PermissionDetails {
     let title: LocalizedStringKey
@@ -31,7 +32,7 @@ enum HabitState: CaseIterable, Codable, Identifiable {
 
 /// Add view view model.
 @MainActor
-class AddHabitViewViewModel: ObservableObject {
+final class AddHabitViewViewModel: ObservableObject {
     /// A boolean value indicating whether a habit is being quit (stopped).
     @Published var habitState = HabitState.quitting
     
@@ -106,6 +107,8 @@ class AddHabitViewViewModel: ObservableObject {
     let activityInputPrompt = LocalizedStringKey("Activity")
     /// The prompt for the habit name `TextField`.
     let habitNamePrompt = LocalizedStringKey("Name")
+    
+    private var logger = Logger(subsystem: "com.tinotusa.HabitTracker", category: "AddHabitViewViewModel")
 }
 
 // MARK: Computed Properties
@@ -162,10 +165,6 @@ extension AddHabitViewViewModel: InputFieldChecks {
 
 // MARK: Functions
 extension AddHabitViewViewModel {
-    func loadData() {
-        
-    }
-    
     /// Adds the current activity to the list of activities.
     func addActivity() {
         if activityInput.isEmpty { return }
@@ -178,6 +177,7 @@ extension AddHabitViewViewModel {
     /// Adds the habit to the firestore database.
     @MainActor
     func addHabit(session: UserSession) async {
+        logger.debug("Starting to add habit.")
         withAnimation(.spring()) {
             isLoading = true
         }
@@ -186,19 +186,19 @@ extension AddHabitViewViewModel {
                 isLoading = false
             }
         }
-        precondition(session.currentUser != nil, "User is not logged in")
         assert(allFieldsFilled, "All fields not filled in")
         guard let user = session.currentUser else {
-            preconditionFailure("User is not logged in.")
+            logger.error("User is not logged in.")
+            return
         }
-
+        
         let habitRef = firestore
             .collection("habits")
             .document(user.uid)
             .collection("habits")
             .document()
-
-        let habit = Habit(
+        
+        var habit = Habit(
             id: habitRef.documentID,
             createdBy: user.uid,
             habitState: habitState,
@@ -210,84 +210,104 @@ extension AddHabitViewViewModel {
             activities: activities,
             reason: reason
         )
+        
+        let notificationManager = NotificationManager()
+        
+        await notificationManager.requestAuthorization(options: [.alert, .badge, .sound])
+        
+        if await !notificationManager.hasPermissions() {
+            permissionsDetails = PermissionDetails(
+                title: "Allow reminders for habits",
+                message: "Please allow the notifications for this app, so that it can remind you when you need to complete a certain habit"
+            )
+            logger.debug("Asking for permissions.")
+        }
+        
+        let title = habit.habitState == .quitting ? "Quitting \(habit.name)" : "Starting \(habit.name)"
+        let body = habit.habitState == .quitting ?
+        "You are quitting \(habit.name), try to do this instead: \(habit.activities.randomElement()!.name)" :
+        "You are starting \(habit.name). Make sure to do it to help the habit stick"
+        
+        let reminderTitle = "Write journal entry"
+        let reminderBody = "You should have finished \(habit.name), how do you feel?"
+        let reminderUserInfo = [
+            "USER_ID": user.uid,
+            "HABIT_ID": habit.id
+        ]
+        let reminderCategoryIdentifier = NotificationActionIdentifiers.journalEntry
+        
+        for day in habit.occurrenceDays {
+            var dateComponents = DateComponents()
+            dateComponents.weekday = day.rawValue + 1
+            let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: habit.occurrenceTime)
+            dateComponents.hour = timeComponents.hour ?? 0
+            dateComponents.minute = (timeComponents.minute ?? 0)
+            
+            logger.debug("The components are: \(dateComponents)")
+            let id = UUID().uuidString
+            habit.localNotificationIDs.append(id)
+            let request = notificationManager.request(
+                identifier: id,
+                title: title,
+                body: body,
+                dateComponents: dateComponents,
+                repeats: true
+            )
+            
+            let successfulNotificationAdd = await notificationManager.add(request: request)
+            
+            var reminderDateComponents = DateComponents()
+            reminderDateComponents.weekday = day.rawValue + 1
+            reminderDateComponents.hour = timeComponents.hour ?? 0 + habit.durationHours
+            reminderDateComponents.minute = (timeComponents.minute ?? 0) + habit.durationMinutes
+            
+            let reminderID = UUID().uuidString
+            habit.localReminderNotificationIDs.append(reminderID)
+            let reminderRequest = notificationManager.request(
+                identifier: reminderID,
+                title: reminderTitle,
+                body: reminderBody,
+                dateComponents: reminderDateComponents,
+                repeats: true,
+                categoryIdentifier: reminderCategoryIdentifier,
+                userInfo: reminderUserInfo
+            )
+            
+            let successfulReminderNotificationAdd = await notificationManager.add(request: reminderRequest)
+            if !(successfulNotificationAdd && successfulReminderNotificationAdd) {
+                errorDetails = ErrorDetails(name: "Notification error", message: "Failed to add notifications for this habit.")
+                logger.error("Failed to add notifications for day: \(day.rawValue).")
+                return
+            }
+            logger.debug("Successfully added notifications for day: \(day.rawValue).")
+        }
+        
+        logger.debug("Successfully added notifications for habit with id: \(habit.id).")
+        withAnimation(.spring()) {
+            showActionNotification = true
+        }
+        clearInputFields()
+        
         do {
             try habitRef.setData(from: habit)
-            let notificationManager = NotificationManager()
-            
-            await notificationManager.requestAuthorization(options: [.alert, .badge, .sound])
-            
-            if await !notificationManager.hasPermissions() {
-                permissionsDetails = PermissionDetails(
-                    title: "Allow reminders for habits",
-                    message: "Please allow the notifications for this app, so that it can remind you when you need to complete a certain habit"
-                )
-            }
-            
-            let title = habit.habitState == .quitting ? "Quitting \(habit.name)" : "Starting \(habit.name)"
-            let body = habit.habitState == .quitting ?
-            "You are quitting \(habit.name), try to do this instead: \(habit.activities.randomElement()!.name)" :
-            "You are starting \(habit.name). Make sure to do it to help the habit stick"
-            
-            let reminderTitle = "Write journal entry"
-            let reminderBody = "You should have finished \(habit.name), how do you feel?"
-            let reminderUserInfo = [
-                "USER_ID": user.uid,
-                "HABIT_ID": habit.id
-            ]
-            let reminderCategoryIdentifier = "JOURNAL_ENTRY"
-            
-            for day in habit.occurrenceDays {
-                var dateComponents = DateComponents()
-                dateComponents.weekday = day.rawValue + 1
-                let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: habit.occurrenceTime)
-                dateComponents.hour = timeComponents.hour ?? 0
-                dateComponents.minute = (timeComponents.minute ?? 0)
-                
-                let request = NotificationManager.request(
-                    identifier: habit.localNotificationID,
-                    title: title,
-                    body: body,
-                    dateComponents: dateComponents,
-                    repeats: true
-                )
-                
-                let successfulNotificationAdd = await NotificationManager.add(request: request)
-    
-                var reminderDateComponents = DateComponents()
-                reminderDateComponents.weekday = day.rawValue + 1
-                reminderDateComponents.hour = timeComponents.hour ?? 0 + habit.durationHours
-                reminderDateComponents.minute = (timeComponents.minute ?? 0) + habit.durationMinutes
-                
-                let reminderRequest = NotificationManager.request(
-                    identifier: habit.localReminderNotificationID,
-                    title: reminderTitle,
-                    body: reminderBody,
-                    dateComponents: reminderDateComponents,
-                    repeats: true,
-                    categoryIdentifier: reminderCategoryIdentifier,
-                    userInfo: reminderUserInfo
-                )
-
-                let successfulReminderNotificationAdd = await NotificationManager.add(request: reminderRequest)
-                if !(successfulNotificationAdd && successfulReminderNotificationAdd) {
-                    errorDetails = ErrorDetails(name: "Notification error", message: "Failed to add notifications for this habit.")
-                }
-            }
-            withAnimation(.spring()) {
-                showActionNotification = true
-            }
-            clearInputFields()
+            logger.debug("Successfully added habit with id: \(habit.id)")
         } catch {
-            print("Error in \(#function): \(error)")
+            // Remove the ids that were just added above if setting the firebase habit failed.
+            notificationManager.removePendingNotifications(withIdentifiers: habit.allNotificationIDs)
+            logger.error("Error failed to add habit. \(error)")
         }
     }
     
     /// Removes the activity from the list.
-    func removeActivity(activity: Activity) {
+    /// - parameter activity: The activity to remove
+    func removeActivity(_ activity: Activity) {
+        logger.debug("Removing activity with id: \(activity.id)")
         guard let index = activities.firstIndex(of: activity) else {
-            preconditionFailure("Activity: \(activity) isn't in the array of activities.")
+            logger.error("Error. Failed to remov activity with id: \(activity.id). Activity couldn't be found in array of activiteis.")
+            return
         }
         activities.remove(at: index)
+        logger.debug("Successfully removed activity with id: \(activity.id).")
     }
     
     /// Clears all of the string inputs for the add view.

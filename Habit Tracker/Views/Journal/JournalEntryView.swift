@@ -43,6 +43,8 @@ struct JournalEntryView: View {
                     LongButton(text: "Add entry", isDisabled: !viewModel.allFieldsFilled) {
                         viewModel.addEntry(userSession: userSession, habit: habit)
                     }
+                    // TODO: change me
+                    Spacer(minLength: 60)
                 }
             }
         }
@@ -61,6 +63,7 @@ struct JournalEntryView: View {
             showingNotifiction: $viewModel.showActionNotification,
             canTapToHide: true
         )
+        .toolbar(.hidden)
     }
 }
 
