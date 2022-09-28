@@ -1,11 +1,10 @@
 //
-//  AddViewViewModel.swift
+//  AddHabitViewViewModel.swift
 //  Habit Tracker
 //
 //  Created by Tino on 24/5/2022.
 //
 
-import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import UserNotifications
@@ -18,7 +17,7 @@ struct PermissionDetails {
 
 /// Add view view model.
 @MainActor
-class AddViewViewModel: ObservableObject {
+class AddHabitViewViewModel: ObservableObject {
     /// A boolean value indicating whether a habit is being quit (stopped).
     @Published var isQuittingHabit = true {
         didSet {
@@ -107,7 +106,22 @@ class AddViewViewModel: ObservableObject {
 }
 
 // MARK: Computed Properties
-extension AddViewViewModel {
+extension AddHabitViewViewModel {
+    var timeInputLabel: LocalizedStringKey {
+        if isQuittingHabit { return "When do you usually do this?" }
+        return "When do you want to do this?"
+    }
+    
+    var dayInputlabel: LocalizedStringKey {
+        if isQuittingHabit { return "What days do you usually this?" }
+        return "On what days to you want to do this?"
+    }
+    
+    var durationInputLabel: LocalizedStringKey {
+        if isQuittingHabit { return "How long does this usually last?" }
+        return "How long do you want to do this for?"
+    }
+    
     /// The total duration the habit takes to complete in seconds.
     var totalDurationSeconds: Int {
         durationHours * 60 + durationMinutes * 60
@@ -130,7 +144,7 @@ extension AddViewViewModel {
 }
 
 // MARK: - InputFieldChecks conformance
-extension AddViewViewModel: InputFieldChecks {
+extension AddHabitViewViewModel: InputFieldChecks {
     func checkNameLength(name: String) {
         habitName = Constants.checkNameLength(name: name)
     }
@@ -145,7 +159,11 @@ extension AddViewViewModel: InputFieldChecks {
 }
 
 // MARK: Functions
-extension AddViewViewModel {
+extension AddHabitViewViewModel {
+    func loadData() {
+        
+    }
+    
     /// Adds the current activity to the list of activities.
     func addActivity() {
         if activityInput.isEmpty { return }

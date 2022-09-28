@@ -79,14 +79,14 @@
 		21CCA1C9286F17AD0052D260 /* View+ActionNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CCA1C8286F17AD0052D260 /* View+ActionNotification.swift */; };
 		21DA7F76283B592700E43E4C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F75283B592700E43E4C /* HomeView.swift */; };
 		21DA7F78283B90B800E43E4C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F77283B90B800E43E4C /* MainView.swift */; };
-		21DA7F7B283B92EF00E43E4C /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F7A283B92EF00E43E4C /* AddView.swift */; };
+		21DA7F7B283B92EF00E43E4C /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F7A283B92EF00E43E4C /* AddHabitView.swift */; };
 		21DA7F7D283B942200E43E4C /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F7C283B942200E43E4C /* CustomTabBar.swift */; };
 		21DA7F7F283B94AD00E43E4C /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA7F7E283B94AD00E43E4C /* Tab.swift */; };
 		21DDF03D283122AD00FE8DAC /* ErrorDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */; };
 		21E516AF286C0D3C003832C3 /* InputFieldChecks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E516AE286C0D3B003832C3 /* InputFieldChecks.swift */; };
 		21E516B1286C15A1003832C3 /* NavigationArrowIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E516B0286C15A1003832C3 /* NavigationArrowIndicator.swift */; };
 		21E516B3286C3CDA003832C3 /* ActionNotificationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E516B2286C3CDA003832C3 /* ActionNotificationBar.swift */; };
-		21E61908283D0287007F42DC /* AddViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E61907283D0287007F42DC /* AddViewViewModel.swift */; };
+		21E61908283D0287007F42DC /* AddHabitViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E61907283D0287007F42DC /* AddHabitViewViewModel.swift */; };
 		21E6190A283D089B007F42DC /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E61909283D089B007F42DC /* Day.swift */; };
 		21E6190C283D0A8D007F42DC /* DayPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6190B283D0A8D007F42DC /* DayPickerView.swift */; };
 		21E937712850ADEC00D041F8 /* MockCalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E937702850ADEC00D041F8 /* MockCalendarService.swift */; };
@@ -207,14 +207,14 @@
 		21DA7F72283B526900E43E4C /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		21DA7F75283B592700E43E4C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		21DA7F77283B90B800E43E4C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		21DA7F7A283B92EF00E43E4C /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
+		21DA7F7A283B92EF00E43E4C /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
 		21DA7F7C283B942200E43E4C /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		21DA7F7E283B94AD00E43E4C /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		21DDF03C283122AD00FE8DAC /* ErrorDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDetails.swift; sourceTree = "<group>"; };
 		21E516AE286C0D3B003832C3 /* InputFieldChecks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldChecks.swift; sourceTree = "<group>"; };
 		21E516B0286C15A1003832C3 /* NavigationArrowIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationArrowIndicator.swift; sourceTree = "<group>"; };
 		21E516B2286C3CDA003832C3 /* ActionNotificationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionNotificationBar.swift; sourceTree = "<group>"; };
-		21E61907283D0287007F42DC /* AddViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewViewModel.swift; sourceTree = "<group>"; };
+		21E61907283D0287007F42DC /* AddHabitViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitViewViewModel.swift; sourceTree = "<group>"; };
 		21E61909283D089B007F42DC /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		21E6190B283D0A8D007F42DC /* DayPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayPickerView.swift; path = "Habit Tracker/Models/DayPickerView.swift"; sourceTree = SOURCE_ROOT; };
 		21E937702850ADEC00D041F8 /* MockCalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCalendarService.swift; sourceTree = "<group>"; };
@@ -373,7 +373,7 @@
 				21B62899280ADA7F00E3FC49 /* UserSession.swift */,
 				21AC33D52821494800A79F7B /* LoginViewModel.swift */,
 				213C5CC32833A56700ACB95F /* SignUpViewModel.swift */,
-				21E61907283D0287007F42DC /* AddViewViewModel.swift */,
+				21E61907283D0287007F42DC /* AddHabitViewViewModel.swift */,
 				215249672845029600FDA66E /* JournalEntryViewViewModel.swift */,
 				215249692845042200FDA66E /* HabitCalendarViewModel.swift */,
 				211040732845ED7B00DC1D17 /* HomeViewViewModel.swift */,
@@ -404,12 +404,12 @@
 		21B62852280AC4B800E3FC49 = {
 			isa = PBXGroup;
 			children = (
-				21A182F328E31292001DE8F0 /* Firebase */,
 				21B6285D280AC4B800E3FC49 /* Habit Tracker */,
 				21B6286E280AC4BB00E3FC49 /* Habit TrackerTests */,
 				21B62878280AC4BB00E3FC49 /* Habit TrackerUITests */,
 				21B6285C280AC4B800E3FC49 /* Products */,
 				21DA7F71283B526900E43E4C /* Frameworks */,
+				21A182F328E31292001DE8F0 /* Firebase */,
 			);
 			sourceTree = "<group>";
 		};
@@ -526,7 +526,7 @@
 		21DA7F79283B92E300E43E4C /* Add */ = {
 			isa = PBXGroup;
 			children = (
-				21DA7F7A283B92EF00E43E4C /* AddView.swift */,
+				21DA7F7A283B92EF00E43E4C /* AddHabitView.swift */,
 				21EE77D22859FCD6007DB59D /* ActivityDeleteButton.swift */,
 			);
 			path = Add;
@@ -707,8 +707,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				215249682845029600FDA66E /* JournalEntryViewViewModel.swift in Sources */,
-				21DA7F7B283B92EF00E43E4C /* AddView.swift in Sources */,
-				21E61908283D0287007F42DC /* AddViewViewModel.swift in Sources */,
+				21DA7F7B283B92EF00E43E4C /* AddHabitView.swift in Sources */,
+				21E61908283D0287007F42DC /* AddHabitViewViewModel.swift in Sources */,
 				21BD7CAF284B50D100A9A8B2 /* EditHabitView.swift in Sources */,
 				211040742845ED7B00DC1D17 /* HomeViewViewModel.swift in Sources */,
 				21EE77CD2859F46D007DB59D /* HighlightCard.swift in Sources */,

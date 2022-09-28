@@ -12,11 +12,11 @@ struct InputFieldHeader: ViewModifier {
     /// The header/title of the input field.
     let title: LocalizedStringKey
     /// The helper text to be displayed when the help button is pressed.
-    let helpText: AddViewViewModel.HelpText
+    let helpText: AddHabitViewViewModel.HelpText
     /// A boolean value indicating whether or not to show the given help text.
     @State private var showingHelpText = false
     
-    init(title: LocalizedStringKey, helpText: AddViewViewModel.HelpText) {
+    init(title: LocalizedStringKey, helpText: AddHabitViewViewModel.HelpText) {
         self.title = title
         self.helpText = helpText
     }
@@ -48,7 +48,7 @@ struct InputFieldHeader: ViewModifier {
 
 extension View {
     /// Adds a header title and a question mark button to the view.
-    func inputFieldHeader(title: LocalizedStringKey, helpText: AddViewViewModel.HelpText) -> some View {
+    func inputFieldHeader(title: LocalizedStringKey, helpText: AddHabitViewViewModel.HelpText) -> some View {
         modifier(InputFieldHeader(title: title, helpText: helpText))
     }
 }

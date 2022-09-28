@@ -30,7 +30,7 @@ struct MainView: View {
                     Label(Tab.home.tabName, systemImage: Tab.home.imageName)
                 }
 
-            AddView()
+            AddHabitView()
                 .tag(Tab.add)
                 .tabItem {
                     Label(Tab.add.tabName, systemImage: Tab.add.imageName)

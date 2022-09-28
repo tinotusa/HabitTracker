@@ -1,15 +1,14 @@
 //
-//  AddView.swift
+//  AddHabitView.swift
 //  Habit Tracker
 //
 //  Created by Tino on 23/5/2022.
 //
 
 import SwiftUI
-import Combine
 
-struct AddView: View {
-    @StateObject var viewModel = AddViewViewModel()
+struct AddHabitView: View {
+    @StateObject var viewModel = AddHabitViewViewModel()
     @EnvironmentObject var userSession: UserSession
     
     var body: some View {
@@ -83,7 +82,7 @@ struct AddView: View {
 }
 
 // MARK: - Subviews
-private extension AddView {
+private extension AddHabitView {
     var header: some View {
         HStack {
             Text("Add habit")
@@ -116,13 +115,13 @@ private extension AddView {
         DatePicker("Time", selection: $viewModel.occurrenceTime, displayedComponents: [.hourAndMinute])
             .labelsHidden()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .inputFieldHeader(title: "When do you usually do this?", helpText: .occurrenceTime)
+        .inputFieldHeader(title: viewModel.timeInputLabel, helpText: .occurrenceTime)
         .highlightCard()
     }
     
     var dayInput: some View {
         DayPickerView(selection: $viewModel.occurrenceDays)
-        .inputFieldHeader(title: "What days do you usually this?", helpText: .ooccurrenceDays)
+            .inputFieldHeader(title: viewModel.dayInputlabel, helpText: .ooccurrenceDays)
         .highlightCard()
     }
     
@@ -139,7 +138,7 @@ private extension AddView {
                 CustomStepper(value: $viewModel.durationMinutes, minValue: 0, maxValue: 60)
             }
         }
-        .inputFieldHeader(title: "How long does this usually last?", helpText: .duration)
+        .inputFieldHeader(title: viewModel.durationInputLabel, helpText: .duration)
         .highlightCard()
     }
     
@@ -203,9 +202,11 @@ private extension AddView {
     
 }
 
-struct AddView_Previews: PreviewProvider {
+struct AddHabitView_Previews: PreviewProvider {
     static var previews: some View {
-        AddView()
-            .environmentObject(UserSession())
+        ZStack {
+            AddHabitView()
+                .environmentObject(UserSession())
+        }
     }
 }
