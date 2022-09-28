@@ -133,22 +133,11 @@ private extension EditHabitView {
     
     var habitStatus: some View {
         VStack {
-            Toggle("Quitting", isOn: $viewModel.isQuitting.animation())
-                .onChange(of: viewModel.isQuitting) { isQuitting in
-                    if isQuitting {
-                        withAnimation {
-                            viewModel.isStarting = false
-                        }
-                    }
+            Picker("Habit state", selection: $viewModel.habitState) {
+                ForEach(HabitState.allCases) { habitStatus in
+                    Text(habitStatus.label)
                 }
-            Toggle("Starting", isOn: $viewModel.isStarting.animation())
-                .onChange(of: viewModel.isStarting) { isStarting in
-                    if isStarting {
-                        withAnimation {
-                            viewModel.isQuitting = false
-                        }
-                    }
-                }
+            }
         }
         .highlightCard()
     }
@@ -190,7 +179,7 @@ private extension EditHabitView {
     
     @ViewBuilder
     var activitiesInput: some View {
-        if viewModel.isQuitting {
+        if viewModel.habitState == .quitting {
             VStack(alignment: .leading, spacing: Constants.habitRowVstackSpacing) {
                 Text("Activities")
                 TextField("Activity", text: $viewModel.activityInput, prompt: Text(viewModel.activityInputPrompt))

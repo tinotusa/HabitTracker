@@ -15,22 +15,25 @@ struct PermissionDetails {
     let message: LocalizedStringKey
 }
 
+
+enum HabitState: CaseIterable, Codable, Identifiable {
+    case quitting
+    case starting
+    
+    var id: Self { self }
+    var label: LocalizedStringKey {
+        switch self {
+        case .quitting: return "Quitting"
+        case .starting: return "Starting"
+        }
+    }
+}
+
 /// Add view view model.
 @MainActor
 class AddHabitViewViewModel: ObservableObject {
     /// A boolean value indicating whether a habit is being quit (stopped).
-    @Published var isQuittingHabit = true {
-        didSet {
-            if isQuittingHabit { isStartingHabit = false }
-        }
-    }
-    
-    /// A boolean value indicating whether a habit is being started (created).
-    @Published var isStartingHabit = false {
-        didSet {
-            if isStartingHabit { isQuittingHabit = false }
-        }
-    }
+    @Published var habitState = HabitState.quitting
     
     /// The name of the habit being quit or started.
     @Published var habitName = ""
@@ -108,17 +111,17 @@ class AddHabitViewViewModel: ObservableObject {
 // MARK: Computed Properties
 extension AddHabitViewViewModel {
     var timeInputLabel: LocalizedStringKey {
-        if isQuittingHabit { return "When do you usually do this?" }
+        if habitState == .quitting { return "When do you usually do this?" }
         return "When do you want to do this?"
     }
     
     var dayInputlabel: LocalizedStringKey {
-        if isQuittingHabit { return "What days do you usually this?" }
+        if habitState == .quitting { return "What days do you usually this?" }
         return "On what days to you want to do this?"
     }
     
     var durationInputLabel: LocalizedStringKey {
-        if isQuittingHabit { return "How long does this usually last?" }
+        if habitState == .quitting { return "How long does this usually last?" }
         return "How long do you want to do this for?"
     }
     
@@ -132,11 +135,10 @@ extension AddHabitViewViewModel {
         let habitName = habitName.trimmingCharacters(in: .whitespacesAndNewlines)
         let reason = reason.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        if !(isQuittingHabit ||  isStartingHabit) { return false }
         if habitName.isEmpty { return false }
         if occurrenceDays.isEmpty { return false }
         if (durationHours == 0 && durationMinutes == 0) { return false }
-        if isQuittingHabit && activities.isEmpty { return false }
+        if activities.isEmpty { return false }
         if reason.isEmpty { return false }
         
         return true
@@ -199,8 +201,7 @@ extension AddHabitViewViewModel {
         let habit = Habit(
             id: habitRef.documentID,
             createdBy: user.uid,
-            isQuittingHabit: isQuittingHabit,
-            isStartingHabit: isStartingHabit,
+            habitState: habitState,
             name: habitName,
             occurrenceTime: occurrenceTime,
             occurrenceDays: occurrenceDays,
@@ -222,8 +223,8 @@ extension AddHabitViewViewModel {
                 )
             }
             
-            let title = habit.isQuittingHabit ? "Quitting \(habit.name)" : "Starting \(habit.name)"
-            let body = habit.isQuittingHabit ?
+            let title = habit.habitState == .quitting ? "Quitting \(habit.name)" : "Starting \(habit.name)"
+            let body = habit.habitState == .quitting ?
             "You are quitting \(habit.name), try to do this instead: \(habit.activities.randomElement()!.name)" :
             "You are starting \(habit.name). Make sure to do it to help the habit stick"
             

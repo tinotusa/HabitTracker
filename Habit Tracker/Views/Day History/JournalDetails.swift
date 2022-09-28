@@ -57,7 +57,7 @@ struct JournalDetails: View {
                 }
                 .highlightCard()
                 
-                if let habit = habit, habit.isQuittingHabit {
+                if let habit = habit, habit.habitState == .quitting {
                     VStack(alignment: .leading, spacing: Constants.habitRowVstackSpacing) {
                         Text("You did this:")
                         ForEach(entry.activities) { activity in

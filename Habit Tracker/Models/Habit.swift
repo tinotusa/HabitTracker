@@ -17,11 +17,9 @@ struct Habit: Codable, Identifiable, Equatable {
     
     /// The date that the habit was created.
     var createdAt: Date
-    /// A boolean value indicating whether a habit is being quit (stopped).
-    var isQuittingHabit: Bool
     
-    /// A boolean value indicating whether a habit is being started (created).
-    var isStartingHabit: Bool
+    /// Whether the habit is being formed (started) or quitting
+    var habitState: HabitState
     
     /// The name of the habit being quit or started.
     var name: String
@@ -61,14 +59,8 @@ struct Habit: Codable, Identifiable, Equatable {
             throw DecodingError.dataCorruptedError(forKey: .createdBy, in: container, debugDescription: "createdBy id cannot be empty.")
         }
         createdAt = try container.decode(Date.self, forKey: .createdAt)
-        isQuittingHabit = try container.decode(Bool.self, forKey: .isQuittingHabit)
-        isStartingHabit = try container.decode(Bool.self, forKey: .isStartingHabit)
-        guard !(isQuittingHabit && isStartingHabit) else {
-            throw DecodingError.dataCorruptedError(forKey: .isQuittingHabit, in: container, debugDescription: "Habit cannot have isQuitting and isStarting both set to true.")
-        }
-        guard !(isQuittingHabit == false && isStartingHabit == false) else {
-            throw DecodingError.dataCorruptedError(forKey: .isQuittingHabit, in: container, debugDescription: "Habit cannot have isQuitting and isStarting both set to false.")
-        }
+        habitState = try container.decode(HabitState.self, forKey: .habitState)
+        
         name = try container.decode(String.self, forKey: .name)
         guard !name.isEmpty && name.count <= InputFieldCharLimit.name else {
             throw DecodingError.dataCorruptedError(
@@ -137,8 +129,7 @@ extension Habit {
     init(
         id: String,
         createdBy: String,
-        isQuittingHabit: Bool,
-        isStartingHabit: Bool,
+        habitState: HabitState,
         name: String,
         occurrenceTime: Date,
         occurrenceDays: Set<Day>,
@@ -150,8 +141,7 @@ extension Habit {
         self.id = id
         self.createdBy = createdBy
         createdAt = Date()
-        self.isQuittingHabit = isQuittingHabit
-        self.isStartingHabit = isStartingHabit
+        self.habitState = habitState
         self.name = name
         self.occurrenceTime = occurrenceTime
         self.occurrenceDays = occurrenceDays
@@ -167,8 +157,7 @@ extension Habit {
         Habit(
             id: UUID().uuidString,
             createdBy: UUID().uuidString,
-            isQuittingHabit: true,
-            isStartingHabit: false,
+            habitState: .quitting,
             name: "test name",
             occurrenceTime: Date(),
             occurrenceDays: [.monday, .tuesday],

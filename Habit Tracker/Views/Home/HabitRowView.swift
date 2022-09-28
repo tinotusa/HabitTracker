@@ -14,7 +14,7 @@ struct HabitRowView: View {
         HStack {
             VStack(alignment: .leading) {
                 HStack {
-                    if habit.isQuittingHabit {
+                    if habit.habitState == .quitting {
                         Text("Quitting")
                             .foregroundColor(.quittingColour)
                     } else {

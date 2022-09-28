@@ -61,14 +61,9 @@ extension EditHabitViewViewModel {
         }
     }
     
-    var isQuitting: Bool {
-        get { habit.isQuittingHabit }
-        set { habit.isQuittingHabit = newValue }
-    }
-    
-    var isStarting: Bool {
-        get { habit.isStartingHabit }
-        set { habit.isStartingHabit = newValue }
+    var habitState: HabitState {
+        get { habit.habitState }
+        set { habit.habitState = newValue }
     }
     
     var activities: [Activity] {
@@ -104,7 +99,7 @@ extension EditHabitViewViewModel {
     }
     
     var reasonTextPrompt: LocalizedStringKey {
-        isQuitting ? "Reason for quitting habit" : "Reason for starting habit"
+        habitState == .quitting ? "Reason for quitting habit" : "Reason for starting habit"
     }
 }
 
@@ -141,10 +136,10 @@ extension EditHabitViewViewModel {
             let docRef = snapshot.documents.first!.reference
             try docRef.setData(from: habit, merge: true)
             
-            let title = habit.isQuittingHabit ? "Quitting habit \(habit.name)." : "Starting habit: \(habit.name)."
-            let body = habit.isQuittingHabit ? "Around this time you would do habit: \(habit.name)." : "Time to start habit: \(habit.name)."
+            let title = habit.habitState == .quitting ? "Quitting habit \(habit.name)." : "Starting habit: \(habit.name)."
+            let body = habit.habitState == .quitting ? "Around this time you would do habit: \(habit.name)." : "Time to start habit: \(habit.name)."
             let reminderTitle = "Write journal entry for habit: \(habit.name)."
-            let reminderBody = habit.isQuittingHabit ? "What did you do instead of habit: \(habit.name)" : "You should have finished habit: \(habit.name)."
+            let reminderBody = habit.habitState == .quitting ? "What did you do instead of habit: \(habit.name)" : "You should have finished habit: \(habit.name)."
             
             for day in habit.occurrenceDays {
                 var dateComponents = DateComponents()

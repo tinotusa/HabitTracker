@@ -1,0 +1,8 @@
+.firebaserc
+*.DS_Store
+*.xcuserstate
+xcuserdata/
+**/*.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+GoogleService-Info.plist
+TODO.md
+

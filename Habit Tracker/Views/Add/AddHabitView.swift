@@ -15,28 +15,34 @@ struct AddHabitView: View {
         VStack(alignment: .leading) {
             header
                 .padding()
-            
+
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
-                    Group {
-                        Toggle("Quitting a habit", isOn: $viewModel.isQuittingHabit.animation())
-                        Toggle("Starting a habit", isOn: $viewModel.isStartingHabit.animation())
+                    VStack(alignment: .leading) {
+                        Text("Are you starting or quitting a habit?")
+                        Picker("habit state", selection: $viewModel.habitState) {
+                            ForEach(HabitState.allCases) { habitState in
+                                Text(habitState.label).tag(habitState)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .labelsHidden()
                     }
-                    
+
                     Divider()
-                    
+
                     nameInput
-                    
+
                     timeInput
-                    
+
                     dayInput
-                    
+
                     durationInput
-                    
+
                     activityInput
-                    
+
                     reasonInput
-                    
+
                     Group {
                         createHabitButton
                         Spacer(minLength: 60) //TODO: Look for better solution (hardcoding seems wrong)
@@ -99,7 +105,7 @@ private extension AddHabitView {
             .disabled(!viewModel.allFieldsFilled)
         }
     }
-    
+
     var nameInput: some View {
         TextField("Name", text: $viewModel.habitName, prompt: Text(viewModel.habitNamePrompt))
             .onChange(of: viewModel.habitName) { name in
@@ -109,7 +115,7 @@ private extension AddHabitView {
             .inputFieldHeader(title: "Habit name", helpText: .name)
             .highlightCard()
     }
-    
+
     @ViewBuilder
     var timeInput: some View {
         DatePicker("Time", selection: $viewModel.occurrenceTime, displayedComponents: [.hourAndMinute])
@@ -118,13 +124,13 @@ private extension AddHabitView {
         .inputFieldHeader(title: viewModel.timeInputLabel, helpText: .occurrenceTime)
         .highlightCard()
     }
-    
+
     var dayInput: some View {
         DayPickerView(selection: $viewModel.occurrenceDays)
             .inputFieldHeader(title: viewModel.dayInputlabel, helpText: .ooccurrenceDays)
         .highlightCard()
     }
-    
+
     var durationInput: some View {
         Group {
             HStack {
@@ -141,10 +147,10 @@ private extension AddHabitView {
         .inputFieldHeader(title: viewModel.durationInputLabel, helpText: .duration)
         .highlightCard()
     }
-    
+
     @ViewBuilder
     var activityInput: some View {
-        if viewModel.isQuittingHabit {
+        if viewModel.habitState == .quitting {
             VStack(alignment: .leading, spacing: Constants.habitRowVstackSpacing) {
                 TextField("Activity", text: $viewModel.activityInput, prompt: Text(viewModel.activityInputPrompt))
                     .submitLabel(.return)
@@ -177,7 +183,7 @@ private extension AddHabitView {
             .highlightCard()
         }
     }
-    
+
     var reasonInput: some View {
         TextEditor(text: $viewModel.reason)
             .frame(
@@ -191,7 +197,7 @@ private extension AddHabitView {
             .inputFieldHeader(title: "Why do you want to do this?", helpText: .reason)
             .highlightCard()
     }
-    
+
     var createHabitButton: some View {
         LongButton(text: "Create habit", isDisabled: !viewModel.allFieldsFilled) {
             Task {

@@ -14,8 +14,7 @@ service cloud.firestore {
       return docData.id is string &&
         docData.createdBy is string &&
         docData.name is string &&
-        docData.isQuittingHabit is bool &&
-        docData.isStartingHabit is bool &&
+        docData.habitState is map &&
         docData.occurrenceTime is timestamp &&
         docData.occurrenceDays is list &&
         docData.durationHours is int &&

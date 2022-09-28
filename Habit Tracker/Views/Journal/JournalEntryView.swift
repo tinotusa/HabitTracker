@@ -79,7 +79,7 @@ private extension JournalEntryView {
     
     @ViewBuilder
     var activitiesList: some View {
-        if habit.isQuittingHabit {
+        if habit.habitState == .quitting {
             VStack(alignment: .leading, spacing: Constants.vstackSpacing) {
                 Text("Which of these activities did you do instead?")
                 ForEach($viewModel.activities) { $activity in
